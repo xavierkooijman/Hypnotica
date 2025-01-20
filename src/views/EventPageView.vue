@@ -1,10 +1,16 @@
 <template>
   <main class="event-profile" v-if="event && !loading">
-    <!-- Hero Section -->
     <section class="hero-section">
       <img :src="event.mainImg" alt="Main Event Image" class="hero-background" />
       <div class="text-overlay">
-        <h1 class="event-name">{{ event.name }}</h1>
+        <div class="name-container">
+          <h1 class="event-name">{{ event.name }}</h1>
+          <button @click="toggleCalendar" aria-label="Add/Remove from Calendar" class="calendar-button">
+            <CalendarPlus v-if="!isInCalendar && isLoggedIn" class="calendar-icon" />
+            <CalendarCheck v-if="isInCalendar && isLoggedIn" class="calendar-icon" />
+            <CalendarPlus v-if="!isLoggedIn" class="calendar-icon" />
+          </button>
+        </div>
         <h2 class="event-subtitle">{{ formattedDescription }}</h2>
       </div>
     </section>
@@ -37,37 +43,47 @@
 <script>
 import { useEventStore } from "@/stores/events";
 import { useVenuesStore } from "@/stores/venues";
+import { useUsersStore } from "@/stores/user";
+import { CalendarPlus, CalendarCheck } from "lucide-vue-next";
 import Carousel from "../components/Carousel.vue";
 import Slider from "../components/EventArtistSlider.vue";
 
 export default {
   name: "EventProfile",
+
   components: {
     Carousel,
     Slider,
+    CalendarPlus,
+    CalendarCheck
   },
+
   data() {
     return {
       event: null,
       loading: true,
       error: null,
       venuesStore: null,
-      eventStore: null,
+      eventStore: null
     };
   },
 
-  created() {
-    this.eventStore = useEventStore();
-    this.venuesStore = useVenuesStore();
-    this.fetchEvent(); // Move from mounted to created
-  },
-
   computed: {
+    isInCalendar() {
+      const usersStore = useUsersStore();
+      const currentUser = usersStore.getAuthenticatedUser;
+      return currentUser ? currentUser.calendar.includes(this.event?.id) : false;
+    },
+
+    isLoggedIn() {
+      const usersStore = useUsersStore();
+      return usersStore.getAuthenticatedUser !== null;
+    },
+
     formattedDescription() {
       if (!this.event) return '';
 
       const date = new Date(this.event.date);
-      const month = date.toLocaleString('default', { month: 'long' });
       const fullDate = date.toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
@@ -75,22 +91,37 @@ export default {
       });
 
       const venueName = this.venuesStore.getVenueById(this.event.venueId)?.name || 'Unknown Venue';
-
       return `${fullDate} | ${venueName} | ${this.event.location}`;
     }
   },
 
   methods: {
+    toggleCalendar() {
+      const usersStore = useUsersStore();
+      const currentUser = usersStore.getAuthenticatedUser;
+
+      if (!currentUser) {
+        alert("You need to be logged in to add events to calendar!");
+        return;
+      }
+
+      if (this.isInCalendar) {
+        const index = currentUser.calendar.indexOf(this.event.id);
+        if (index !== -1) {
+          currentUser.calendar.splice(index, 1);
+        }
+      } else {
+        currentUser.calendar.push(this.event.id);
+      }
+
+      usersStore.$patch();
+    },
+
     async fetchEvent() {
       try {
         this.loading = true;
-        const eventId = this.$route.params.eventId; // Changed from id to eventId
-        console.log('Route params:', this.$route.params); // Debug router params
-        console.log('Fetching event with ID:', eventId);
-
+        const eventId = this.$route.params.eventId;
         const event = this.eventStore.getEventById(eventId);
-        console.log('Events in store:', this.eventStore.events); // Debug events in store
-        console.log('Found event:', event);
 
         if (!event) {
           this.error = 'Event not found';
@@ -98,16 +129,17 @@ export default {
         }
 
         this.event = event;
-      } catch (error) {
-        console.error('Error fetching event:', error);
-        this.error = 'Failed to load event';
+      } catch (err) {
+        this.error = 'Failed to load event: ' + err.message;
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
 
-  mounted() {
+  created() {
+    this.eventStore = useEventStore();
+    this.venuesStore = useVenuesStore();
     this.fetchEvent();
   }
 };
@@ -144,6 +176,41 @@ export default {
   padding: 20px;
   margin: 20px;
   border-radius: 8px;
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.calendar-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.calendar-icon {
+  width: 64px;
+  height: 64px;
+  transition: transform 0.3s ease;
+  stroke: #fff;
+  fill: transparent;
+  stroke-width: 2;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.calendar-icon.liked {
+  fill: #fff;
+  stroke: #fff;
+}
+
+.calendar-button:hover .calendar-icon {
+  transform: scale(1.1);
 }
 
 .event-name {

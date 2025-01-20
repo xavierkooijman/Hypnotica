@@ -1,10 +1,14 @@
 <template>
   <main class="venue-profile" v-if="venue && !loading">
-    <!-- Hero Section -->
     <section class="hero-section">
       <img :src="venue.mainImg" alt="Venue Image" class="hero-background" />
       <div class="text-overlay">
-        <h1 class="venue-name">{{ venue.name }}</h1>
+        <div class="name-container">
+          <h1 class="venue-name">{{ venue.name }}</h1>
+          <button @click="toggleLike" aria-label="Like/Dislike" class="like-button">
+            <Heart :class="{ liked: isLiked }" class="heart-icon" />
+          </button>
+        </div>
         <h2 class="venue-desc">{{ venue.desc }}</h2>
       </div>
     </section>
@@ -54,6 +58,8 @@
 <script>
 import { useVenuesStore } from "@/stores/venues";
 import { useProgramStore } from "@/stores/program";
+import { useUsersStore } from "@/stores/user";
+import { Heart } from "lucide-vue-next";
 import Carousel from "../components/Carousel.vue";
 import Program from "../components/ProgramSection.vue";
 
@@ -63,37 +69,42 @@ export default {
   components: {
     Carousel,
     Program,
+    Heart
   },
 
   data() {
     return {
-      venue: null, // Venue será armazenado aqui após ser carregado
-      venueEvents: [], // Lista de eventos do venue
+      venue: null,
+      venueEvents: [],
       loading: true,
       error: null,
+      isLiked: false
     };
   },
 
   methods: {
     async fetchVenue() {
       const venuesStore = useVenuesStore();
-      const programStore = useProgramStore();
+      const usersStore = useUsersStore();
 
       try {
         this.loading = true;
         this.error = null;
-        const venueId = this.$route.params.venueId; // Pega o ID do venue da URL
+        const venueId = this.$route.params.venueId;
 
-        // Buscar o venue com o ID na store
         const fetchedVenue = venuesStore.getVenueById(venueId);
 
         if (!fetchedVenue) {
           this.error = "Venue não encontrado!";
         } else {
-          // Se o venue for encontrado, armazene na variável `venue`
           this.venue = fetchedVenue;
+          
+          // Check if venue is liked
+          const currentUser = usersStore.getAuthenticatedUser;
+          if (currentUser) {
+            this.isLiked = currentUser.favoriteVenues.includes(this.venue.id);
+          }
 
-          // Buscar os eventos para este venue através do program store
           this.fetchVenueEvents(venueId);
         }
       } catch (err) {
@@ -101,6 +112,28 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+
+    toggleLike() {
+      const usersStore = useUsersStore();
+      const currentUser = usersStore.getAuthenticatedUser;
+
+      if (!currentUser) {
+        alert("You need to be logged in to like venues!");
+        return;
+      }
+
+      if (this.isLiked) {
+        const index = currentUser.favoriteVenues.indexOf(this.venue.id);
+        if (index !== -1) {
+          currentUser.favoriteVenues.splice(index, 1);
+        }
+      } else {
+        currentUser.favoriteVenues.push(this.venue.id);
+      }
+
+      this.isLiked = !this.isLiked;
+      usersStore.$patch();
     },
 
     async fetchVenueEvents(venueId) {
@@ -163,7 +196,8 @@ export default {
 .venue-name {
   color: var(--Main-White);
   font: 64px Aspekta800, sans-serif;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-right: 20px;
 }
 
 .venue-desc {
@@ -171,6 +205,41 @@ export default {
   font: 24px Aspekta400, sans-serif;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
+
+.name-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.like-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  display: inline-flex;
+  align-items: center;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.heart-icon {
+  width: 64px;
+  height: 64px;
+  transition: transform 0.3s ease, fill 0.3s ease;
+  stroke: #fff;
+  fill: transparent;
+  stroke-width: 2;
+}
+
+.heart-icon.liked {
+  fill: #fff;
+  stroke: #fff;
+}
+
+.like-button:hover .heart-icon {
+  transform: scale(1.1);
+} 
 
 /* Biography Section */
 .venue-bio {

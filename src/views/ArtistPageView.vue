@@ -7,7 +7,6 @@
           <h1 class="artist-name">{{ artistInfo.name }}</h1>
           <button @click="toggleLike" aria-label="Like/Dislike" class="like-button">
             <Heart :class="{ liked: isLiked }" class="heart-icon" />
-            <Popup class="notification" :isVisible="isPopupVisible" :timeout="popupTimeout" @close="isPopupVisible = false" />
           </button>
         </div>
       </div>
@@ -78,11 +77,9 @@ import { useProgramStore } from "../stores/program";
 
 import { Heart } from "lucide-vue-next";
 import Program from "../components/ProgramSection.vue";
-import Popup from "../components/PopUpLogin.vue";
 
 export default {
   components: {
-    Popup,
     Heart,
     Program,
   },
@@ -94,41 +91,50 @@ export default {
       isLiked: false,
       artistInfo: {},
       artistEvents: [],  // Agora é um array de eventos do artista
-      isPopupVisible: false,
-      popupTimeout: 5, // Tempo em segundos
     };
   },
   methods: {
-    async fetchTopTracks() {
+    async fetchArtistEvents() {
       const artistsStore = useArtistsStore();
+      const programStore = useProgramStore();
+      const usersStore = useUsersStore();
+
       try {
         this.loading = true;
         this.error = null;
-
         const artistId = this.$route.params.artistId;
-        this.artistInfo = artistsStore.getArtistById(artistId);
-        this.topTracks = await artistsStore.getTop3Tracks(this.artistInfo.name);
 
-        const usersStore = useUsersStore();
+        this.artistInfo = artistsStore.getArtistById(artistId);
+        if (!this.artistInfo) {
+          this.error = "Artist not found";
+          return;
+        }
+
+        // Check if artist is liked
         const currentUser = usersStore.getAuthenticatedUser;
         if (currentUser) {
           this.isLiked = currentUser.favoriteArtists.includes(this.artistInfo.id);
         }
+
+        this.artistEvents = programStore.getEventsByArtist(artistId);
       } catch (err) {
-        this.error = "Failed to load top tracks: " + err.message;
+        this.error = "Failed to load artist events: " + err.message;
       } finally {
         this.loading = false;
       }
     },
 
-    async fetchArtistEvents() {
-      const programStore = useProgramStore();
+    async fetchTopTracks() {
+      const artistsStore = useArtistsStore();
+
       try {
-        // Chama o método para obter os eventos do artista
-        const artistId = this.artistInfo.id;
-        this.artistEvents = await programStore.fetchArtistEvents(artistId);
+        this.loading = true;
+        this.error = null;
+        this.topTracks = await artistsStore.getTop3Tracks(this.artistInfo.name);
       } catch (err) {
-        console.error("Failed to load artist events", err);
+        this.error = "Failed to load top tracks: " + err.message;
+      } finally {
+        this.loading = false;
       }
     },
 
@@ -137,19 +143,16 @@ export default {
       const currentUser = usersStore.getAuthenticatedUser;
 
       if (!currentUser) {
-        this.isPopupVisible = true;
+        alert("You need to be logged in to like artists!");
         return;
       }
 
-      // Verifica se o artista já está na lista de favoritos usando apenas o ID
       if (this.isLiked) {
-        // Remove o ID do artista da lista de favoritos
         const index = currentUser.favoriteArtists.indexOf(this.artistInfo.id);
         if (index !== -1) {
           currentUser.favoriteArtists.splice(index, 1);
         }
       } else {
-        // Adiciona o ID do artista à lista de favoritos
         currentUser.favoriteArtists.push(this.artistInfo.id);
       }
 
@@ -257,6 +260,7 @@ export default {
   /* Começa com o coração vazio (transparente) */
   stroke-width: 2;
   /* Largura da borda do coração */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .heart-icon.liked {
@@ -270,13 +274,6 @@ export default {
   transform: scale(1.1);
   /* Aumenta o ícone um pouco ao passar o mouse */
 }
-
-
-
-.notification {
-  color: white;
-}
-
 
 .social-icon {
   width: 75px;
