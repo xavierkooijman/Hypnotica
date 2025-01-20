@@ -83,6 +83,7 @@ export default {
     Heart,
     Program,
   },
+
   data() {
     return {
       topTracks: null,
@@ -90,52 +91,75 @@ export default {
       error: null,
       isLiked: false,
       artistInfo: {},
-      artistEvents: [],  // Agora é um array de eventos do artista
+      artistEvents: [], 
     };
   },
+
   methods: {
-    async fetchArtistEvents() {
+    async initialize() {
       const artistsStore = useArtistsStore();
-      const programStore = useProgramStore();
-      const usersStore = useUsersStore();
 
       try {
         this.loading = true;
         this.error = null;
-        const artistId = this.$route.params.artistId;
 
-        this.artistInfo = artistsStore.getArtistById(artistId);
-        if (!this.artistInfo) {
-          this.error = "Artist not found";
-          return;
+        // Get token first
+        await artistsStore.getSpotifyAccessToken();
+
+        // Then load artist info and events
+        await this.fetchArtistInfo();
+        await this.fetchArtistEvents(); // Add await since it's now async
+
+        // Finally load tracks
+        if (this.artistInfo?.name) {
+          await this.fetchTopTracks();
         }
-
-        // Check if artist is liked
-        const currentUser = usersStore.getAuthenticatedUser;
-        if (currentUser) {
-          this.isLiked = currentUser.favoriteArtists.includes(this.artistInfo.id);
-        }
-
-        this.artistEvents = programStore.getEventsByArtist(artistId);
       } catch (err) {
-        this.error = "Failed to load artist events: " + err.message;
+        this.error = "Failed to initialize: " + err.message;
       } finally {
         this.loading = false;
       }
     },
 
-    async fetchTopTracks() {
+    async fetchArtistInfo() {
       const artistsStore = useArtistsStore();
+      const usersStore = useUsersStore();
+      const artistId = this.$route.params.artistId;
 
-      try {
-        this.loading = true;
-        this.error = null;
-        this.topTracks = await artistsStore.getTop3Tracks(this.artistInfo.name);
-      } catch (err) {
-        this.error = "Failed to load top tracks: " + err.message;
-      } finally {
-        this.loading = false;
+      this.artistInfo = artistsStore.getArtistById(artistId);
+      if (!this.artistInfo) {
+        throw new Error("Artist not found");
       }
+
+      // Check if artist is liked
+      const currentUser = usersStore.getAuthenticatedUser;
+      if (currentUser) {
+        this.isLiked = currentUser.favoriteArtists.includes(this.artistInfo.id);
+      }
+    },
+
+    async fetchArtistEvents() {
+      try {
+        const programStore = useProgramStore();
+        const artistId = this.$route.params.artistId;
+        
+        // Use the existing fetchArtistEvents method from programStore
+        const events = await programStore.fetchArtistEvents(artistId);
+        this.artistEvents = events || [];
+        
+      } catch (error) {
+        console.error('Error fetching artist events:', error);
+        this.artistEvents = [];
+      }
+    },
+
+    async fetchTopTracks() {
+      if (!this.artistInfo?.name) {
+        throw new Error("Artist name not available");
+      }
+
+      const artistsStore = useArtistsStore();
+      this.topTracks = await artistsStore.getTop3Tracks(this.artistInfo.name);
     },
 
     toggleLike() {
@@ -160,9 +184,9 @@ export default {
       usersStore.$patch();
     },
   },
+
   mounted() {
-    this.fetchTopTracks();
-    this.fetchArtistEvents();  // Correção aqui: certifique-se de que está chamando corretamente
+    this.initialize();
   }
 };
 </script>
