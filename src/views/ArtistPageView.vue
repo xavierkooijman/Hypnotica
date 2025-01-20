@@ -16,22 +16,23 @@
       <div class="bio-container">
         <p class="bio-text">{{ artistInfo.bio }}</p>
         <div class="social-links" role="navigation" aria-label="Social Media Links">
-        <a :href="artistInfo?.socials?.youtube" target="_blank" rel="noopener noreferrer" v-if="artistInfo?.socials?.youtube">
-          <img loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/831c81c938349091e2146876e0645d3586d86fb03def6537bb794ee0ff7a7b94?placeholderIfAbsent=true&apiKey=f7dd8e77dcfe4504b1da5d2d682eab2f"
-            class="social-icon" alt="YouTube" />
-        </a>
-        <a :href="artistInfo?.socials?.spotify" target="_blank" rel="noopener noreferrer">
-          <img loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/6525e131582c27018aa27e0cb734a4bbe48a79f1ce846092f2a8538a755ee030?placeholderIfAbsent=true&apiKey=f7dd8e77dcfe4504b1da5d2d682eab2f"
-            class="social-icon" alt="Spotify" />
-        </a>
-        <a :href="artistInfo?.socials?.instagram" target="_blank" rel="noopener noreferrer">
-          <img loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/4ccf2bb4cb874abffa5390e4c638d667d26f2c74a2824bc92943ef04e0ff94be?placeholderIfAbsent=true&apiKey=f7dd8e77dcfe4504b1da5d2d682eab2f"
-            class="social-icon" alt="Instagram" />
-        </a>
-      </div>
+          <a :href="artistInfo?.socials?.youtube" target="_blank" rel="noopener noreferrer"
+            v-if="artistInfo?.socials?.youtube">
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/831c81c938349091e2146876e0645d3586d86fb03def6537bb794ee0ff7a7b94?placeholderIfAbsent=true&apiKey=f7dd8e77dcfe4504b1da5d2d682eab2f"
+              class="social-icon" alt="YouTube" />
+          </a>
+          <a :href="artistInfo?.socials?.spotify" target="_blank" rel="noopener noreferrer">
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/6525e131582c27018aa27e0cb734a4bbe48a79f1ce846092f2a8538a755ee030?placeholderIfAbsent=true&apiKey=f7dd8e77dcfe4504b1da5d2d682eab2f"
+              class="social-icon" alt="Spotify" />
+          </a>
+          <a :href="artistInfo?.socials?.instagram" target="_blank" rel="noopener noreferrer">
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/4ccf2bb4cb874abffa5390e4c638d667d26f2c74a2824bc92943ef04e0ff94be?placeholderIfAbsent=true&apiKey=f7dd8e77dcfe4504b1da5d2d682eab2f"
+              class="social-icon" alt="Instagram" />
+          </a>
+        </div>
       </div>
       <img loading="lazy" :src="artistInfo.secondaryImg" class="artist-image" alt="Portrait of Charlotte de Witte" />
     </section>
@@ -61,15 +62,8 @@
       <div v-for="(day, index) in artistEvents" :key="index" class="schedule-day">
         <h3 class="day-title">{{ day.date }}</h3>
         <div class="events-list">
-          <Program 
-            v-for="(event, eventIndex) in day.events" 
-            :key="eventIndex"
-            :eventTitle="event.title" 
-            :venue="event.venue" 
-            :eventTime="event.time" 
-            :lineup="event.lineup" 
-            :eventId="event.id" 
-          />
+          <Program v-for="(event, eventIndex) in day.events" :key="eventIndex" :eventTitle="event.title"
+            :venue="event.venue" :eventTime="event.time" :lineup="event.lineup" :eventId="event.id" />
         </div>
       </div>
     </section>
@@ -100,64 +94,72 @@ export default {
     };
   },
   methods: {
-  async fetchTopTracks() {
-    const artistsStore = useArtistsStore();
-    try {
-      this.loading = true;
-      this.error = null;
-
-      const artistId = this.$route.params.artistId;
-      this.artistInfo = artistsStore.getArtistById(artistId);
-      this.topTracks = await artistsStore.getTop3Tracks(this.artistInfo.name);
-
-      const usersStore = useUsersStore();
-      const currentUser = usersStore.getAuthenticatedUser;
-      if (currentUser) {
-        this.isLiked = currentUser.favoriteArtists.includes(this.artistInfo.id);
-      }
-    } catch (err) {
-      this.error = "Failed to load top tracks: " + err.message;
-    } finally {
-      this.loading = false;
-    }
-  },
-
-  async fetchArtistEvents() {
+    async fetchArtistEvents() {
+      const artistsStore = useArtistsStore();
       const programStore = useProgramStore();
+      const usersStore = useUsersStore();
+
       try {
-        // Chama o método para obter os eventos do artista
-        const artistId = this.artistInfo.id;
-        this.artistEvents = await programStore.fetchArtistEvents(artistId);
+        this.loading = true;
+        this.error = null;
+        const artistId = this.$route.params.artistId;
+
+        this.artistInfo = artistsStore.getArtistById(artistId);
+        if (!this.artistInfo) {
+          this.error = "Artist not found";
+          return;
+        }
+
+        // Check if artist is liked
+        const currentUser = usersStore.getAuthenticatedUser;
+        if (currentUser) {
+          this.isLiked = currentUser.favoriteArtists.includes(this.artistInfo.id);
+        }
+
+        this.artistEvents = programStore.getEventsByArtist(artistId);
       } catch (err) {
-        console.error("Failed to load artist events", err);
+        this.error = "Failed to load artist events: " + err.message;
+      } finally {
+        this.loading = false;
       }
     },
 
-  toggleLike() {
-    const usersStore = useUsersStore();
-    const currentUser = usersStore.getAuthenticatedUser;
+    async fetchTopTracks() {
+      const artistsStore = useArtistsStore();
 
-    if (!currentUser) {
-      alert("You need to be logged in to like artists!");
-      return;
-    }
-
-    // Verifica se o artista já está na lista de favoritos usando apenas o ID
-    if (this.isLiked) {
-      // Remove o ID do artista da lista de favoritos
-      const index = currentUser.favoriteArtists.indexOf(this.artistInfo.id);
-      if (index !== -1) {
-        currentUser.favoriteArtists.splice(index, 1);
+      try {
+        this.loading = true;
+        this.error = null;
+        this.topTracks = await artistsStore.getTop3Tracks(this.artistInfo.name);
+      } catch (err) {
+        this.error = "Failed to load top tracks: " + err.message;
+      } finally {
+        this.loading = false;
       }
-    } else {
-      // Adiciona o ID do artista à lista de favoritos
-      currentUser.favoriteArtists.push(this.artistInfo.id);
-    }
+    },
 
-    this.isLiked = !this.isLiked;
-    usersStore.$patch();
+    toggleLike() {
+      const usersStore = useUsersStore();
+      const currentUser = usersStore.getAuthenticatedUser;
+
+      if (!currentUser) {
+        alert("You need to be logged in to like artists!");
+        return;
+      }
+
+      if (this.isLiked) {
+        const index = currentUser.favoriteArtists.indexOf(this.artistInfo.id);
+        if (index !== -1) {
+          currentUser.favoriteArtists.splice(index, 1);
+        }
+      } else {
+        currentUser.favoriteArtists.push(this.artistInfo.id);
+      }
+
+      this.isLiked = !this.isLiked;
+      usersStore.$patch();
+    },
   },
-},
   mounted() {
     this.fetchTopTracks();
     this.fetchArtistEvents();  // Correção aqui: certifique-se de que está chamando corretamente
@@ -184,8 +186,10 @@ export default {
   width: 100%;
   padding: 20px;
   margin: 20px;
-  position: relative; /* Add this */
-  z-index: 2; /* Add this to appear above background */
+  position: relative;
+  /* Add this */
+  z-index: 2;
+  /* Add this to appear above background */
 }
 
 .hero-background {
@@ -200,7 +204,7 @@ export default {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.8) 100%);
   z-index: 1;
 }
 
@@ -225,7 +229,8 @@ export default {
   color: var(--Main-White);
   font: 64px Aspekta800, sans-serif;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  margin-right: 20px; /* Add space between name and like button */
+  margin-right: 20px;
+  /* Add space between name and like button */
 }
 
 .verified-badge {
@@ -255,6 +260,7 @@ export default {
   /* Começa com o coração vazio (transparente) */
   stroke-width: 2;
   /* Largura da borda do coração */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .heart-icon.liked {
@@ -292,9 +298,12 @@ export default {
 .social-links {
   display: flex;
   gap: 16px;
-  justify-content: flex-start; /* Change to flex-start */
-  padding-left: 20px; /* Add some padding from the left */
-  margin-top: 20px; /* Add some space from the name */
+  justify-content: flex-start;
+  /* Change to flex-start */
+  padding-left: 20px;
+  /* Add some padding from the left */
+  margin-top: 20px;
+  /* Add some space from the name */
 }
 
 .artist-bio {
