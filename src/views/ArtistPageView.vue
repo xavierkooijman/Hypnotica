@@ -7,6 +7,7 @@
           <h1 class="artist-name">{{ artistInfo.name }}</h1>
           <button @click="toggleLike" aria-label="Like/Dislike" class="like-button">
             <Heart :class="{ liked: isLiked }" class="heart-icon" />
+            <Popup class="notification" :isVisible="isPopupVisible" :timeout="popupTimeout" @close="isPopupVisible = false" />
           </button>
         </div>
       </div>
@@ -77,10 +78,12 @@ import { useProgramStore } from "../stores/program";
 
 import { Heart } from "lucide-vue-next";
 import Program from "../components/ProgramSection.vue";
+import Popup from "../components/PopUpLogin.vue";
 
 export default {
   components: {
     Heart,
+    Popup,
     Program,
   },
 
@@ -91,7 +94,9 @@ export default {
       error: null,
       isLiked: false,
       artistInfo: {},
-      artistEvents: [], 
+      artistEvents: [],
+      isPopupVisible: false,
+      popupTimeout: 5, // Tempo em segundos 
     };
   },
 
@@ -167,7 +172,7 @@ export default {
       const currentUser = usersStore.getAuthenticatedUser;
 
       if (!currentUser) {
-        alert("You need to be logged in to like artists!");
+        this.isPopupVisible = true;
         return;
       }
 
@@ -270,6 +275,11 @@ export default {
   display: inline-flex;
   align-items: center;
 }
+
+.notification {
+  color: white;
+}
+
 
 .heart-icon {
   width: 64px;
