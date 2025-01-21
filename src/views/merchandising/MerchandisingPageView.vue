@@ -80,7 +80,8 @@ const allProducts = computed(() => {
 }
 
 .outline-title {
-  font-size: 200px;
+  font-size: clamp(6rem, 10vw, 10rem); /* Minimum 32px, responsive 8% viewport width, maximum 96px */
+  line-height: 1.2;
   font-family: Aspekta800, sans-serif;
   color: transparent;
   -webkit-text-stroke: 3px var(--gray200);
@@ -88,7 +89,6 @@ const allProducts = computed(() => {
   text-align: center;
   width: max-content;
   /* Changed to fix letter cutoff */
-  line-height: 1.2;
   white-space: nowrap;
   /* Prevent word wrap */
 }
@@ -140,6 +140,7 @@ const allProducts = computed(() => {
   width: 100%;
   height: auto; /* Ajuste para altura automática */
   object-fit: cover;
+  filter: blur(3px);
 }
 
 .gallery-text {
