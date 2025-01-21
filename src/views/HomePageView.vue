@@ -11,12 +11,35 @@
     <RouterLink to="/venue/1">Venue Page Teste</RouterLink><br>
     <RouterLink to='/news/1'>Single New Page Teste</RouterLink><br>
   </div>
+  <div>
+    <button @click="showPopup">Verificar Login</button>
+    <Popup 
+      :isVisible="isPopupVisible" 
+      :timeout="popupTimeout" 
+      @close="isPopupVisible = false" 
+    />
+  </div>
 </template>
 
 <script>
-  export default {
-    
-  }
+import Popup from "../components/PopUpLogin.vue";
+
+export default {
+  components: {
+    Popup,
+  },
+  data() {
+    return {
+      isPopupVisible: false,
+      popupTimeout: 5, // Tempo em segundos
+    };
+  },
+  methods: {
+    showPopup() {
+      this.isPopupVisible = true;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

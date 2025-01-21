@@ -1,11 +1,20 @@
 <script>
 import { RouterLink } from "vue-router";
+import NotificationPopup from '@/components/NotificationPopup.vue';
+import SettingsPopup from '@/components/SettingsPopup.vue';
+import { useUsersStore } from "@/stores/user";
 
 export default {
   data(){
     return{
       open: false,
+      userStore: useUsersStore()
     }
+  },
+  components: {
+    RouterLink,
+    NotificationPopup,
+    SettingsPopup
   },
   methods: {
     navbarAnimation() {
@@ -71,11 +80,21 @@ export default {
       </div>
     </div>
   </div>
-  <RouterLink class="btn-secondary" :to="{ name: 'LoginPage' }">Login</RouterLink>
+  <div class="popUps-container" v-if="userStore.authenticatedUser">
+    <NotificationPopup />
+    <SettingsPopup />
+  </div>
+  <RouterLink v-else class="btn-secondary" :to="{ name: 'LoginPage' }">Login</RouterLink>
   </div>
 </template>
 
 <style scoped>
+
+.popUps-container{
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+}
 
 .header{
   position: sticky;
