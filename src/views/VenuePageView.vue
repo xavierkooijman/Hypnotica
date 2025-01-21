@@ -5,9 +5,11 @@
       <div class="text-overlay">
         <div class="name-container">
           <h1 class="venue-name">{{ venue.name }}</h1>
-          <button @click="toggleLike" aria-label="Like/Dislike" class="like-button">
-            <Heart :class="{ liked: isLiked }" class="heart-icon" />
-          </button>
+          <LikeButton 
+            type="venue"
+            :targetId="venue.id"
+            @like-changed="onLikeChanged"
+          />
         </div>
         <h2 class="venue-desc">{{ venue.desc }}</h2>
       </div>
@@ -54,14 +56,13 @@
   </div>
 </template>
 
-
 <script>
 import { useVenuesStore } from "@/stores/venues";
 import { useProgramStore } from "@/stores/program";
 import { useUsersStore } from "@/stores/user";
-import { Heart } from "lucide-vue-next";
 import Carousel from "../components/Carousel.vue";
 import Program from "../components/ProgramSection.vue";
+import LikeButton from "../components/likeButton.vue";
 
 export default {
   name: "VenueProfile",
@@ -69,7 +70,7 @@ export default {
   components: {
     Carousel,
     Program,
-    Heart
+    LikeButton
   },
 
   data() {
@@ -98,8 +99,6 @@ export default {
           this.error = "Venue não encontrado!";
         } else {
           this.venue = fetchedVenue;
-          
-          // Check if venue is liked
           const currentUser = usersStore.getAuthenticatedUser;
           if (currentUser) {
             this.isLiked = currentUser.favoriteVenues.includes(this.venue.id);
@@ -114,35 +113,16 @@ export default {
       }
     },
 
-    toggleLike() {
-      const usersStore = useUsersStore();
-      const currentUser = usersStore.getAuthenticatedUser;
-
-      if (!currentUser) {
-        alert("You need to be logged in to like venues!");
-        return;
-      }
-
-      if (this.isLiked) {
-        const index = currentUser.favoriteVenues.indexOf(this.venue.id);
-        if (index !== -1) {
-          currentUser.favoriteVenues.splice(index, 1);
-        }
-      } else {
-        currentUser.favoriteVenues.push(this.venue.id);
-      }
-
-      this.isLiked = !this.isLiked;
-      usersStore.$patch();
+    onLikeChanged(newState) {
+      this.isLiked = newState;
     },
 
     async fetchVenueEvents(venueId) {
       const programStore = useProgramStore();
       
       try {
-        const events = await programStore.fetchAllPrograms(); // Buscando todos os programas
+        const events = await programStore.fetchAllPrograms();
 
-        // Filtra os eventos que pertencem a este venue
         const venueEvents = events.flatMap(eventGroup => 
           eventGroup.events.filter(event => event.venue === this.venue.name)
         );
@@ -155,7 +135,6 @@ export default {
   },
 
   mounted() {
-    // Carregar o venue assim que o componente for montado
     this.fetchVenue();
   },
 };
@@ -213,34 +192,6 @@ export default {
   gap: 20px;
 }
 
-.like-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 15px;
-  display: inline-flex;
-  align-items: center;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-}
-
-.heart-icon {
-  width: 64px;
-  height: 64px;
-  transition: transform 0.3s ease, fill 0.3s ease;
-  stroke: #fff;
-  fill: transparent;
-  stroke-width: 2;
-}
-
-.heart-icon.liked {
-  fill: #fff;
-  stroke: #fff;
-}
-
-.like-button:hover .heart-icon {
-  transform: scale(1.1);
-} 
-
 /* Biography Section */
 .venue-bio {
   display: flex;
@@ -270,7 +221,7 @@ export default {
 .section-title {
   color: var(--Main-White);
   font: 64px Aspekta600, sans-serif;
-  margin-top: 96px; /* Corrige sobreposição com Program */
+  margin-top: 96px;
   margin-bottom: -120px;
 }
 
@@ -297,72 +248,5 @@ export default {
 
 .events-list {
   margin-top: 32px;
-}
-
-.event-card {
-  border-top: 1px solid var(--Gray-500, #52595f);
-  border-bottom: 1px solid var(--Gray-500, #52595f);
-  padding: 32px 0;
-}
-
-.event-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--Main-White, #fafafa);
-  font: 24px Aspekta400, sans-serif;
-}
-
-.time-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 48px;
-}
-
-.event-icon {
-  width: 28px;
-  aspect-ratio: 0.97;
-  object-fit: contain;
-}
-
-.lineup {
-  color: var(--Gray-100, #bec7ce);
-  font: 20px Aspekta350, sans-serif;
-  margin-top: 12px;
-}
-
-.featured-music {
-  padding: 0 48px;
-}
-
-.music-grid {
-  display: flex;
-  gap: 20px;
-  margin-top: 32px;
-}
-
-.track-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.track-artwork {
-  width: 100%;
-  border-radius: 12px;
-  aspect-ratio: 1;
-  object-fit: contain;
-}
-
-.track-title {
-  color: var(--Main-White, #fafafa);
-  font: 32px Aspekta600, sans-serif;
-  margin: 36px 0 17px;
-}
-
-.platform-icon {
-  width: 32px;
-  aspect-ratio: 0.97;
-  object-fit: contain;
 }
 </style>
