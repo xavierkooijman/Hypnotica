@@ -107,6 +107,38 @@ export default {
     const carouselTracks = ref([])
     const isCarouselMounted = ref(false)
 
+    const startCountdown = () => {
+      const counters = document.querySelectorAll('.stat-number')
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const counter = entry.target
+            const target = +counter.getAttribute('data-target')
+            const duration = 1200
+            const startTime = performance.now()
+
+            const updateCounter = (currentTime) => {
+              const elapsed = currentTime - startTime
+              const progress = Math.min(elapsed / duration, 1)
+              const current = Math.floor(progress * target)
+              counter.textContent = '+' + current
+
+              if (progress < 1) {
+                requestAnimationFrame(updateCounter)
+              }
+            }
+
+            requestAnimationFrame(updateCounter)
+            observer.unobserve(counter)
+          }
+        })
+      }, {
+        threshold: 0.5 // Trigger when 50% of element is visible
+      })
+
+      counters.forEach(counter => observer.observe(counter))
+    }
+
     const initializeCarousel = () => {
       try {
         const tracks = document.querySelectorAll('.carousel-track')
@@ -133,6 +165,7 @@ export default {
 
     onMounted(() => {
       // Wait for next tick to ensure DOM is ready
+      startCountdown()
       setTimeout(initializeCarousel, 0)
     })
 
@@ -144,24 +177,29 @@ export default {
 }
 </script>
 
+
 <style scoped>
 /* Page Layout */
 .about-us-page {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-top: 100px;
   background: var(--mainBlack);
 }
 
 /* Hero Section */
 .about-us-title {
-  color: var(--mainWhite);
+  font-size: clamp(6rem, 10vw, 10rem);
+  /* Minimum 32px, responsive 8% viewport width, maximum 96px */
+  line-height: 1.2;
+  font-family: Aspekta800, sans-serif;
+  color: transparent;
+  -webkit-text-stroke: 3px var(--gray200);
+  margin: 48px auto;
   text-align: center;
-  font: 120px Aspekta800, sans-serif;
-  letter-spacing: 2px;
-  margin: 0;
-  padding-top: 50px;
+  width: max-content;
+  /* Changed to fix letter cutoff */
+  white-space: nowrap;
 }
 
 .festival-description {
