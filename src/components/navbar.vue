@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       open: false,
+      closed: true,
       userStore: useUsersStore()
     }
   },
@@ -20,9 +21,13 @@ export default {
     navbarAnimation() {
       if (this.open == true) {
         this.open = false
+        setTimeout(() => {
+          this.closed = true
+        }, 300);
       }
       else {
         this.open = true
+        this.closed = false
       }
     },
     logout() {
@@ -44,14 +49,13 @@ export default {
           </div>
           <img class="vHidden" :class="{ vShow: open }" src="/src/assets/Icons/CrossXIcon.svg" alt="">
         </div>
-        <div class="navbar-links" :class="{ display: open }">
+          <div class="navbar-links" v-show="closed">
           <RouterLink class="link" :to="{ name: 'TicketsPage' }">Tickets</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramEventsPage' }">Program</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramArtistsPage' }">Artists</RouterLink>
           <RouterLink class="link" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
         </div>
       </div>
-      <Transition>
         <div class="hidden-container" :class="{ subnav: open }">
         <div class="hidden-section" :class="{ vShow: open }">
           <p class="hidden-title">Festival</p>
@@ -86,7 +90,6 @@ export default {
           </div>
         </div>
       </div>
-      </Transition>
     </div>
     <RouterLink v-if="userStore.authenticatedUser == null" class="btn-secondary" :to="{ name: 'LoginPage' }">Login</RouterLink>
     <div v-else-if="userStore.authenticatedUser.name == 'admin'">
@@ -146,13 +149,14 @@ export default {
   border-radius: 10px;
   background: rgba(250, 250, 250, 0.05);
   backdrop-filter: blur(100px);
-  height: 65px;
   top: 48px;
+  height: 65px;
   transition: all 0.3s linear;
+  overflow: hidden;
 }
 
 .hauto{
-  height: auto;
+  height: 349px;
 }
 
 .gap{
@@ -164,7 +168,6 @@ export default {
   flex-direction: row;
   align-items: center;
   gap: 36px;
-  min-height: 53px;
 }
 
 .navbar-links {
@@ -172,8 +175,8 @@ export default {
   flex-direction: row;
   align-items: center;
   gap: 48px;
-  transition-delay: 0.3s;
 }
+
 
 .vHidden {
   visibility: hidden;
@@ -185,9 +188,8 @@ export default {
 }
 
 .display {
-  visibility: hidden;
-  width: 0;
-  transition-delay: 0s;
+  display: none;
+  transition-delay: 0.3s;
 }
 
 .navbar-menu {
