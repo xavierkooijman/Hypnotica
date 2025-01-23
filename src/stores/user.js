@@ -149,6 +149,7 @@ export const useUsersStore = defineStore('users', {
 
     logout() {
       this.authenticatedUser = null;
+      window.location.reload();
     },
 
     updateProfileImage(newProfImg) {

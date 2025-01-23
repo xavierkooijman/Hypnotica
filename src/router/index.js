@@ -161,6 +161,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   { 
+    path: '/account/favorites', 
+    name: 'AccountFavoritesArtistsPage', 
+    component: AccountFavoritesArtistsPage,
+    meta: { requiresAuth: true }
+  },
+  { 
     path: '/account/password', 
     name: 'AccountPasswordPage', 
     component: AccountPasswordPage,
@@ -180,12 +186,6 @@ const routes = [
     path: '/where-to-stay', 
     name: 'WhereToStayPage', 
     component: WhereToStayPage 
-  },
-  { 
-    path: '/favorites', 
-    name: 'AccountFavoritesArtistsPage', 
-    component: AccountFavoritesArtistsPage,
-    meta: { requiresAuth: true }
   },
   { 
     path: '/admin/adminDashboard', 

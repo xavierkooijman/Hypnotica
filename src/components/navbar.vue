@@ -4,6 +4,7 @@ import NotificationPopup from '@/components/NotificationPopup.vue';
 import SettingsPopup from '@/components/SettingsPopup.vue';
 import { useUsersStore } from "@/stores/user";
 import router from "@/router";
+import { Heart } from 'lucide-vue-next';
 
 export default {
   data() {
@@ -16,7 +17,8 @@ export default {
   components: {
     RouterLink,
     NotificationPopup,
-    SettingsPopup
+    SettingsPopup,
+    Heart
   },
   methods: {
     navbarAnimation() {
@@ -99,6 +101,7 @@ export default {
     </div>
     <div class="popUps-container" v-else-if="userStore.authenticatedUser.name != 'admin'">
       <NotificationPopup />
+      <RouterLink to="/account/favorites"><Heart class="Favourites" :class="{ 'active': $route.path === '/account/favorites' }" /></RouterLink>
       <SettingsPopup />
     </div>
   </div>
@@ -109,6 +112,21 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 32px;
+}
+
+.Favourites {
+  color: var(--mainWhite);
+  width: 50px;
+  height: 50px;
+  stroke-width: 1px;
+}
+
+.Favourites.active {
+  fill: var(--mainWhite); /* Fill with white when active */
+}
+
+.Favourites:hover {
+  color: var(--gray200);
 }
 
 .header {
