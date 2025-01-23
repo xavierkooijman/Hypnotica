@@ -36,7 +36,7 @@ export default {
 <template>
   <div class="header">
     <RouterLink class="logo" :to="{ name: 'HomePage' }">Hypnøtica</RouterLink>
-    <div class="navbar">
+    <div class="navbar" :class="{ hauto: open }">
       <div class="navbar-menuLinks">
         <div :class="{ w100: open }" class="navbar-menu" @click="navbarAnimation()">
           <div class="menu-btn">
@@ -134,11 +134,10 @@ export default {
 }
 
 .navbar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 588px;
   padding: 6px;
   flex-direction: column;
@@ -146,6 +145,12 @@ export default {
   border-radius: 10px;
   background: rgba(250, 250, 250, 0.05);
   backdrop-filter: blur(100px);
+  height: 65px;
+  top: 48px;
+}
+
+.hauto{
+  height: auto;
 }
 
 .navbar-menuLinks {
