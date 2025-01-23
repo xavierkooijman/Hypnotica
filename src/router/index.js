@@ -245,7 +245,13 @@ const router = createRouter({
 
 // Verificação global de autenticação
 router.beforeEach((to, from) => {
-  if (to.meta.requiresAuth && !useUsersStore().authenticatedUser) {
+  if (to.meta.requiresAdmin && !useUsersStore().authenticatedUser.isAdmin) {
+    return {
+      path: "/login",
+      query: { redirect: to.fullPath },
+    }
+  }
+  else if (to.meta.requiresAuth && !useUsersStore().authenticatedUser) {
     return {
       path: "/login",
       query: { redirect: to.fullPath },
