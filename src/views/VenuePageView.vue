@@ -47,6 +47,23 @@
         </div>
       </div>
     </section>
+
+    <section class="map-section">
+      <h2 class="section-title">Location</h2>
+      <div class="map-container">
+        <GoogleMap 
+          :center="venue.position" 
+          :markers="[{
+            position: venue.position,
+            title: venue.name,
+            description: venue.bio,
+            address: venue.desc,
+            image: venue.mainImg
+          }]" 
+          :zoom="14"
+        />
+      </div>
+    </section>
   </main>
   
   <!-- Loader or error message -->
@@ -63,6 +80,7 @@ import { useUsersStore } from "@/stores/user";
 import Carousel from "../components/Carousel.vue";
 import Program from "../components/ProgramSection.vue";
 import LikeButton from "../components/likeButton.vue";
+import GoogleMap from '../components/GoogleMaps.vue'
 
 export default {
   name: "VenueProfile",
@@ -70,7 +88,8 @@ export default {
   components: {
     Carousel,
     Program,
-    LikeButton
+    LikeButton,
+    GoogleMap
   },
 
   data() {
@@ -249,4 +268,18 @@ export default {
 .events-list {
   margin-top: 32px;
 }
+
+.map-section {
+  padding: 0 96px;
+  margin: 96px 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 32px;
+}
+
 </style>
