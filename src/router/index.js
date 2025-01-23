@@ -34,6 +34,7 @@ import adminArtist from '@/views/admin/adminArtist.vue';
 import adminVenue from '@/views/admin/adminVenue.vue';
 import adminEvent from '@/views/admin/adminEvent.vue';
 import adminDashboard from '@/views/admin/adminDashboard.vue';
+import adminNews from '@/views/admin/adminNews.vue';
 
 // Definição de rotas
 const routes = [
@@ -207,7 +208,13 @@ const routes = [
     name: 'adminEvent', 
     component: adminEvent,
     meta: { requiresAdmin: true }
-  }
+  },
+  { 
+    path: '/admin/adminNews', 
+    name: 'adminNews', 
+    component: adminNews,
+    meta: { requiresAdmin: true }
+  },
 ];
 
 // Configuração do router

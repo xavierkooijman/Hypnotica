@@ -89,7 +89,7 @@ export default {
     </div>
     <RouterLink v-if="userStore.authenticatedUser == null" class="btn-secondary" :to="{ name: 'LoginPage' }">Login</RouterLink>
     <div v-else-if="userStore.authenticatedUser.name == 'admin'">
-      <button @click="logout" class="signout-btn">Sign out</button>
+      <button @click="logout" class="btn-secondary">Sign out</button>
     </div>
     <div class="popUps-container" v-else-if="userStore.authenticatedUser.name != 'admin'">
       <NotificationPopup />
@@ -134,6 +134,10 @@ export default {
 }
 
 .navbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   width: 588px;
   padding: 6px;

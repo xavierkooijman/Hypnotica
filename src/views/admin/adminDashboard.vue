@@ -6,6 +6,7 @@
     <RouterLink class="hover-underline-animation w-fit" to="/admin/adminArtist">Admin Artist</RouterLink>
     <RouterLink class="hover-underline-animation w-fit" to="/admin/adminVenue">Admin Venue</RouterLink>
     <RouterLink class="hover-underline-animation w-fit" to="/admin/adminEvent">Admin Event</RouterLink>
+    <RouterLink class="hover-underline-animation w-fit" to="/admin/adminNews">Admin News</RouterLink>
   </div>
 </template>
 
