@@ -10,19 +10,19 @@
                 <div class="form-row">
                     <div class="input-group">
                         <label for="name" class="visually-hidden">Name</label>
-                        <input type="text" id="name" v-model="formData.name" class="form-input pbottom-12" placeholder="Name"
-                            required aria-label="Name" />
+                        <input type="text" id="name" v-model="formData.name" class="form-input pbottom-12"
+                            placeholder="Name" required aria-label="Name" />
                     </div>
                     <div class="input-group">
                         <label for="email" class="visually-hidden">Email</label>
-                        <input type="email" id="email" v-model="formData.email" class="form-input pbottom-12" placeholder="Email"
-                            required aria-label="Email" />
+                        <input type="email" id="email" v-model="formData.email" class="form-input pbottom-12"
+                            placeholder="Email" required aria-label="Email" />
                     </div>
                 </div>
                 <div class="dropdown">
                     <label for="workFunction" class="visually-hidden">Work Function</label>
-                    <select id="workFunction" v-model="formData.workFunction" class="form-input dropdown-select" required
-                        aria-label="Select work function">
+                    <select id="workFunction" v-model="formData.workFunction" class="form-input dropdown-select"
+                        required aria-label="Select work function">
                         <option value="" disabled selected>Work Function</option>
                         <option value="production">Production</option>
                         <option value="marketing">Marketing</option>
@@ -58,7 +58,26 @@ export default {
     },
     methods: {
         handleSubmit() {
-            console.log('Form submitted:', this.formData)
+            const store = contactStore()
+
+            // Add new contact message to store
+            store.contacts.push({
+                name: this.formData.name,
+                email: this.formData.email,
+                workFunction: this.formData.workFunction,
+                coverLetter: this.formData.coverLetter
+            })
+
+            // Reset form
+            this.formData = {
+                name: '',
+                email: '',
+                workFunction: '',
+                coverLetter: ''
+            }
+
+            // Show success message
+            alert('Volunteer request sent successfully!')
         }
     }
 }
