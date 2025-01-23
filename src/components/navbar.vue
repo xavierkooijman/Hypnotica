@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router";
 import NotificationPopup from '@/components/NotificationPopup.vue';
 import SettingsPopup from '@/components/SettingsPopup.vue';
 import { useUsersStore } from "@/stores/user";
+import router from "@/router";
 
 export default {
   data() {
@@ -32,6 +33,7 @@ export default {
     },
     logout() {
       this.userStore.logout();
+      router.push({ name: 'HomePage' });
     }
   }
 }
@@ -156,7 +158,7 @@ export default {
 }
 
 .hauto{
-  height: 349px;
+  height: 343px;
 }
 
 .gap{

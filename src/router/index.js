@@ -35,6 +35,7 @@ import adminVenue from '@/views/admin/adminVenue.vue';
 import adminEvent from '@/views/admin/adminEvent.vue';
 import adminDashboard from '@/views/admin/adminDashboard.vue';
 import adminNews from '@/views/admin/adminNews.vue';
+import adminMerch from '@/views/admin/adminMerch.vue';
 
 // Definição de rotas
 const routes = [
@@ -213,6 +214,12 @@ const routes = [
     path: '/admin/adminNews', 
     name: 'adminNews', 
     component: adminNews,
+    meta: { requiresAdmin: true }
+  },
+  { 
+    path: '/admin/adminMerch', 
+    name: 'adminMerch', 
+    component: adminMerch,
     meta: { requiresAdmin: true }
   },
 ];
