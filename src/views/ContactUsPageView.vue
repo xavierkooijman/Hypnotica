@@ -50,7 +50,7 @@
   </template>
   
   <script>
-  import { contactStore } from '@/stores/contactus'
+  import { contactStore } from '@/stores/contactUsForm'
   export default {
     name: 'ContactForm',
     data() {
