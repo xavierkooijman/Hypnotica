@@ -24,6 +24,10 @@ export const contactStore = defineStore('contacts', {
             };
             this.contacts.push(newContact);
         },
+
+        deleteContact(index) {
+            this.contacts.splice(index, 1);
+        },
     },
 
     persist: true,
