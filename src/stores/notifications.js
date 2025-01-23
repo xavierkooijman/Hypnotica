@@ -118,6 +118,13 @@ export const useNotificationsStore = defineStore('notifications', {
         const userPref = preferences.find(pref => pref.type === notification.type);
         return userPref?.enabled ?? true;
       });
+    },
+    
+    markAllAsRead() {
+      this.notifications = this.notifications.map(notification => ({
+        ...notification,
+        read: true
+      }));
     }
   },
   persist: true,
