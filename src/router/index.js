@@ -34,6 +34,9 @@ import adminArtist from '@/views/admin/adminArtist.vue';
 import adminVenue from '@/views/admin/adminVenue.vue';
 import adminEvent from '@/views/admin/adminEvent.vue';
 import adminDashboard from '@/views/admin/adminDashboard.vue';
+import adminNews from '@/views/admin/adminNews.vue';
+import adminMerch from '@/views/admin/adminMerch.vue';
+import adminShifts from '@/views/admin/adminShifts.vue';
 
 // Definição de rotas
 const routes = [
@@ -207,7 +210,25 @@ const routes = [
     name: 'adminEvent', 
     component: adminEvent,
     meta: { requiresAdmin: true }
-  }
+  },
+  { 
+    path: '/admin/adminNews', 
+    name: 'adminNews', 
+    component: adminNews,
+    meta: { requiresAdmin: true }
+  },
+  { 
+    path: '/admin/adminMerch', 
+    name: 'adminMerch', 
+    component: adminMerch,
+    meta: { requiresAdmin: true }
+  },
+  { 
+    path: '/admin/adminShifts', 
+    name: 'adminShifts', 
+    component: adminShifts,
+    meta: { requiresAdmin: true }
+  },
 ];
 
 // Configuração do router
@@ -224,7 +245,13 @@ const router = createRouter({
 
 // Verificação global de autenticação
 router.beforeEach((to, from) => {
-  if (to.meta.requiresAuth && !useUsersStore().authenticatedUser) {
+  if (to.meta.requiresAdmin && !useUsersStore().authenticatedUser.isAdmin) {
+    return {
+      path: "/login",
+      query: { redirect: to.fullPath },
+    }
+  }
+  else if (to.meta.requiresAuth && !useUsersStore().authenticatedUser) {
     return {
       path: "/login",
       query: { redirect: to.fullPath },
