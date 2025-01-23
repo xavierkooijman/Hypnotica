@@ -24,7 +24,6 @@ export default {
       else {
         this.open = true
       }
-      console.log(this.open)
     },
     logout() {
       this.userStore.logout();
@@ -37,7 +36,7 @@ export default {
   <div class="header">
     <RouterLink class="logo" :to="{ name: 'HomePage' }">Hypnøtica</RouterLink>
     <div class="navbar" :class="{ hauto: open }">
-      <div class="navbar-menuLinks">
+      <div class="navbar-menuLinks" :class="{ gap: open }">
         <div :class="{ w100: open }" class="navbar-menu" @click="navbarAnimation()">
           <div class="menu-btn">
             <img src="/src/assets/Icons/MenuIcon.svg" alt="">
@@ -52,7 +51,8 @@ export default {
           <RouterLink class="link" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
         </div>
       </div>
-      <div class="hidden-container" :class="{ subnav: open }">
+      <Transition>
+        <div class="hidden-container" :class="{ subnav: open }">
         <div class="hidden-section" :class="{ vShow: open }">
           <p class="hidden-title">Festival</p>
           <div class="hidden-links">
@@ -86,6 +86,7 @@ export default {
           </div>
         </div>
       </div>
+      </Transition>
     </div>
     <RouterLink v-if="userStore.authenticatedUser == null" class="btn-secondary" :to="{ name: 'LoginPage' }">Login</RouterLink>
     <div v-else-if="userStore.authenticatedUser.name == 'admin'">
@@ -147,10 +148,15 @@ export default {
   backdrop-filter: blur(100px);
   height: 65px;
   top: 48px;
+  transition: all 0.3s linear;
 }
 
 .hauto{
   height: auto;
+}
+
+.gap{
+  gap: 0px !important;
 }
 
 .navbar-menuLinks {
@@ -158,6 +164,7 @@ export default {
   flex-direction: row;
   align-items: center;
   gap: 36px;
+  min-height: 53px;
 }
 
 .navbar-links {
@@ -165,6 +172,7 @@ export default {
   flex-direction: row;
   align-items: center;
   gap: 48px;
+  transition-delay: 0.3s;
 }
 
 .vHidden {
@@ -177,7 +185,9 @@ export default {
 }
 
 .display {
-  display: none;
+  visibility: hidden;
+  width: 0;
+  transition-delay: 0s;
 }
 
 .navbar-menu {
