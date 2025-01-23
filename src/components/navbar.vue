@@ -23,7 +23,7 @@ export default {
         this.open = false
         setTimeout(() => {
           this.closed = true
-        }, 300);
+        }, 350);
       }
       else {
         this.open = true
@@ -151,7 +151,7 @@ export default {
   backdrop-filter: blur(100px);
   top: 48px;
   height: 65px;
-  transition: all 0.3s linear;
+  transition: all 350ms linear;
   overflow: hidden;
 }
 
@@ -184,12 +184,7 @@ export default {
 
 .vShow {
   visibility: visible !important;
-  transition-delay: 0.3s;
-}
-
-.display {
-  display: none;
-  transition-delay: 0.3s;
+  transition-delay: 350ms;
 }
 
 .navbar-menu {
@@ -202,7 +197,7 @@ export default {
   backdrop-filter: blur(100px);
   padding: 12px;
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: all 350ms linear;
   width: 100px;
 }
 
@@ -258,7 +253,7 @@ export default {
   border-radius: 8px;
   background: rgba(250, 250, 250, 0.02);
   backdrop-filter: blur(100px);
-  transition: all 0.3s linear;
+  transition: all 350ms linear;
 }
 
 .subnav {
