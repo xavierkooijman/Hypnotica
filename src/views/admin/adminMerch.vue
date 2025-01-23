@@ -49,7 +49,7 @@ export default {
     <form class="container" @submit.prevent="handleSubmit">
         <h2>Add Merchandise:</h2>
         <input type="text" class="form-input pbottom-12" v-model="name" placeholder="Name" required/>
-        <input type="number" class="form-input pbottom-12" v-model="price" placeholder="Price" required/>
+        <input type="number" class="form-input pbottom-12" v-model="price" placeholder="Price" step="any" required/>
         <input type="number" class="form-input pbottom-12" v-model="stock" placeholder="Stock" required/>
         <textarea class="form-input pbottom-12" v-model="description" placeholder="Description" required />
         <div>Selected sizes: {{ selectedSizes }}</div>
