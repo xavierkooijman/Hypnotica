@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import {volunteerStore} from '@/stores/volunteerForm';
 export default {
     name: 'VolunteerForm',
     data() {
@@ -58,10 +59,10 @@ export default {
     },
     methods: {
         handleSubmit() {
-            const store = contactStore()
+            const store = volunteerStore()
 
             // Add new contact message to store
-            store.contacts.push({
+            store.volunteers.push({
                 name: this.formData.name,
                 email: this.formData.email,
                 workFunction: this.formData.workFunction,
