@@ -50,6 +50,7 @@
   </template>
   
   <script>
+  import { contactStore } from '@/stores/contactus'
   export default {
     name: 'ContactForm',
     data() {
@@ -62,10 +63,27 @@
       }
     },
     methods: {
-      handleSubmit() {
-        console.log('Form submitted:', this.formData)
+    handleSubmit() {
+      const store = contactStore()
+      
+      // Add new contact message to store
+      store.contacts.push({
+        name: this.formData.name,
+        email: this.formData.email, 
+        message: this.formData.message
+      })
+
+      // Reset form
+      this.formData = {
+        name: '',
+        email: '',
+        message: ''
       }
+
+      // Show success message
+      alert('Message sent successfully!')
     }
+  }
   }
   </script>
   
