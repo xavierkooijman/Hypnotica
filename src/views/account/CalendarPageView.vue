@@ -13,6 +13,39 @@ import Sidebar from '@/components/Sidebar.vue';
 								hours: ["20:00", "21:00", "22:00", "23:00", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00"]
             }
         },
+				methods: {
+					calculateGridColumn(date) {
+      			const eventDate = new Date(date);
+      			const day = eventDate.getDate();
+
+      			switch (day) {
+        			case 24:
+          			return 1;
+        			case 25:
+          			return 2;
+							case 26:
+								return 3;
+						}	
+    			},
+					calculateTopPosition(timeStart) {
+						const [hours, minutes] = timeStart.split(':').map(Number);
+						const totalMinutes = (hours * 60) + minutes;
+						const startTime = 20 * 60;
+						console.log(totalMinutes - startTime); 
+
+						let position;
+						if (totalMinutes >= startTime) {
+							position = totalMinutes - startTime;
+						}
+						else {
+							position = (24 * 60 - startTime) + totalMinutes;
+						}
+
+						const percentagePosition = (position / (10 * 60)) * 100;
+
+						return percentagePosition;
+    			},
+				}
     }
 </script>
 
@@ -31,7 +64,7 @@ import Sidebar from '@/components/Sidebar.vue';
 				</div>
 				<div class="blocks-container">
 					<div class="calendar-block" v-for="n in 30"></div>
-					<div class="event-card" v-for="event in eventStore.events" :style="{height: event.timeDifference * 10 + '%'}">
+					<div class="event-card" v-for="event in eventStore.events" :style="{height: event.duration * 10 + '%', gridColumn: calculateGridColumn(event.date), top: calculateTopPosition(event.timeStart) + '%'}">
 						<p>{{ event.name }}</p>
 						<p>{{ event.timeStart }} - {{ event.timeEnd }}</p>
 						<p>{{ event.venueId }}</p>
@@ -61,8 +94,8 @@ import Sidebar from '@/components/Sidebar.vue';
 	border: 1px solid var(--gray100);
 	padding: 12px;
 	border-radius: 16px;
-	width: 32%;
-	top: 30%;
+	width: 100%;
+	max-width: 450px;
 }
 
 .days-blocks-container{
