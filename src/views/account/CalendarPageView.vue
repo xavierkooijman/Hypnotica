@@ -94,8 +94,9 @@ import Sidebar from '@/components/Sidebar.vue';
 	border: 1px solid var(--gray100);
 	padding: 12px;
 	border-radius: 16px;
-	width: 100%;
+	width: clamp(100px, calc(22vw - 32px), 450px);
 	max-width: 450px;
+	
 }
 
 .days-blocks-container{
