@@ -5,49 +5,44 @@ export const useShiftsStore = defineStore('shifts', {
   state: () => ({
     shifts: [
       {
-        id: 1,
         job: "Coordinating artists",
         date: "Fri, 24th of January",
         startTime: "20:00",
         endTime: "04:00",
         location: "Berliner Str. 45, 10115 Berlin",
-        coins: 100
+        coins: 0
       },
       {
-        id: 2,
         job: "Providing assistance",
         date: "Sat, 24th of January",
         startTime: "19:00",
         endTime: "03:00",
         location: "Alexanderplatz 12, 10178 Berlin",
-        coins: 200
+        coins: 0
       },
       {
-        id: 3,
         job: "Managing security",
         date: "Sat, 24th of January",
         startTime: "22:00",
         endTime: "06:00",
         location: "Prinzessinnenstraße 7, 10969 Berlin",
-        coins: 50
+        coins: 0
       },
       {
-        id: 4,
         job: "Supporting performers",
         date: "Fri, 24th of January",
         startTime: "21:00",
         endTime: "05:00",
         location: "Mitte, Berlin, Germany",
-        coins: 150
+        coins: 0
       },
       {
-        id: 5,
         job: "Helping with logistics",
         date: "Sun, 24th of January",
         startTime: "18:00",
         endTime: "02:00",
         location: "Humboldtstr. 9, 10117 Berlin",
-        coins: 300
+        coins: 0
       }
       
     ],
@@ -55,28 +50,31 @@ export const useShiftsStore = defineStore('shifts', {
   }),
 
   actions: {
-    addShift(job, date, startTime, endTime, location, coins) {
-
-      let newId;
-      do {
-        newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.shifts.some(shift=> shift.id == newId));
+    addShift(job, date, startTime, endTime, location) {
+      const shiftExists = this.shifts.some(
+        shift => shift.job === job
+      );
+    
+      if (shiftExists) {
+        throw new Error('Este trabalho já existe.');
+      }
     
       const newShift = {
-        id: newId,
         job: job,
         date: date,
         startTime: startTime,
         endTime: endTime,
         location: location,
-        coins: coins
+        coins: 0
       };
     
       this.shifts.push(newShift);
     },
 
-    removeShift(id) {
-      const index = this.shifts.findIndex(shift => shift.id == id);
+    removeShift(job) {
+      const index = this.shifts.findIndex(
+        shift => shift.job === job
+      );
 
       if (index !== -1) {
         this.shifts.splice(index, 1);
@@ -99,5 +97,13 @@ export const useShiftsStore = defineStore('shifts', {
     }
   },
 
-  persist: true,
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'shifts',
+        storage: localStorage,
+      },
+    ],
+  },
 });

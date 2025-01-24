@@ -8,10 +8,8 @@ export const useEventStore = defineStore('event', {
         name: "A Night of Electrifying Beats",
         bio: `Step into the pulsating heart of electronic music at Neon Reverie, an unforgettable event that merges cutting-edge soundscapes with immersive visuals. Taking place at the iconic KitKatClub in Berlin from January 1st to 3rd, 2025, this night promises an unparalleled fusion of innovation and rhythm. Featuring world-renowned DJs and live acts, Neon Reverie celebrates the diversity of electronic music across genres like techno, trance, and deep house. Get ready to dance, connect, and lose yourself in a sensory journey like no other.`,
         artistsIds: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-        date: "2025-01-24",
-        timeStart: "22:00",
-        timeEnd: "01:00",
-        duration: 3,
+        date: "2025-01-13",
+        time: "20:00-05:00",
         venueId: "1",
         genres: "Techno",
         mainImg: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -29,10 +27,8 @@ export const useEventStore = defineStore('event', {
         name: "A Club of Angel Dust",
         bio: `Step into the pulsating heart of electronic music at Neon Reverie, an unforgettable event that merges cutting-edge soundscapes with immersive visuals. Taking place at the iconic KitKatClub in Berlin from January 1st to 3rd, 2025, this night promises an unparalleled fusion of innovation and rhythm. Featuring world-renowned DJs and live acts, Neon Reverie celebrates the diversity of electronic music across genres like techno, trance, and deep house. Get ready to dance, connect, and lose yourself in a sensory journey like no other.`,
         artistsIds: ["2", "1"],
-        date: "2025-01-25",
-        timeStart: "23:00",
-        timeEnd: "03:00",
-        duration: 4,
+        date: "2025-01-14",
+        time: "23:30-09:00",
         venueId: "2",
         genres: "Techno",
         mainImg: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -71,22 +67,6 @@ export const useEventStore = defineStore('event', {
         newId = Math.floor(Math.random() * 1000) + 1;
       } while (this.events.some(event => event.id === newId));
 
-      const [startHour, startMinute] = timeStart.split(':').map(Number);
-      const [endHour, endMinute] = timeEnd.split(':').map(Number);
-  
-      let startDate = new Date(0, 0, 0, startHour, startMinute);
-      let endDate = new Date(0, 0, 0, endHour, endMinute);
-  
-      if (endDate <= startDate) {
-          endDate.setDate(endDate.getDate() + 1);
-      }
-  
-      const diff = endDate - startDate;
-      const hours = Math.floor(diff / 1000 / 60 / 60);
-      const minutes = Math.floor((diff / 1000 / 60) % 60);
-  
-      const timeDifference = hours + (minutes / 60);
-
       const newEvent = {
         id: newId,
         name: name,
@@ -95,7 +75,6 @@ export const useEventStore = defineStore('event', {
         date: date,
         timeStart: timeStart,
         timeEnd: timeEnd,
-        duration: timeDifference,
         venueId: venueId,
         genres: genres,
         mainImg: images[0],

@@ -15,7 +15,7 @@
                             den Linden boulevard, the Brandenburg Gate and the Friedrichstrasse shopping street.
                         </p>
                     </div>
-                    <button class="btn-secondary" tabindex="0">Book a room at martas Hotel Berlin-Mitte</button>
+                    <button class="action-button" tabindex="0">Book a room at martas Hotel Berlin-Mitte</button>
                 </div>
                 <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/f3/50/dc/exterior-view-top-vch.jpg?w=700&h=-1&s=1"
                     class="transport-image" alt="Martas Hotel Berlin" loading="lazy" />
@@ -35,7 +35,7 @@
                             all within walking distance.
                         </p>
                     </div>
-                    <button class="btn-secondary" tabindex="0">Book a room at nhow Berlin</button>
+                    <button class="action-button" tabindex="0">Book a room at nhow Berlin</button>
                 </div>
             </article>
 
@@ -51,7 +51,7 @@
                             perfect for events of all sizes.
                         </p>
                     </div>
-                    <button class="btn-secondary" tabindex="0">Book a room at Hotel Palace Berlin</button>
+                    <button class="action-button" tabindex="0">Book a room at Hotel Palace Berlin</button>
                 </div>
                 <img src="https://static-new.lhw.com/HotelImages/Final/LW0734/lw0734_88698852_720x450.jpg"
                     class="transport-image" alt="Hotel Palace Berlin" loading="lazy" />

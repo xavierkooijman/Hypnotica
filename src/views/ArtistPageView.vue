@@ -241,13 +241,19 @@ export default {
 .bio-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 48px;
 }
 
 .social-links {
   display: flex;
   gap: 16px;
+  justify-content: flex-start;
+  /* Change to flex-start */
+  padding-left: 20px;
+  /* Add some padding from the left */
+  margin-top: 20px;
+  /* Add some space from the name */
 }
 
 .artist-bio {

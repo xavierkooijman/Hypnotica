@@ -115,50 +115,61 @@ export const useMerchandiseStore = defineStore('merchandise', {
           "https://artoftechno.com/cdn/shop/products/6F20E950-49C0-4F10-A467-FAB158874B78.jpg?v=1724409196&width=800"
         ]
       },
+      {
+        id: "9",
+        name: "Festival Survival Fanny Pack",
+        price: 29.99,
+        description: "Stay hands-free and organized with this durable festival fanny pack featuring multiple compartments.",
+        sizes: ["XS", "S", "XL", "XXL"],
+        stock: 90,
+        mainImage: "https://artoftechno.com/cdn/shop/files/background-hoodie-teecopy_0f236cfd-6d71-402b-9f5e-6656ecba4c1c.jpg?v=1731583105&width=800",
+        secondaryImages: [
+          "https://artoftechno.com/cdn/shop/files/front_8cf3031d-97a6-48c7-ae71-54330d92be78.jpg?v=1731592193&width=800",
+          "https://artoftechno.com/cdn/shop/files/back3_a558b538-08f9-4fc5-bd91-ac1613b3c563.jpg?v=1731401265&width=800",
+          "https://artoftechno.com/cdn/shop/products/6F20E950-49C0-4F10-A467-FAB158874B78.jpg?v=1724409196&width=800"
+        ]
+      },
+      {
+        id: "10",
+        name: "Glow In The Dark Techno Bracelet",
+        price: 5.99,
+        description: "Light up the night with this glow-in-the-dark bracelet, a must-have for every techno lover.",
+        sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+        stock: 130,
+        mainImage: "https://artoftechno.com/cdn/shop/files/background-hoodie-teecopy_0f236cfd-6d71-402b-9f5e-6656ecba4c1c.jpg?v=1731583105&width=800",
+        secondaryImages: [
+          "https://artoftechno.com/cdn/shop/files/front_8cf3031d-97a6-48c7-ae71-54330d92be78.jpg?v=1731592193&width=800",
+          "https://artoftechno.com/cdn/shop/files/back3_a558b538-08f9-4fc5-bd91-ac1613b3c563.jpg?v=1731401265&width=800",
+          "https://artoftechno.com/cdn/shop/products/6F20E950-49C0-4F10-A467-FAB158874B78.jpg?v=1724409196&width=800"
+        ]
+      }
     ]
   }),
 
   getters: {
     getMerchandiseById: (state) => (id) => {
-      return state.merchandise.find(item => item.id == id);
+      return state.merchandise.find(item => item.id === id);
     },
     getAllMerchandise: (state) => {
       return state.merchandise;
     },
     getStockLevel: (state) => (id) => {
-      const item = state.merchandise.find(item => item.id == id);
+      const item = state.merchandise.find(item => item.id === id);
       return item ? item.stock : 0;
     }
   },
 
   actions: {
-    addMerchandise(name,price,description,sizes,stock,images) {
-      const itemExists = this.merchandise.some(item => item.name == name);
+    addMerchandise(newItem) {
+      const itemExists = this.merchandise.some(item => item.id === newItem.id);
       if (itemExists) {
-        throw new Error('Item with that name already exists');
+        throw new Error('Item already exists');
       }
-
-      let newId;
-      do {
-        newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.merchandise.some(item=> item.id == newId));
-
-      const newItem = {
-        id: newId,
-        name,
-        price,
-        description,
-        sizes,
-        stock,
-        mainImage: images[0],
-        secondaryImages: images.slice(1)
-      }
-
       this.merchandise.push(newItem);
     },
 
     removeMerchandise(id) {
-      const index = this.merchandise.findIndex(item => item.id == id);
+      const index = this.merchandise.findIndex(item => item.id === id);
       if (index === -1) {
         throw new Error('Item not found');
       }
@@ -166,7 +177,7 @@ export const useMerchandiseStore = defineStore('merchandise', {
     },
 
     updateMerchandise(updatedItem) {
-      const index = this.merchandise.findIndex(item => item.id == updatedItem.id);
+      const index = this.merchandise.findIndex(item => item.id === updatedItem.id);
       if (index === -1) {
         throw new Error('Item not found');
       }
@@ -174,7 +185,7 @@ export const useMerchandiseStore = defineStore('merchandise', {
     },
 
     updateStock(id, quantity) {
-      const item = this.merchandise.find(item => item.id == id);
+      const item = this.merchandise.find(item => item.id === id);
       if (!item) {
         throw new Error('Item not found');
       }
@@ -182,7 +193,7 @@ export const useMerchandiseStore = defineStore('merchandise', {
     },
 
     decreaseStock(productId) {
-      const product = this.merchandise.find(p => p.id == productId)
+      const product = this.merchandise.find(p => p.id === productId)
       if (product && product.stock > 0) {
         product.stock--
         return true
@@ -190,5 +201,6 @@ export const useMerchandiseStore = defineStore('merchandise', {
       throw new Error('Product out of stock')
     }
   },
-  persist: true,
+
+  persist: true
 });

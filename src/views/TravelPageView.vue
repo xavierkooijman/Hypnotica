@@ -17,7 +17,7 @@
                             to move to the next Hypnøtica location.
                         </p>
                     </div>
-                    <button class="btn-secondary" tabindex="0">Plan your route with BVG</button>
+                    <button class="action-button" tabindex="0">Plan your route with BVG</button>
                 </div>
                 <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/147e6ead757a34a94be2a02b0db0059cc625b1a5bf6a3794f3ddecbb8513a363"
                     class="transport-image" alt="Berlin public transport system" loading="lazy" />
@@ -38,7 +38,7 @@
                             who love making last minute plans.
                         </p>
                     </div>
-                    <button class="btn-secondary" tabindex="0">Plan your route with Deutsche Bahn</button>
+                    <button class="action-button" tabindex="0">Plan your route with Deutsche Bahn</button>
                 </div>
             </article>
 
@@ -51,7 +51,7 @@
                             Berlin Brandenburg Airport is the main international airport serving Berlin, the capital of Germany. Located in Schönefeld, a municipality just south of Berlin, the airport offers excellent connections to the city, making it a convenient visitors outside of Germany.
                         </p>
                     </div>
-                    <button class="btn-secondary" tabindex="0">Book your flight with Skyscanner</button>
+                    <button class="action-button" tabindex="0">Book your flight with Skyscanner</button>
                 </div>
                 <img src="https://www.aviation24.be/wp-content/uploads/2019/06/American-TXL-PHL.jpg"
                     class="transport-image" alt="BVG mobile app interface" loading="lazy" />

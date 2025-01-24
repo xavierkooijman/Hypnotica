@@ -248,7 +248,7 @@ export const useNewsStore = defineStore('news', {
 
   getters: {
     getNewsById: (state) => (id) => {
-      return state.news.find(newsItem => newsItem.id == id);
+      return state.news.find(newsItem => newsItem.id === id);
     },
     getAllNews: (state) => {
       return state.news;
@@ -256,40 +256,22 @@ export const useNewsStore = defineStore('news', {
   },
 
   actions: {
-    addNews(title,description,content,images) {
-      const newsExists = this.news.some(newsItem => newsItem.title == title);
+    addNews(newNews) {
+      const newsExists = this.news.some(newsItem => newsItem.id === newNews.id);
       if (newsExists) {
-        throw new Error('Já existe uma notícia com esse título');
+        throw new Error('Já existe uma notícia com esse ID');
       }
-
-      let newId;
-      do {
-        newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.news.some(singleNews=> singleNews.id == newId));
-
-      const newsDate = new Date().toISOString().split('T')[0];
-
-      const newNews = {
-        id: newId,
-        title: title,
-        date: newsDate,
-        description: description,
-        content: content, 
-        mainImage: images[0],
-        secondaryImages: [images[1],images[2]]
-      };
-
       this.news.push(newNews);
     },
     removeNews(newsId) {
-      const newsIndex = this.news.findIndex(newsItem => newsItem.id == newsId);
+      const newsIndex = this.news.findIndex(newsItem => newsItem.id === newsId);
       if (newsIndex === -1) {
         throw new Error('Notícia não encontrada');
       }
       this.news.splice(newsIndex, 1);
     },
     updateNews(updatedNews) {
-      const newsIndex = this.news.findIndex(newsItem => newsItem.id == updatedNews.id);
+      const newsIndex = this.news.findIndex(newsItem => newsItem.id === updatedNews.id);
       if (newsIndex === -1) {
         throw new Error('Notícia não encontrada');
       }
