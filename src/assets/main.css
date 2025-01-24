@@ -149,10 +149,12 @@ a{
   border-radius: 12px;
   border: 1px solid var(--gray400);
   color: var(--mainWhite);
+  background: none;
   font-family: Aspekta500;
   font-size: 1.25rem;
   transition: 150ms ease-out;
   cursor: pointer;
+  width: fit-content;
 }
 
 .btn-secondary:hover{

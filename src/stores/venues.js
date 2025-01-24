@@ -4,37 +4,81 @@ export const useVenuesStore = defineStore('venues', {
   state: () => ({
     venues: [
       {
-      id: "1",
-      name:"KitKatClub",
-      desc:"Köpenicker Straße 76, 10179 Berlin",
-      bio:"The KitKatClub is a legendary Berlin venue celebrated for its bold, open-minded atmosphere and unforgettable electronic music events. Known for embracing individuality and freedom, it has become an iconic hotspot in the city's vibrant nightlife scene.",
-      mainImg: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      carouselImages: [
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      ],
-      mapImage : "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-
-    {
-      id: "2",
-      name:"Eskada",
-      desc:"Köpenicker Straße 76, 10179 Berlin",
-      bio:"The KitKatClub is a legendary Berlin venue celebrated for its bold, open-minded atmosphere and unforgettable electronic music events. Known for embracing individuality and freedom, it has become an iconic hotspot in the city's vibrant nightlife scene.",
-      mainImg: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      carouselImages: [
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      ],
-      mapImage : "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    }
-  ] 
+        id: "1",
+        name: "Berghain",
+        desc: "Am Wriezener Bhf, 10243 Berlin",
+        bio: "Legendary techno club housed in a former power plant, known for its striking industrial architecture and world-class sound system.",
+        position: { lat: 52.5097, lng: 13.4577 },
+        mainImg: "https://s3.playbpm.com.br/images/berghain.2e16d0ba.fill-1140x450.jpg",
+        carouselImages: [
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+        ]
+      },
+      {
+        id: "2",
+        name: "KitKatClub",
+        desc: "Köpenicker Str. 76, 10179 Berlin",
+        bio: "Famous techno club known for its unique atmosphere and diverse music program.",
+        position: { lat: 52.5005, lng: 13.4397 },
+        mainImg: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg",
+        carouselImages: [
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+        ]
+      },
+      {
+        id: "3",
+        name: "Watergate",
+        desc: "Falckensteinstraße 49, 10997 Berlin",
+        bio: "Two-floor club on the Spree River with panoramic windows and an LED ceiling installation.",
+        position: { lat: 52.5007, lng: 13.4519 },
+        mainImg: "https://www.residentadvisor.net/images/clubs/watergate.jpg",
+        carouselImages: [
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+        ]
+      },
+      {
+        id: "4",
+        name: "Tresor",
+        desc: "Köpenicker Str. 70, 10179 Berlin",
+        bio: "Historic techno club in a former power plant basement, featuring three floors of electronic music.",
+        position: { lat: 52.4973, lng: 13.4530 },
+        mainImg: "https://www.residentadvisor.net/images/clubs/tresor-berlin.jpg",
+        carouselImages: [
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+        ]
+      },
+      {
+        id: "5",
+        name: "Ritter Butzke",
+        desc: "Ritterstraße 26, 10969 Berlin",
+        bio: "Industrial-style nightclub in a former factory featuring multiple rooms of electronic music.",
+        position: { lat: 52.4995, lng: 13.4288 },
+        mainImg: "https://www.ritterbutzke.com/wp-content/uploads/2019/01/ritter-butzke-club-berlin.jpg",
+        carouselImages: [
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+          "https://images.pexels.com/photos/1763067/pexels-photo-1763067.jpeg",
+          "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
+        ]
+      }
+    ]
   }),
 
   getters: {
@@ -44,46 +88,37 @@ export const useVenuesStore = defineStore('venues', {
     getAllVenues: (state) => {
       return state.venues;
     },
+    getVenueMarkers: (state) => {
+      return state.venues.map(venue => ({
+        position: venue.position,
+        title: venue.name,
+        description: venue.bio,
+        address: venue.desc,
+        image: venue.mainImg
+      }));
+    }
   },
 
   actions: {
-    // Adiciona um novo local
-    addVenue(name,bio,address,images) {
-      const venueExists = this.venues.some(venue => venue.name === name);
+    addVenue(venue) {
+      const venueExists = this.venues.some(v => v.name === venue.name);
 
       if (venueExists) {
-        throw new Error('Já existe um local com esse nome');
+        throw new Error('Venue already exists');
       }
 
       let newId;
       do {
         newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.venues.some(venue => venue.id === newId));
+      } while (this.venues.some(v => v.id === newId.toString()));
 
       const newVenue = {
-        id: newId,
-        name: name,
-        desc : address,
-        bio: bio, 
-        mainImg: images[0],
-        carouselImages: [images[1], images[2], images[3], images[4], images[5]],
+        id: newId.toString(),
+        ...venue
       };
 
       this.venues.push(newVenue);
-    },
-
-    // Remove um local pelo ID
-    removeVenue(id) {
-      this.venues = this.venues.filter(venue => venue.id !== id);
-    },
-
-    // Atualiza informações de um local específico
-    updateVenue(updatedVenue) {
-      const index = this.venues.findIndex(venue => venue.id === updatedVenue.id);
-      if (index !== -1) {
-        this.venues[index] = updatedVenue;
-      }
-    },
+    }
   },
-  persist: true,
+  persist: true
 });

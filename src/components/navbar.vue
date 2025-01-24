@@ -3,12 +3,14 @@ import { RouterLink } from "vue-router";
 import NotificationPopup from '@/components/NotificationPopup.vue';
 import SettingsPopup from '@/components/SettingsPopup.vue';
 import { useUsersStore } from "@/stores/user";
+import router from "@/router";
 import { Heart } from 'lucide-vue-next';
 
 export default {
   data() {
     return {
       open: false,
+      closed: true,
       userStore: useUsersStore()
     }
   },
@@ -22,14 +24,18 @@ export default {
     navbarAnimation() {
       if (this.open == true) {
         this.open = false
+        setTimeout(() => {
+          this.closed = true
+        }, 350);
       }
       else {
         this.open = true
+        this.closed = false
       }
-      console.log(this.open)
     },
     logout() {
       this.userStore.logout();
+      router.push({ name: 'HomePage' });
     }
   }
 }
@@ -38,8 +44,8 @@ export default {
 <template>
   <div class="header">
     <RouterLink class="logo" :to="{ name: 'HomePage' }">Hypnøtica</RouterLink>
-    <div class="navbar">
-      <div class="navbar-menuLinks">
+    <div class="navbar" :class="{ hauto: open }">
+      <div class="navbar-menuLinks" :class="{ gap: open }">
         <div :class="{ w100: open }" class="navbar-menu" @click="navbarAnimation()">
           <div class="menu-btn">
             <img src="/src/assets/Icons/MenuIcon.svg" alt="">
@@ -47,14 +53,14 @@ export default {
           </div>
           <img class="vHidden" :class="{ vShow: open }" src="/src/assets/Icons/CrossXIcon.svg" alt="">
         </div>
-        <div class="navbar-links" :class="{ display: open }">
+          <div class="navbar-links" v-show="closed">
           <RouterLink class="link" :to="{ name: 'TicketsPage' }">Tickets</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramEventsPage' }">Program</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramArtistsPage' }">Artists</RouterLink>
           <RouterLink class="link" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
         </div>
       </div>
-      <div class="hidden-container" :class="{ subnav: open }">
+        <div class="hidden-container" :class="{ subnav: open }">
         <div class="hidden-section" :class="{ vShow: open }">
           <p class="hidden-title">Festival</p>
           <div class="hidden-links">
@@ -91,7 +97,7 @@ export default {
     </div>
     <RouterLink v-if="userStore.authenticatedUser == null" class="btn-secondary" :to="{ name: 'LoginPage' }">Login</RouterLink>
     <div v-else-if="userStore.authenticatedUser.name == 'admin'">
-      <button @click="logout" class="signout-btn">Sign out</button>
+      <button @click="logout" class="btn-secondary">Sign out</button>
     </div>
     <div class="popUps-container" v-else-if="userStore.authenticatedUser.name != 'admin'">
       <NotificationPopup />
@@ -153,6 +159,9 @@ export default {
 
 .navbar {
   display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 588px;
   padding: 6px;
   flex-direction: column;
@@ -160,6 +169,18 @@ export default {
   border-radius: 10px;
   background: rgba(250, 250, 250, 0.05);
   backdrop-filter: blur(100px);
+  top: 48px;
+  height: 65px;
+  transition: all 350ms linear;
+  overflow: hidden;
+}
+
+.hauto{
+  height: 343px;
+}
+
+.gap{
+  gap: 0px !important;
 }
 
 .navbar-menuLinks {
@@ -176,17 +197,14 @@ export default {
   gap: 48px;
 }
 
+
 .vHidden {
   visibility: hidden;
 }
 
 .vShow {
   visibility: visible !important;
-  transition-delay: 0.3s;
-}
-
-.display {
-  display: none;
+  transition-delay: 350ms;
 }
 
 .navbar-menu {
@@ -199,7 +217,7 @@ export default {
   backdrop-filter: blur(100px);
   padding: 12px;
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: all 350ms linear;
   width: 100px;
 }
 
@@ -255,7 +273,7 @@ export default {
   border-radius: 8px;
   background: rgba(250, 250, 250, 0.02);
   backdrop-filter: blur(100px);
-  transition: all 0.3s linear;
+  transition: all 350ms linear;
 }
 
 .subnav {
