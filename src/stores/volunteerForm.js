@@ -31,6 +31,6 @@ export const volunteerStore = defineStore('volunteers', {
             this.volunteers.splice(index, 1);
         },
     },
-
+    
     persist: true,
 });

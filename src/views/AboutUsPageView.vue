@@ -90,7 +90,7 @@
           Spanning three electrifying days and nights, the festival is hosted
           across Berlin's iconic venues, featuring over 100 performances.
         </p>
-        <button class="explore-button" aria-label="Explore the Hypnøtica Program" tabindex="0"
+        <button class="btn-secondary" aria-label="Explore the Hypnøtica Program" tabindex="0"
           @click="navigateToProgram">
           Explore the Hypnøtica Program
         </button>
