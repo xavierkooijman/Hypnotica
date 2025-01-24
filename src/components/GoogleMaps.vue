@@ -33,68 +33,68 @@ export default {
 
             const google = await loader.load();
             const map = new google.maps.Map(this.$refs.mapDiv, {
-    center: this.center,
-    zoom: this.zoom,
-    styles: [
-        {
-            elementType: "geometry",
-            stylers: [{ color: "#242f3e" }]
-        },
-        {
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#746855" }]
-        },
-        {
-            elementType: "labels.text.stroke",
-            stylers: [{ color: "#242f3e" }]
-        },
-        {
-            featureType: "administrative.locality",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#d59563" }]
-        },
-        {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#17263c" }]
-        },
-        {
-            featureType: "water",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#515c6d" }]
-        },
-        {
-            featureType: "road",
-            elementType: "geometry",
-            stylers: [{ color: "#38414e" }]
-        },
-        {
-            featureType: "road.highway",
-            elementType: "geometry",
-            stylers: [{ color: "#746855" }]
-        },
-        {
-            featureType: "road.arterial",
-            elementType: "geometry",
-            stylers: [{ color: "#373737" }]
-        },
-        {
-            featureType: "road.local",
-            elementType: "geometry",
-            stylers: [{ color: "#2b3038" }]
-        },
-        {
-            featureType: "poi",
-            elementType: "geometry",
-            stylers: [{ color: "#283442" }]
-        },
-        {
-            featureType: "transit",
-            elementType: "geometry",
-            stylers: [{ color: "#2f3948" }]
-        }
-    ]
-});
+                center: this.center,
+                zoom: this.zoom,
+                styles: [
+                    {
+                        elementType: "geometry",
+                        stylers: [{ color: "#242f3e" }]
+                    },
+                    {
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#746855" }]
+                    },
+                    {
+                        elementType: "labels.text.stroke",
+                        stylers: [{ color: "#242f3e" }]
+                    },
+                    {
+                        featureType: "administrative.locality",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }]
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "geometry",
+                        stylers: [{ color: "#17263c" }]
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#515c6d" }]
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "geometry",
+                        stylers: [{ color: "#38414e" }]
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "geometry",
+                        stylers: [{ color: "#746855" }]
+                    },
+                    {
+                        featureType: "road.arterial",
+                        elementType: "geometry",
+                        stylers: [{ color: "#373737" }]
+                    },
+                    {
+                        featureType: "road.local",
+                        elementType: "geometry",
+                        stylers: [{ color: "#2b3038" }]
+                    },
+                    {
+                        featureType: "poi",
+                        elementType: "geometry",
+                        stylers: [{ color: "#283442" }]
+                    },
+                    {
+                        featureType: "transit",
+                        elementType: "geometry",
+                        stylers: [{ color: "#2f3948" }]
+                    }
+                ]
+            });
 
             const infoWindow = new google.maps.InfoWindow({
                 maxWidth: 300

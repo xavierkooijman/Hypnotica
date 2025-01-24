@@ -1,7 +1,7 @@
 <template>
   <main class="about-us-page" role="main">
     <section class="hero-section" aria-labelledby="festival-description">
-      <h1 class="about-us-title">About Us</h1>
+      <h1 class="outline-title">ABOUT US</h1>
       <p id="festival-description" class="festival-description">
         Hypnøtica is envisioned as an immersive and transformative festival that
         serves as a beacon for the electronic music world. It combines
@@ -140,28 +140,34 @@ export default {
     }
 
     const initializeCarousel = () => {
-      try {
-        const tracks = document.querySelectorAll('.carousel-track')
-        if (!tracks.length) {
-          console.warn('No carousel tracks found')
-          return
+  try {
+    const tracks = document.querySelectorAll('.carousel-track')
+    if (!tracks.length) return
+
+    tracks.forEach((track, index) => {
+      const speed = index === 0 ? 1 : -1
+      let position = 0
+
+      function animate() {
+        position += speed
+        const totalWidth = track.scrollWidth / 3 // Because we have 3 sets
+
+        if (Math.abs(position) >= totalWidth) {
+          position = 0
         }
 
-        tracks.forEach(track => {
-          track.addEventListener('animationend', () => {
-            requestAnimationFrame(() => {
-              track.style.animation = 'none'
-              track.offsetHeight // Trigger reflow
-              track.style.animation = null
-            })
-          })
-        })
-
-        isCarouselMounted.value = true
-      } catch (error) {
-        console.error('Error initializing carousel:', error)
+        track.style.transform = `translateX(${position}px)`
+        requestAnimationFrame(animate)
       }
-    }
+
+      requestAnimationFrame(animate)
+    })
+
+    isCarouselMounted.value = true
+  } catch (error) {
+    console.error('Error initializing carousel:', error)
+  }
+}
 
     onMounted(() => {
       // Wait for next tick to ensure DOM is ready
@@ -185,21 +191,6 @@ export default {
   flex-direction: column;
   overflow: hidden;
   background: var(--mainBlack);
-}
-
-/* Hero Section */
-.about-us-title {
-  font-size: clamp(6rem, 10vw, 10rem);
-  /* Minimum 32px, responsive 8% viewport width, maximum 96px */
-  line-height: 1.2;
-  font-family: Aspekta800, sans-serif;
-  color: transparent;
-  -webkit-text-stroke: 3px var(--gray200);
-  margin: 48px auto;
-  text-align: center;
-  width: max-content;
-  /* Changed to fix letter cutoff */
-  white-space: nowrap;
 }
 
 .festival-description {
@@ -230,7 +221,7 @@ export default {
 .stat-divider {
   width: 2px;
   height: 64px;
-  background-color: var(--gray400);
+  background: var(--gray500);
 }
 
 .stat-number {
@@ -243,10 +234,27 @@ export default {
   color: var(--gray100);
 }
 
-.stat-divider {
-  width: 2px;
-  height: 64px;
-  background: var(--gray500);
+/* Carousel Section */
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  transform: translateX(0);
+  transition: transform 0s linear;
+}
+
+.carousel-image {
+  height: 425px;
+  width: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
 }
 
 .banner-section,
@@ -261,36 +269,16 @@ export default {
   margin-top: 32px;
 }
 
-.carousel-container {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 16px;
-  width: max-content;
-  will-change: transform;
-}
-
 .banner-section .carousel-track {
-  animation: scroll 40s linear infinite;
+  animation: scroll 50s linear infinite;
   transform: translateX(0);
 }
 
 .banner-section-reverse .carousel-track {
-  animation: scroll-reverse 40s linear infinite;
+  animation: scroll-reverse 50s linear infinite;
   transform: translateX(calc(-50% + 0px));
 }
 
-.carousel-image {
-  height: 425px;
-  width: 300px;
-  object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-}
 
 @keyframes scroll {
   0% {
@@ -339,7 +327,7 @@ export default {
   letter-spacing: 1.6px;
 }
 
-.explore-button {
+.btn-secondary {
   align-self: flex-start;
   margin-top: 48px;
   padding: 12px 24px;
@@ -352,8 +340,25 @@ export default {
   transition: all 0.3s ease;
 }
 
-.explore-button:hover {
+.btn-secondary:hover {
   background: var(--gray400);
   border-color: var(--gray400);
+}
+
+@media (max-width: 768px) {
+  .carousel-image {
+    height: 300px;
+    width: 200px;
+  }
+
+  .content-section {
+    flex-direction: column;
+    gap: 48px;
+    margin: 96px 24px 48px;
+  }
+
+  .content-image {
+    width: 100%;
+  }
 }
 </style>
