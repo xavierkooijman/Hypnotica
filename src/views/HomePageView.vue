@@ -3,9 +3,10 @@
     <section class="hero-section">
       <h1 class="outline-title">HYPNØTICA</h1>
       <div class="hero-container">
-        <img loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/417dcbc6485b293240db64d1c418ebfb6e2f34a563f88635b855ec6e41ebcb87?placeholderIfAbsent=true&apiKey=6e755de73b8d4c758b3444a5cc47bce6"
-          class="hero-background" alt="Hypnotica festival background visual" />
+        <video class="hero-background" autoplay loop muted playsinline>
+          <source src="@/assets/videos/LandingPageVideo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
         <div class="date-wrapper">
           <p class="festival-date">
             24th-26th<br />January 2025<br />Berlin
@@ -67,7 +68,7 @@
     </section>
     <h2 class="section-title">Tickets</h2>
     <section class="tickets-section">
-      
+
     </section>
 
     <section class="banner-section" aria-label="Festival Banner">
@@ -240,10 +241,10 @@ const stopDrag = () => {
 .hero-section {
   position: relative;
   width: 100%;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0;
 }
 
 .outline-title {
@@ -259,22 +260,20 @@ const stopDrag = () => {
 
 .hero-container {
   width: 100%;
-  height: 85vh;
+  height: calc(100vh - 200px);
   position: relative;
-  overflow: hidden;
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .hero-background {
-  display: block;
   width: 65%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   border-radius: 12px;
+  display: block;
+  margin: 0 auto;
 }
 
 .date-wrapper {
@@ -308,7 +307,8 @@ const stopDrag = () => {
 }
 
 .about-section {
-  padding: 80px 120px;  /* Increased from previous padding */
+  padding: 80px 120px;
+  /* Increased from previous padding */
   display: flex;
   flex-direction: column;
   align-items: center;
