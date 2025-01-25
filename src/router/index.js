@@ -152,7 +152,7 @@ const routes = [
     path: '/account/volunteer', 
     name: 'AccountVolunteerDashboardPage', 
     component: AccountVolunteerDashboardPage,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, isVolunteer: true }
   },
   { 
     path: '/account/notifications', 
@@ -252,6 +252,12 @@ router.beforeEach((to, from) => {
     }
   }
   else if (to.meta.requiresAuth && !useUsersStore().authenticatedUser) {
+    return {
+      path: "/login",
+      query: { redirect: to.fullPath },
+    };
+  }
+  else if (to.meta.requiresVolunteer && !useUsersStore().authenticatedUser.isVolunteer) {
     return {
       path: "/login",
       query: { redirect: to.fullPath },

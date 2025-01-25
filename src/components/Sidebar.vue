@@ -35,13 +35,15 @@
                         </RouterLink>
                     </div>
                     <div class="nav-item">
-                        <div class="separator">
-                            <div class="separator-line"></div>
-                        </div>
+                        <div class="nav-item" v-if="isVolunteer">
+                            <div class="separator">
+                                <div class="separator-line"></div>
+                            </div>
                         <RouterLink to="/account/volunteer" class="nav-link"
                             :class="{ active: $route.path === '/account/volunteer', 'custom-style-volunteer': $route.path === '/account/volunteer' }">
                             Volunteer dashboard
                         </RouterLink>
+                    </div>
                     </div>
                     <div class="nav-item">
                         <div class="separator">
@@ -89,6 +91,10 @@ export default {
         userLogged() {
             const store = useUsersStore();
             return store.authenticatedUser.name;
+        },
+        isVolunteer() {
+            const store = useUsersStore();
+            return store.authenticatedUser.isVolunteer === true;
         }
     }
 }
