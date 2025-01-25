@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { useNotificationsStore } from './notifications';
-import { useTicketsStore } from './tickets';
 
 export const useUsersStore = defineStore('users', {
 
@@ -82,13 +81,12 @@ export const useUsersStore = defineStore('users', {
 
 
       const notificationsStore = useNotificationsStore();  // Acessar a store de notificações
-      const ticketsStore = useTicketsStore();  // Acessar a store
       const newUser = {
         name: name,
         email: email,
         password: password,
         profImg: '/src/assets/images/1.jpg',
-        tickets: [ticketsStore.tickets],
+        tickets: [],
         favoriteArtists: [],
         favoriteVenues: [],
         calendar: [],
