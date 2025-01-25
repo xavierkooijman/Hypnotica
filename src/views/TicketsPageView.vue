@@ -1,6 +1,8 @@
 <template>
-    <h1 class="outline-title">TICKETS</h1>
-    <Tickets />
+    <div>
+        <h1 class="outline-title">TICKETS</h1>
+        <Tickets />
+    </div>
 </template>
 
 <script>

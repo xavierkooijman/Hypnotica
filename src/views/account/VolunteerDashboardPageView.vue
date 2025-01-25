@@ -30,7 +30,7 @@
                                 <div class="coins-info">
                                     <div class="coins-header">
                                         <h3 class="coins-title">Total coins</h3>
-                                        <p class="coins-amount">1020 coins</p>
+                                        <p class="coins-amount">{{ userCoins }} coins</p>
                                     </div>
                                 </div>
                                 <div class="reward-section">
@@ -194,6 +194,7 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue';
 import { useShiftsStore } from '@/stores/shifts';
+import { useUsersStore } from '@/stores/user';
 import { computed, ref, onMounted } from 'vue';
 
 export default {
@@ -201,13 +202,17 @@ export default {
     components: { Sidebar },
     setup() {
         const shiftsStore = useShiftsStore();
+        const usersStore = useUsersStore();
 
         // Computed para acessar os shifts da store
         const shifts = computed(() => shiftsStore.shifts);
+        
+        // Computed para acessar as coins do usuário autenticado
+        const userCoins = computed(() => usersStore.authenticatedUser?.coins || 0);
 
         // Definir uma variável para armazenar o shift selecionado
         const selectedShift = ref(null);
-
+        
         // Função para selecionar o shift
         const selectShift = (shift) => {
             selectedShift.value = shift;
@@ -216,14 +221,15 @@ export default {
         // Definir um shift padrão assim que os shifts estiverem carregados
         onMounted(() => {
             if (shifts.value.length > 0) {
-                selectedShift.value = shifts.value[0]; // Definindo o primeiro shift como o padrão
+                selectedShift.value = shifts.value[0];
             }
         });
 
         return {
             shifts,
             selectShift,
-            selectedShift
+            selectedShift,
+            userCoins
         };
     }
 };

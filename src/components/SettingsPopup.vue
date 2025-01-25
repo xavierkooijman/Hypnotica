@@ -30,7 +30,7 @@
                     </div>
                     <router-link to="/account/calendar" class="option-text">Calendar</router-link>
                 </div>
-                <div class="settings-option" tabindex="0">
+                <div class="settings-option" tabindex="0" v-if="isVolunteer">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
@@ -87,6 +87,10 @@ export default {
         logout() {
             const store = useUsersStore();
             return store.logout;
+        },
+        isVolunteer() {
+            const store = useUsersStore();
+            return store.authenticatedUser.isVolunteer === true;
         }
     },
     methods: {

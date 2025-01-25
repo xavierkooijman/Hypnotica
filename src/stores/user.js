@@ -7,7 +7,7 @@ export const useUsersStore = defineStore('users', {
     authenticatedUser: null,
     users: [
       { name: "admin", email: "admin@gmail.com", password: "123", isAdmin: true},
-      { name: "xavi", email: "example@gmail.com", password: "321", profImg: '/src/assets/images/1.jpg', tickets: [], favoriteArtists: [], favoriteVenues: [], calendar: [], notificationPref: [] },
+      { name: "xavi", email: "example@gmail.com", password: "321", profImg: '/src/assets/images/1.jpg', tickets: [], favoriteArtists: [], favoriteVenues: [], calendar: [], isVolunteer: true, coins: 5000, notificationPref: [] },
     ],
   }),
 
@@ -90,6 +90,8 @@ export const useUsersStore = defineStore('users', {
         favoriteArtists: [],
         favoriteVenues: [],
         calendar: [],
+        isVolunteer: false,
+        coins: 0,
         notificationPref: [notificationsStore.preferences]
       };
 
