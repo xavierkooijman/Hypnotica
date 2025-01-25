@@ -52,22 +52,25 @@
       <div class="artist-slider" ref="artistGrid" @mousedown="startDrag" @mousemove="drag" @mouseup="stopDrag"
         @mouseleave="stopDrag">
         <div class="artist-track">
+          <!-- Pattern of 4 artists: 2 small, 2 big -->
           <template v-for="(artist, index) in artistStore.artists" :key="artist.id">
-            <!-- Pattern starts -->
-            <div class="small-circles-group" v-if="index % 2 === 0">
+            <!-- First two artists as small circles -->
+            <div class="small-circles-group" v-if="index % 4 === 0">
               <ArtistSmallCircle :artist="artist" />
-              <ArtistSmallCircle v-if="artistStore.artists[index + 1]" :artist="artistStore.artists[index + 1]" />
+              <ArtistSmallCircle v-if="index + 1 < artistStore.artists.length"
+                :artist="artistStore.artists[index + 1]" />
             </div>
+            <!-- Next two artists as big circles -->
             <div class="large-circles-group" v-if="index % 4 === 2">
               <ArtistBigCircle :artist="artist" />
-              <ArtistBigCircle v-if="artistStore.artists[index + 1]" :artist="artistStore.artists[index + 1]" />
+              <ArtistBigCircle v-if="index + 1 < artistStore.artists.length" :artist="artistStore.artists[index + 1]" />
             </div>
           </template>
         </div>
       </div>
     </section>
     <h2 class="section-title">Tickets</h2>
-    <Tickets/>
+    <Tickets />
     <section class="banner-section" aria-label="Festival Banner">
       <h2 class="section-title">Media Gallery</h2>
       <div class="carousel-container">

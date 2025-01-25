@@ -28,8 +28,17 @@ const navigateToArtist = () => {
 
 <style scoped>
 .artist-circle {
+    position: relative;
     width: 200px;
-    cursor: pointer;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity: 0.7;
+    transition: all 0.5s ease;
+}
+
+.artist-circle:hover {
+    opacity: 1;
 }
 
 .image-container {
