@@ -100,14 +100,18 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-
 export default {
-  setup() {
-    const carouselTracks = ref([])
-    const isCarouselMounted = ref(false)
+  name: 'AboutUsPageView',
 
-    const startCountdown = () => {
+  data() {
+    return {
+      carouselTracks: [],
+      isCarouselMounted: false
+    }
+  },
+
+  methods: {
+    startCountdown() {
       const counters = document.querySelectorAll('.stat-number')
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -127,58 +131,52 @@ export default {
                 requestAnimationFrame(updateCounter)
               }
             }
-
             requestAnimationFrame(updateCounter)
-            observer.unobserve(counter)
           }
         })
-      }, {
-        threshold: 0.5 // Trigger when 50% of element is visible
       })
 
       counters.forEach(counter => observer.observe(counter))
-    }
+    },
 
-    const initializeCarousel = () => {
-  try {
-    const tracks = document.querySelectorAll('.carousel-track')
-    if (!tracks.length) return
+    initializeCarousel() {
+      try {
+        const tracks = document.querySelectorAll('.carousel-track')
+        if (!tracks.length) return
 
-    tracks.forEach((track, index) => {
-      const speed = index === 0 ? 1 : -1
-      let position = 0
+        tracks.forEach((track, index) => {
+          const speed = index === 0 ? 1 : -1
+          let position = 0
 
-      function animate() {
-        position += speed
-        const totalWidth = track.scrollWidth / 3 // Because we have 3 sets
+          function animate() {
+            position += speed
+            const totalWidth = track.scrollWidth / 3
 
-        if (Math.abs(position) >= totalWidth) {
-          position = 0
-        }
+            if (Math.abs(position) >= totalWidth) {
+              position = 0
+            }
 
-        track.style.transform = `translateX(${position}px)`
-        requestAnimationFrame(animate)
+            track.style.transform = `translateX(${position}px)`
+            requestAnimationFrame(animate)
+          }
+
+          requestAnimationFrame(animate)
+        })
+
+        this.isCarouselMounted = true
+      } catch (error) {
+        console.error('Error initializing carousel:', error)
       }
+    },
 
-      requestAnimationFrame(animate)
-    })
-
-    isCarouselMounted.value = true
-  } catch (error) {
-    console.error('Error initializing carousel:', error)
-  }
-}
-
-    onMounted(() => {
-      // Wait for next tick to ensure DOM is ready
-      startCountdown()
-      setTimeout(initializeCarousel, 0)
-    })
-
-    return {
-      isCarouselMounted,
-      carouselTracks
+    navigateToProgram() {
+      this.$router.push('/program/events')
     }
+  },
+
+  mounted() {
+    this.startCountdown()
+    setTimeout(this.initializeCarousel, 0)
   }
 }
 </script>
