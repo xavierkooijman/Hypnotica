@@ -38,15 +38,22 @@
                 <button type="submit" class="btn-primary submit-button" aria-label="Submit application">
                     Submit application
                 </button>
+                <PopUpLogin :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false" />
             </div>
         </div>
     </form>
 </template>
 
 <script>
-import {volunteerStore} from '@/stores/volunteerForm';
+import { volunteerStore } from '@/stores/volunteerForm';
+import { useUsersStore } from '@/stores/user';
+import PopUpLogin from '@/components/PopUpLogin.vue';
+
 export default {
     name: 'VolunteerForm',
+    components: {
+        PopUpLogin
+    },
     data() {
         return {
             formData: {
@@ -54,20 +61,29 @@ export default {
                 email: '',
                 workFunction: '',
                 coverLetter: ''
-            }
+            },
+            showLoginPopup: false
         }
     },
     methods: {
         handleSubmit() {
-            const store = volunteerStore()
+            const userStore = useUsersStore();
 
-            // Add new contact message to store
+            // Check if user is logged in
+            if (!userStore.authenticatedUser) {
+                this.showLoginPopup = true;
+                return;
+            }
+
+            const store = volunteerStore();
+
+            // Add new volunteer to store
             store.volunteers.push({
                 name: this.formData.name,
                 email: this.formData.email,
                 workFunction: this.formData.workFunction,
                 coverLetter: this.formData.coverLetter
-            })
+            });
 
             // Reset form
             this.formData = {
@@ -75,7 +91,7 @@ export default {
                 email: '',
                 workFunction: '',
                 coverLetter: ''
-            }
+            };
 
             // Show success message
             alert('Volunteer request sent successfully!')
