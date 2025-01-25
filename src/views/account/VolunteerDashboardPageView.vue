@@ -39,8 +39,7 @@
                                             <h3 class="reward-title">Reward</h3>
                                             <p class="reward-desc">Merch promo code</p>
                                         </div>
-                                        <button class="claim-btn" tabindex="0" @click="togglePromoCodesPopup">Claim with
-                                            coins</button>
+                                        <button class="claim-btn" tabindex="0">Claim with coins</button>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +189,6 @@
             </div>
         </div>
     </div>
-    <PromoCodesPopUp v-if="showPromoCodesPopup" @close="togglePromoCodesPopup" />
 </template>
 
 <script>
@@ -198,34 +196,23 @@ import Sidebar from '@/components/Sidebar.vue';
 import { useShiftsStore } from '@/stores/shifts';
 import { useUsersStore } from '@/stores/user';
 import { computed, ref, onMounted } from 'vue';
-import PromoCodesPopUp from '@/components/PromoCodesPopUp.vue';
 
 export default {
     name: 'VolunteerDashboardPageView',
-    components: { Sidebar, PromoCodesPopUp },
-    data() {
-        return {
-            showPromoCodesPopup: false
-        }
-    },
-    methods: {
-        togglePromoCodesPopup() {
-            this.showPromoCodesPopup = !this.showPromoCodesPopup;
-        }
-    },
+    components: { Sidebar },
     setup() {
         const shiftsStore = useShiftsStore();
         const usersStore = useUsersStore();
 
         // Computed para acessar os shifts da store
         const shifts = computed(() => shiftsStore.shifts);
-
+        
         // Computed para acessar as coins do usuário autenticado
         const userCoins = computed(() => usersStore.authenticatedUser?.coins || 0);
 
         // Definir uma variável para armazenar o shift selecionado
         const selectedShift = ref(null);
-
+        
         // Função para selecionar o shift
         const selectShift = (shift) => {
             selectedShift.value = shift;
