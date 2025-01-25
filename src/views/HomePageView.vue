@@ -68,10 +68,6 @@
     </section>
     <h2 class="section-title">Tickets</h2>
     <Tickets/>
-    <section class="tickets-section">
-
-    </section>
-
     <section class="banner-section" aria-label="Festival Banner">
       <h2 class="section-title">Media Gallery</h2>
       <div class="carousel-container">

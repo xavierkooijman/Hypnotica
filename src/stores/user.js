@@ -7,7 +7,7 @@ export const useUsersStore = defineStore('users', {
     authenticatedUser: null,
     users: [
       { name: "admin", email: "admin@gmail.com", password: "123", isAdmin: true},
-      { name: "xavi", email: "example@gmail.com", password: "321", profImg: '/src/assets/images/1.jpg', tickets: [], favoriteArtists: [], favoriteVenues: [], calendar: [], isVolunteer: true, coins: 5000, notificationPref: [] },
+      { name: "xavi", email: "example@gmail.com", password: "321", profImg: '/src/assets/images/1.jpg', tickets: [], favoriteArtists: [], favoriteVenues: [], calendar: [], isVolunteer: true, coins: 5000, promoCodesRedeemed: [], notificationPref: [] },
     ],
   }),
 
