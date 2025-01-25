@@ -151,7 +151,6 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 100px;
 }
 
 /* Hero Section */

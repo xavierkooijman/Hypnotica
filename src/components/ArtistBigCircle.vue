@@ -1,80 +1,93 @@
 <template>
-    <article class="artist-circle" @click="navigateToArtist">
-      <div class="image-container">
-        <img :src="artist.mainImg" :alt="artist.name" class="artist-image" />
-        <button class="action-button" aria-label="View artist details">
-          <MoveUpRight class="action-icon" />
-        </button>
-      </div>
-    </article>
-  </template>
-  
-  <script setup>
-  import { MoveUpRight } from 'lucide-vue-next'
-  import { useRouter } from 'vue-router'
-  
-  const router = useRouter()
-  const props = defineProps({
-    artist: {
-      type: Object,
-      required: true
-    }
-  })
-  
-  const navigateToArtist = () => {
-    router.push({ path: `/artist/${props.artist.id}` })
-  }
-  </script>
-  
-  <style scoped>
-    .artist-circle {
-    width: 400px;  /* Increased from 300px */
-    cursor: pointer;
-    }
+  <article class="artist-circle" @click="navigateToArtist">
+    <div class="image-container">
+      <img :src="artist.mainImg" :alt="artist.name" class="artist-image" />
+      <button class="action-button" aria-label="View artist details">
+        <MoveUpRight class="action-icon" />
+      </button>
+    </div>
+  </article>
+</template>
 
-    .image-container {
-    position: relative;
-    width: 400px;  /* Increased from 300px */
-    height: 400px;  /* Increased from 300px */
-    border-radius: 50%;
-    overflow: hidden;
-    }
-  
-  .artist-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
+<script setup>
+import { MoveUpRight } from 'lucide-vue-next'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const props = defineProps({
+  artist: {
+    type: Object,
+    required: true
   }
-  
-  .action-button {
-    position: absolute;
-    border-radius: 50%;
-    background-color: rgba(250, 250, 250, 0.3);
-    width: 100px;
-    height: 100px;
-    left: 50%;
-    top: 55%;
-    transform: translate(-50%, 0);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.5s ease;
-  }
-  
-  .artist-circle:hover .action-button {
-    opacity: 1;
-    background-color: rgba(250, 250, 250, 0.4);
-    transform: translate(-50%, -75%);
-  }
-  
-  .action-icon {
-    width: 55px;
-    height: 55px;
-    color: var(--gray800);
-  }
-  
-  </style>
+})
+
+const navigateToArtist = () => {
+  router.push({ path: `/artist/${props.artist.id}` })
+}
+</script>
+
+<style scoped>
+.artist-circle {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0.7;
+  /* Initial opacity */
+  transition: all 0.5s ease;
+  /* Smooth transition for all properties */
+}
+
+.artist-circle:hover {
+  opacity: 1;
+  /* Full opacity on hover */
+}
+
+.image-container {
+  position: relative;
+  width: 400px;
+  /* Increased from 300px */
+  height: 400px;
+  /* Increased from 300px */
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.artist-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.action-button {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(250, 250, 250, 0.3);
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, 0);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.artist-circle:hover .action-button {
+  opacity: 1;
+  background-color: rgba(250, 250, 250, 0.4);
+  transform: translate(-50%, -75%);
+}
+
+.action-icon {
+  width: 55px;
+  height: 55px;
+  color: var(--gray800);
+}
+</style>

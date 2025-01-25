@@ -84,7 +84,7 @@ export default {
 .artist-grid {
   display: flex;
   gap: 32px;
-  padding: 16px 32px 0px 64px; /* Adicionado padding à esquerda */
+  padding: 32px 32px 0px 48px; /* Adicionado padding à esquerda */
   width: 100%;
   max-width: 100%;
   overflow: hidden; /* Não permite que o conteúdo ultrapasse os limites da div */
