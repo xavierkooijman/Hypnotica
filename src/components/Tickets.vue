@@ -259,26 +259,30 @@ const purchaseTicket = (type, price) => {
 
 
 
-.benefit-item svg {
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
-    flex-shrink: 0;
-}
-
 .benefit-item {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 12px;
     color: var(--Main-White, #fafafa);
     font-size: 16px;
     font-family: Aspekta300;
 }
 
+.benefit-item svg {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin-top: 3px;
+}
+
+.benefit-item span {
+    flex: 1;
+    line-height: 1.5;
+}
 
 .ti {
     display: none;
-}
+} 
 
 .ticket-button {
     margin-top: 24px;
