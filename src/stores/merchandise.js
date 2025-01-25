@@ -1,3 +1,4 @@
+import { Coins } from 'lucide-vue-next';
 import { defineStore } from 'pinia';
 
 export const useMerchandiseStore = defineStore('merchandise', {
@@ -115,7 +116,27 @@ export const useMerchandiseStore = defineStore('merchandise', {
           "https://artoftechno.com/cdn/shop/products/6F20E950-49C0-4F10-A467-FAB158874B78.jpg?v=1724409196&width=800"
         ]
       },
-    ]
+    ],
+    promoCodes: [
+      {
+        name: 'Small Discount',
+        code: 'TECHNO10',
+        discount: 15,
+        requiredCoins: 500
+      },
+      {
+        name: 'Medium Discount',
+        code: 'TECHNO20',
+        discount: 20,
+        requiredCoins: 1000
+      },
+      {
+        name: 'Large Discount',
+        code: 'TECHNO30',
+        discount: 30,
+        requiredCoins: 1500
+      },
+    ],
   }),
 
   getters: {
@@ -128,11 +149,14 @@ export const useMerchandiseStore = defineStore('merchandise', {
     getStockLevel: (state) => (id) => {
       const item = state.merchandise.find(item => item.id == id);
       return item ? item.stock : 0;
+    },
+    getpromoCodes: (state) => {
+      return state.promoCodes;
     }
   },
 
   actions: {
-    addMerchandise(name,price,description,sizes,stock,images) {
+    addMerchandise(name, price, description, sizes, stock, images) {
       const itemExists = this.merchandise.some(item => item.name == name);
       if (itemExists) {
         throw new Error('Item with that name already exists');
@@ -141,7 +165,7 @@ export const useMerchandiseStore = defineStore('merchandise', {
       let newId;
       do {
         newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.merchandise.some(item=> item.id == newId));
+      } while (this.merchandise.some(item => item.id == newId));
 
       const newItem = {
         id: newId,
