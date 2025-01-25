@@ -23,7 +23,12 @@
                     <div class="product-title">{{ product?.name }}</div>
                     <span v-if="product?.stock <= 0" class="stock-label">Out of stock</span>
                 </div>
-                <div class="product-price">{{ product?.price }} €</div>
+                <div class="product-price">
+                    <span v-if="discountedPrice !== product?.price" class="original-price">
+                        {{ product?.price }} €
+                    </span>
+                    {{ discountedPrice }} €
+                </div>
 
                 <div class="product-description-container">
                     <div class="product-description-title">Description</div>
@@ -42,24 +47,31 @@
                     </div>
                 </div>
 
-                <button class="buy-button" @click="handleBuyNow" :disabled="!selectedSize || product?.stock <= 0">
-                    {{ product?.stock <= 0 ? 'Out of Stock' : 'Add to Cart' }} </button>
-            </div>
-
-            <!-- Related Products Section -->
-            <section class="related-products">
-                <h2 class="section-title">Customers Also Like</h2>
-                <div class="related-grid">
-                    <MerchandiseCard v-for="relatedProduct in relatedProducts" :key="relatedProduct.id"
-                        :product="relatedProduct" />
+                <div class="promo-code-section">
+                    <div class="product-description-title">Available Promo Codes</div>
+                    <div v-if="Object.keys(groupedUserCodes).length > 0" class="available-codes">
+                        <button v-for="(count, code) in groupedUserCodes" :key="code" class="code-button"
+                            :class="{ 'selected': enteredCode === code }" @click="toggleCode(code)">
+                            {{ code }} ({{ count }})
+                        </button>
+                    </div>
+                    <div v-else class="no-codes-message">
+                        No promo codes available
+                    </div>
                 </div>
-            </section>
+                <button class="buy-button" @click="handleBuyNow"
+                    :disabled="!isAuthenticated || !selectedSize || product?.stock <= 0">
+                    {{ !isAuthenticated ? 'Login to Purchase' : product?.stock <= 0 ? 'Out of Stock' : 'Add to Cart' }}
+                        </button>
+
+            </div>
         </div>
     </main>
 </template>
 
 <script>
 import { useMerchandiseStore } from '@/stores/merchandise'
+import { useUsersStore } from '@/stores/user'
 import MerchandiseCard from '@/components/MerchandiseCard.vue'
 
 export default {
@@ -71,16 +83,58 @@ export default {
 
     data() {
         const merchandiseStore = useMerchandiseStore()
+        const usersStore = useUsersStore()
         return {
             product: null,
             loading: true,
             error: null,
             relatedProducts: [],
             merchandiseStore,
+            usersStore,
             currentMainImage: null,
             selectedSize: null,
             availableSizes: [],
-            displayImages: []
+            displayImages: [],
+            enteredCode: '',
+            appliedDiscount: null,
+            validPromoCode: null
+        }
+    },
+
+    computed: {
+        userCodes() {
+            return this.usersStore?.authenticatedUser?.promoCodesRedeemed || []
+        },
+        discountedPrice() {
+            if (!this.product?.price || !this.appliedDiscount) return this.product?.price
+            return (this.product.price * (1 - this.appliedDiscount / 100)).toFixed(2)
+        },
+        groupedUserCodes() {
+            const codes = this.usersStore?.authenticatedUser?.promoCodesRedeemed || []
+            console.log(codes);
+            return codes.reduce((acc, code) => {
+                acc[code] = (acc[code] || 0) + 1
+                return acc
+            }, {})
+        },
+        isAuthenticated() {
+            return !!this.usersStore?.authenticatedUser
+        },
+        groupedUserCodes() {
+            const codes = this.usersStore?.authenticatedUser?.promoCodesRedeemed || []
+            const grouped = codes.reduce((acc, code) => {
+                acc[code] = (acc[code] || 0) + 1
+                return acc
+            }, {})
+
+            // Sort by discount value
+            return Object.fromEntries(
+                Object.entries(grouped).sort((a, b) => {
+                    const discountA = this.merchandiseStore.getpromoCodes.find(p => p.code === a[0])?.discount || 0
+                    const discountB = this.merchandiseStore.getpromoCodes.find(p => p.code === b[0])?.discount || 0
+                    return discountA - discountB
+                })
+            )
         }
     },
 
@@ -109,14 +163,14 @@ export default {
                     available: product.stock > 0
                 }))
 
-                const allProducts = this.merchandiseStore.getAllMerchandise || []
+                const allProducts = this.merchandiseStore.merchandise || []
                 this.relatedProducts = allProducts
-                    .filter(p => p.id !== productId)
+                    .filter(p => p.id !== product.id)
                     .slice(0, 3)
 
             } catch (err) {
-                console.error('Error details:', err)
-                this.error = err.message || 'Failed to load product'
+                this.error = err.message
+                console.error('Error fetching product:', err)
             } finally {
                 this.loading = false
             }
@@ -136,24 +190,72 @@ export default {
             this.selectedSize = size
         },
 
+        validatePromoCode() {
+            const user = this.usersStore.authenticatedUser
+            if (!user?.promoCodesRedeemed?.includes(this.enteredCode)) {
+                alert('Invalid or already used promo code')
+                return
+            }
+
+            const promoCode = this.merchandiseStore.getpromoCodes.find(
+                code => code.code === this.enteredCode
+            )
+
+            if (promoCode) {
+                this.appliedDiscount = promoCode.discount
+                this.validPromoCode = this.enteredCode
+                alert(`${promoCode.discount}% discount applied successfully!`)
+            }
+        },
+
         async handleBuyNow() {
-            if (!this.selectedSize) {
-                alert('Please select a size first')
-                return
-            }
-
-            if (this.product.stock <= 0) {
-                alert('This product is out of stock')
-                return
-            }
-
             try {
+                if (!this.selectedSize) {
+                    alert('Please select a size')
+                    return
+                }
+
                 await this.merchandiseStore.decreaseStock(this.product.id)
+
+                if (this.validPromoCode) {
+                    const user = this.usersStore.authenticatedUser
+                    const userIndex = this.usersStore.users.findIndex(u => u.email === user.email)
+
+                    // Create new array with one code removed
+                    const updatedCodes = [...this.usersStore.users[userIndex].promoCodesRedeemed]
+                    const removeIndex = updatedCodes.indexOf(this.validPromoCode)
+
+                    if (removeIndex !== -1) {
+                        updatedCodes.splice(removeIndex, 1)
+                        this.usersStore.users[userIndex].promoCodesRedeemed = updatedCodes
+                        this.usersStore.$patch()
+                    }
+                }
+
                 alert('Product added to cart successfully!')
                 await this.$router.push({ name: 'MerchandisingPage' })
             } catch (err) {
                 console.error('Purchase error:', err)
                 alert('Failed to process purchase: ' + err.message)
+            }
+        },
+
+        toggleCode(code) {
+            if (this.enteredCode === code) {
+                // Deselect code
+                this.enteredCode = ''
+                this.appliedDiscount = null
+                this.validPromoCode = null
+            } else {
+                // Select and validate new code
+                this.enteredCode = code
+                const promoCode = this.merchandiseStore.getpromoCodes.find(
+                    pc => pc.code === code
+                )
+                if (promoCode) {
+                    this.appliedDiscount = promoCode.discount
+                    this.validPromoCode = code
+                }
             }
         }
     },
@@ -241,13 +343,13 @@ export default {
 
 .product-title {
     color: var(--gray100, #bec7ce);
-    font:  36px Aspekta700, sans-serif;
+    font: 36px Aspekta700, sans-serif;
     letter-spacing: -0.5px;
 }
 
 .stock-label {
     color: #ff4444;
-    font:  16px Aspekta600, sans-serif;
+    font: 16px Aspekta600, sans-serif;
     padding: 4px 12px;
     border: 2px solid #ff4444;
     border-radius: 6px;
@@ -255,9 +357,15 @@ export default {
 
 .product-price {
     color: var(--mainWhite, #fafafa);
-    font:  48px Aspekta700, sans-serif;
+    font: 36px Aspekta600, sans-serif;
     margin-top: 12px;
     letter-spacing: -0.5px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--gray400);
+    margin-right: 12px;
 }
 
 .product-description-container {
@@ -266,12 +374,12 @@ export default {
 
 .product-description-title {
     color: var(--mainWhite, #fafafa);
-    font:  30px Aspekta400, sans-serif;
+    font: 30px Aspekta400, sans-serif;
 }
 
 .product-description {
     color: var(--gray100, #bec7ce);
-    font:  16px Aspekta250, sans-serif;
+    font: 16px Aspekta250, sans-serif;
     letter-spacing: 0.64px;
     margin-top: 8px;
     line-height: 1.6;
@@ -283,7 +391,7 @@ export default {
 
 .product-size-title {
     color: var(--mainWhite, #fafafa);
-    font:  24px Aspekta400, sans-serif;
+    font: 30px Aspekta400, sans-serif;
     margin-bottom: 16px;
 }
 
@@ -300,7 +408,7 @@ export default {
     border: 2px solid var(--gray100, #bec7ce);
     background: transparent;
     color: var(--mainWhite, #fafafa);
-    font:  16px Aspekta500, sans-serif;
+    font: 16px Aspekta500, sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -327,6 +435,46 @@ export default {
     background: var(--gray700, #373c40);
 }
 
+.promo-code-section {
+    margin: 24px 0;
+    width: 100%;
+}
+
+.available-codes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.code-button {
+    padding: 8px 16px;
+    background: var(--gray700);
+    border: 2px solid var(--gray100);
+    border-radius: 8px;
+    color: var(--mainWhite);
+    font-family: Aspekta400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.code-button:hover {
+    background: var(--gray600);
+    transform: translateY(-2px);
+}
+
+.code-button.selected {
+    background: var(--mainWhite);
+    color: var(--mainBlack);
+    border-color: var(--mainWhite);
+}
+
+.no-codes-message {
+    color: var(--gray400);
+    font-family: Aspekta400;
+    margin-top: 12px;
+}
+
 .buy-button {
     width: 80%;
     max-width: 300px;
@@ -334,11 +482,12 @@ export default {
     border-radius: 12px;
     background: var(--mainWhite, #fafafa);
     color: var(--mainBlack, #010306);
-    font:  18px Aspekta700, sans-serif;
+    font: 18px Aspekta700, sans-serif;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 48px 0;  /* Changed from margin: 48px auto */
+    margin: 48px 0;
+    /* Changed from margin: 48px auto */
     display: block;
 }
 
@@ -358,20 +507,24 @@ export default {
 .related-products {
     width: 100%;
     margin-top: 96px;
+    padding: 0 32px;
 }
 
 .section-title {
-    color: var(--mainWhite, #fafafa);
-    font:  48px Aspekta600, sans-serif;
+    color: var(--mainWhite);
+    font: 48px Aspekta600, sans-serif;
     text-align: center;
     margin-bottom: 64px;
 }
 
 .related-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 32px;
     width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    margin-bottom: 48px;
 }
 
 @media (max-width: 991px) {
@@ -397,7 +550,7 @@ export default {
     }
 
     .related-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .product-title {

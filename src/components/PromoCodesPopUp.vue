@@ -62,9 +62,20 @@ export default {
                     user => user.email === authUser.email
                 );
                 if (userIndex !== -1) {
+                    // Initialize promoCodesRedeemed array if it doesn't exist
+                    if (!this.usersStore.users[userIndex].promoCodesRedeemed) {
+                        this.usersStore.users[userIndex].promoCodesRedeemed = [];
+                    }
+
+                    // Add code to redeemed list only once
+                    this.usersStore.users[userIndex].promoCodesRedeemed.push(discount.code);
+
+                    // Update coins
                     this.usersStore.users[userIndex].coins -= discount.requiredCoins;
-                    this.usersStore.authenticatedUser.coins -= discount.requiredCoins;
+
+                    // Persist changes
                     this.usersStore.$patch();
+
                     alert(`Successfully redeemed ${discount.discount}% discount code!`);
                 }
             }
@@ -81,50 +92,53 @@ export default {
     display: flex;
     justify-content: center;
 }
+
 .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .popup-content {
-  background: var(--Main-Black, #010306);
-  color: var(--Main-White, #fafafa);
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background: var(--Main-Black, #010306);
+    color: var(--Main-White, #fafafa);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: var(--Main-White, #fafafa);
-  font-size: 24px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 10px;
-  margin-top: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--Main-White, #fafafa);
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 .close-btn:hover {
-  color: var(--Gray-100, #bec7ce);
+    color: var(--Gray-100, #bec7ce);
 }
+
 .text {
     font-family: Aspekta300;
 }
+
 .popup-header {
     display: flex;
     justify-content: space-between;
@@ -153,6 +167,7 @@ export default {
         0 0 30px rgba(0, 153, 255, 0.2),
         inset 0 0 20px rgba(0, 0, 0, 0.7);
 }
+
 .popup-title {
     color: var(--Main-White);
     font-family: Aspekta300;
@@ -161,10 +176,12 @@ export default {
     display: flex;
     justify-content: center;
 }
+
 .discount-list {
     list-style: none;
     padding: 0;
 }
+
 .discount-list li {
     display: flex;
     justify-content: space-between;
@@ -178,29 +195,36 @@ export default {
     color: var(--Gray-100);
     font-family: Aspekta300;
 }
+
 .discount-list li:hover {
     background: rgba(250, 250, 250, 0.1);
 }
+
 .discount-list li.selected {
     border: 1px solid var(--Blue-300);
     background: rgba(1, 152, 255, 0.1);
 }
+
 .discount-info {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
+
 .discount-name {
     font-size: 18px;
     color: var(--Main-White);
 }
+
 .discount-percentage {
     font-size: 14px;
 }
+
 .coin-amount {
     color: var(--Blue-300);
     font-family: Aspekta400;
 }
+
 .buy-button {
     width: 100%;
     padding: 12px;
@@ -216,20 +240,25 @@ export default {
     background-color: aliceblue;
     color: black;
 }
+
 .buy-button:hover {
     background-color: aqua;
 }
+
 .disabled {
     opacity: 0.5;
     text-decoration: line-through;
     cursor: not-allowed;
 }
+
 .disabled:hover {
     background: none;
 }
+
 .selected {
     background: var(--gray700);
 }
+
 .redeem-code {
     margin-top: 20px;
     padding: 16px;
