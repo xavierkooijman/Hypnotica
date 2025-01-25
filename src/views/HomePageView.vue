@@ -67,6 +67,7 @@
       </div>
     </section>
     <h2 class="section-title">Tickets</h2>
+    <Tickets/>
     <section class="tickets-section">
 
     </section>
@@ -191,6 +192,8 @@ import { useRouter } from 'vue-router'
 import { useArtistsStore } from '@/stores/artists'
 import ArtistSmallCircle from '@/components/ArtistSmallCircle.vue'
 import ArtistBigCircle from '@/components/ArtistBigCircle.vue'
+import Tickets from '@/components/Tickets.vue';
+
 
 const merchandiseStore = useMerchandiseStore()
 const router = useRouter()

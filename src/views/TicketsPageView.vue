@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <h1>Tickets</h1>
-    </div>
+    <h1 class="outline-title">TICKETS</h1>
+    <Tickets />
 </template>
 
 <script>
-    export default {
-        
-    }
+import Tickets from '@/components/Tickets.vue';
+export default {
+    components: {
+        Tickets,
+    },
+}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

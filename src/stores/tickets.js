@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-
+import { useUsersStore } from './user';
 export const useTicketsStore = defineStore('tickets', {
   state: () => ({
     tickets: [
@@ -9,15 +9,6 @@ export const useTicketsStore = defineStore('tickets', {
         date: "FRIDAY 24th JANUARY",
         name: "RACHEL CHELL",
         type: "SINGLE DAY",
-        qrcode: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png',
-        background: 'https://cdn.builder.io/api/v1/image/assets/TEMP/d203ace7cd45f849cefbb792a778b82f5ecdd49de0e9aaf507667a936ff309fb?apiKey=3650e9b5644d4191adc714c61c50f709&'
-      },
-      {
-        id: "24",
-        title: "HYPNØTICA 2025",
-        date: "FRIDAY 24th JANUARY",
-        name: "RACHEL CHELL",
-        type: "ALL DAYS",
         qrcode: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png',
         background: 'https://cdn.builder.io/api/v1/image/assets/TEMP/d203ace7cd45f849cefbb792a778b82f5ecdd49de0e9aaf507667a936ff309fb?apiKey=3650e9b5644d4191adc714c61c50f709&'
       },
@@ -55,6 +46,9 @@ export const useTicketsStore = defineStore('tickets', {
       };
 
       this.tickets.push(newTicket)
+      if (useUsersStore().authenticatedUser) {
+        useUsersStore().authenticatedUser.tickets.push(newTicket);
+      }
     },
 
     // Remove um ticket pelo ID
