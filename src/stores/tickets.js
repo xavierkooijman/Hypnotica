@@ -46,8 +46,12 @@ export const useTicketsStore = defineStore('tickets', {
       };
 
       this.tickets.push(newTicket)
-      if (useUsersStore().authenticatedUser) {
-        useUsersStore().authenticatedUser.tickets.push(newTicket);
+      const usersStore = useUsersStore();
+      if (usersStore.authenticatedUser) {
+        if (!usersStore.authenticatedUser.tickets) {
+          usersStore.authenticatedUser.tickets = [];
+        }
+        usersStore.authenticatedUser.tickets.push(newTicket);
       }
     },
 
