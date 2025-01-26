@@ -3,7 +3,6 @@
         <button class="settings" @click="toggleModal">
             <img :src="imageURL" class="avatar-image-button" alt="Imagem da Web" />
         </button>
-        <!-- Overlay para a tela -->
         <div v-if="isModalVisible" class="overlay" @click="toggleModal"></div>
 
         <div v-if="isModalVisible" class="account-avatar-modal">
@@ -16,49 +15,53 @@
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/dashboard" class="option-text">Profile Settings</router-link>
+                    <router-link @click="toggleModal" to="/account/dashboard" class="option-text">Profile
+                        Settings</router-link>
                 </div>
                 <div class="settings-option" tabindex="0">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/tickets" class="option-text">Tickets</router-link>
+                    <router-link @click="toggleModal" to="/account/tickets" class="option-text">Tickets</router-link>
                 </div>
                 <div class="settings-option" tabindex="0">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/calendar" class="option-text">Calendar</router-link>
+                    <router-link @click="toggleModal" to="/account/calendar" class="option-text">Calendar</router-link>
                 </div>
                 <div class="settings-option" tabindex="0" v-if="isVolunteer">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/volunteer" class="option-text">Volunteer dashboard</router-link>
+                    <router-link @click="toggleModal" to="/account/volunteer" class="option-text">Volunteer
+                        dashboard</router-link>
                 </div>
                 <div class="settings-option" tabindex="0">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/notifications" class="option-text">Notification settings</router-link>
+                    <router-link @click="toggleModal" to="/account/notifications" class="option-text">Notification
+                        settings</router-link>
                 </div>
                 <div class="settings-option" tabindex="0">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/favorites" class="option-text">Favorites</router-link>
+                    <router-link @click="toggleModal" to="/account/favorites"
+                        class="option-text">Favorites</router-link>
                 </div>
                 <div class="settings-option" tabindex="0">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <router-link to="/account/password" class="option-text">Password</router-link>
+                    <router-link @click="toggleModal" to="/account/password" class="option-text">Password</router-link>
                 </div>
                 <div class="settings-option" tabindex="0">
                     <div class="line-container">
                         <div class="line"></div>
                     </div>
-                    <button @click="logout" class="signout-btn">Sign out</button>
+                    <button @click="handleSignOut" class="signout-btn">Sign out</button>
                 </div>
             </div>
         </div>
@@ -96,6 +99,10 @@ export default {
     methods: {
         toggleModal() {
             this.isModalVisible = !this.isModalVisible;
+        },
+        handleSignOut() {
+            this.logout();
+            this.toggleModal();
         }
     }
 };

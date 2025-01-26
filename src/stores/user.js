@@ -36,7 +36,7 @@ export const useUsersStore = defineStore('users', {
       const alreadyInCalendar = this.authenticatedUser.calendar.includes(eventId);
       if (!alreadyInCalendar) {
         this.authenticatedUser.calendar.push(eventId);
-        this.$patch(); // Persistir a alteração
+        this.$patch();
         console.log(`Evento ${eventId} adicionado ao calendário.`);
       }
     },
@@ -50,7 +50,7 @@ export const useUsersStore = defineStore('users', {
       const index = this.authenticatedUser.calendar.indexOf(eventId);
       if (index !== -1) {
         this.authenticatedUser.calendar.splice(index, 1);
-        this.$patch(); // Persistir a alteração
+        this.$patch();
         console.log(`Evento ${eventId} removido do calendário.`);
       }
     },
