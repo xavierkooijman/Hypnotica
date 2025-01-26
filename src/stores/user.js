@@ -75,7 +75,7 @@ export const useUsersStore = defineStore('users', {
       );
 
       if (userExists) {
-        throw new Error('Já existe um utilizador com esse nome ou email');
+        throw new Error('Já existe um utilizador com esse nome ou email!');
       }
 
 
@@ -100,7 +100,7 @@ export const useUsersStore = defineStore('users', {
 
     updateUser(updatedUserData) {
       if (!this.authenticatedUser) {
-        throw new Error('Nenhum utilizador autenticado');
+        throw new Error('Nenhum utilizador autenticado!');
       }
     
       const { username, email, newPassword, newProfImg } = updatedUserData;
@@ -141,7 +141,7 @@ export const useUsersStore = defineStore('users', {
       );
 
       if (!user) {
-        throw new Error('Email ou password incorretos');
+        throw new Error('Email ou password incorretos!');
       }
 
       this.authenticatedUser = user; 
@@ -157,7 +157,7 @@ export const useUsersStore = defineStore('users', {
         this.validateImage(newProfImg);
         this.authenticatedUser.profImg = newProfImg;
       } else {
-        throw new Error('Nenhum utilizador autenticado');
+        throw new Error('Nenhum utilizador autenticado!');
       }
     }
   },

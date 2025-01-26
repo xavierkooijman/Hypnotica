@@ -5,15 +5,21 @@
       <p class="venue-name">{{ venue }}</p>
       <div class="time-wrapper">
         <time class="event-time">{{ eventTime }}</time>
-        <button @click.stop="toggleIcon" class="icon-button" :disabled="!isLoggedIn">
+        <!-- Remover o disabled -->
+        <button @click.stop="toggleIcon" class="icon-button">
           <CalendarPlus v-if="!clicked && isLoggedIn" class="event-icon" />
           <CalendarCheck v-if="clicked && isLoggedIn" class="event-icon" />
-          <!-- Sempre mostra o ícone de adicionar, mas ele não muda se não estiver logado -->
           <CalendarPlus v-if="!isLoggedIn" class="event-icon" />
         </button>
       </div>
     </div>
     <p class="lineup">{{ lineup }}</p>
+
+    <Popup
+      :is-visible="showLoginPopup" 
+      :timeout="5" 
+      @close="showLoginPopup = false"
+    ></Popup>
   </article>
 </template>
 
@@ -21,11 +27,13 @@
 import { useRouter } from 'vue-router';
 import { useUsersStore } from "../stores/user";
 import { CalendarPlus, CalendarCheck } from 'lucide-vue-next';
+import Popup from "./PopUpLogin.vue";
 
 export default {
   components: {
     CalendarPlus,
     CalendarCheck,
+    Popup
   },
   props: {
     eventId: {
@@ -39,7 +47,8 @@ export default {
   },
   data() {
     return {
-      clicked: false, // O estado inicial será determinado na montagem
+      clicked: false,
+      showLoginPopup: false // Add new data property for popup visibility
     };
   },
   setup(props) {
@@ -75,9 +84,8 @@ export default {
     },
     toggleIcon() {
       if (!this.isLoggedIn) {
-        // Alerta só aparece no clique, não no carregamento do componente
-        alert("Você precisa estar logado para adicionar eventos ao calendário!");
-        return; // Não faz nada se o usuário não estiver logado
+        this.showLoginPopup = true;
+        return;
       }
 
       this.clicked = !this.clicked; // Alterna entre adicionar e remover
