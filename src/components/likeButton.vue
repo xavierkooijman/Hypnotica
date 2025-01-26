@@ -26,6 +26,10 @@ export default {
         targetId: {
             type: String,
             required: true
+        },
+        isEnabled: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -54,7 +58,9 @@ export default {
             const currentUser = usersStore.getAuthenticatedUser;
 
             if (!currentUser) {
-                this.isPopupVisible = true;
+                if (this.isEnabled) {
+                    this.isPopupVisible = true;
+                }
                 return;
             }
 

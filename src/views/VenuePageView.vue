@@ -6,6 +6,7 @@
         <div class="name-container">
           <h1 class="venue-name">{{ venue.name }}</h1>
           <LikeButton 
+          :isEnabled="true"
             type="venue"
             :targetId="venue.id"
             @like-changed="onLikeChanged"
