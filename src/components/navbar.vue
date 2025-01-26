@@ -46,7 +46,7 @@ export default {
 
 <template>
   <div class="header">
-    <RouterLink class="logo" :to="{ name: 'HomePage' }">Hypnøtica</RouterLink>
+    <RouterLink class="logo" :to="{ name: 'HomePage' }"><img src="../assets/images/Hypnøtica.svg " /></RouterLink>
     <div class="navbar" :class="{ hauto: open }">
       <div class="navbar-menuLinks" :class="{ gap: open }">
         <div :class="{ w100: open }" class="navbar-menu" @click="navbarAnimation()">
@@ -60,7 +60,7 @@ export default {
           <RouterLink class="link" :to="{ name: 'TicketsPage' }">Tickets</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramEventsPage' }">Program</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramArtistsPage' }">Artists</RouterLink>
-          <RouterLink class="link" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
+          <RouterLink class="link about" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
         </div>
       </div>
       <div class="hidden-container" :class="{ subnav: open }">
@@ -126,6 +126,10 @@ export default {
 
 .Favourites:hover {
   color: var(--gray200);
+}
+
+.about {
+  margin-right: 12px;
 }
 
 .header {
