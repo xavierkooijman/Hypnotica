@@ -226,7 +226,7 @@
   
   .button-container {
     display: flex;
-    gap: 40px;
+    gap: 12px;
   }
   
   .mini-button {
