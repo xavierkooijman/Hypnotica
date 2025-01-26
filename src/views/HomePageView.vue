@@ -209,6 +209,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.artistGrid = this.$refs.artistGrid;
+  },
+
   computed: {
     latestProducts() {
       return this.merchandiseStore.getAllMerchandise.slice(0, 3)
@@ -231,9 +235,22 @@ export default {
     },
 
     startDrag(event) {
-      this.isDragging = true
-      this.startX = event.pageX - this.artistGrid.offsetLeft
-      this.scrollLeft = this.artistGrid.scrollLeft
+      if (!this.artistGrid) return;
+      this.isDragging = true;
+      this.startX = event.pageX - this.artistGrid.offsetLeft;
+      this.scrollLeft = this.artistGrid.scrollLeft;
+    },
+
+    drag(event) {
+      if (!this.isDragging || !this.artistGrid) return;
+      event.preventDefault();
+      const x = event.pageX - this.artistGrid.offsetLeft;
+      const walk = (x - this.startX) * 2;
+      this.artistGrid.scrollLeft = this.scrollLeft - walk;
+    },
+
+    stopDrag() {
+      this.isDragging = false;
     }
   }
 }
