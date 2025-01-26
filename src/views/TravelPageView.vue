@@ -1,4 +1,5 @@
 <template>
+    <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <section class="travel-section">
         <h1 class="outline-title">TRAVEL</h1>
         <div class="travel-content">
@@ -74,6 +75,13 @@ export default {
     padding: 0 48px;
     overflow-x: hidden;
     position: relative;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: 50px;
+  rotate: 180deg;
 }
 
 .outline-title {

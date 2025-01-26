@@ -1,4 +1,6 @@
 <template>
+    <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+    <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <div>
         <h1 class="outline-title">TICKETS</h1>
         <Tickets />
@@ -68,8 +70,20 @@ export default {
     text-align: center;
 }
 
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  bottom: -300px;
+}
+.blur-gradiant-2 {
+    position: absolute;
+  z-index: -1;
+  bottom: -900px;
+  rotate: 180deg;
+}
+
 .faq-container {
-    background: var(--Main-Black, #010306);
     display: flex;
     flex-direction: column;
     overflow: hidden;

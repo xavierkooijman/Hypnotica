@@ -1,4 +1,5 @@
 <template>
+    <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <form class="volunteer-page" @submit.prevent="handleSubmit">
         <PopUpGeneral :is-visible="showPopup" :timeout="3" title="Volunteer request sent successfully!" type="success"
             @close="showPopup = false" />
@@ -118,8 +119,14 @@ export default {
     border: 0;
 }
 
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -500px;
+  right: 0;
+}
+
 .volunteer-page {
-    background: var(--Main-Black, #010306);
     display: flex;
     flex-direction: column;
     overflow: hidden;

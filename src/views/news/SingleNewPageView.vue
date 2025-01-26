@@ -1,4 +1,7 @@
 <template>
+  <img class="blur-gradiant" src="../../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-2" src="../../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-3" src="../../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <article class="article-container" v-if="currentNews">
     <!-- Hero Image -->
     <img loading="lazy" :src="currentNews.mainImage" class="hero-image"
@@ -122,6 +125,27 @@ export default {
   flex-direction: column;
   overflow: hidden;
   align-items: center;
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -300px;
+  right: 0;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -1400px;
+  rotate: 180deg;
+}
+
+.blur-gradiant-3 {
+  position: absolute;
+  z-index: -1;
+  top: 2000px;
+  right: 0;
 }
 
 .hero-image,

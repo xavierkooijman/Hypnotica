@@ -1,4 +1,6 @@
 <template>
+    <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+    <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <div class="faq-container">
         <div class="faq-content">
             <h1 class="outline-title">FAQ</h1>
@@ -58,13 +60,26 @@ export default {
 
 <style scoped>
 .faq-container {
-    background: var(--Main-Black, #010306);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     font-family: Aspekta, sans-serif;
     min-height: 100vh;
     margin-bottom: 146px;        
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -300px;
+  right: 0;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -700px;
+  rotate: 180deg;
 }
 
 .faq-content {

@@ -1,4 +1,5 @@
 <template>
+  <img class="blur-gradiant" src="../../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <main class="program-page">
     <h1 class="outline-title">PROGRAM</h1>
     <Filter @filter-changed="applyFilters" />
@@ -97,6 +98,13 @@ export default {
 <style scoped>
 .program-page {
   margin-bottom: 100px;
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  bottom: -100px;
 }
 
 .event-list {
