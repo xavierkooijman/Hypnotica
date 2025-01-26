@@ -49,33 +49,45 @@
 
 <script>
 import { X } from 'lucide-vue-next';
+import { useProgramStore } from '@/stores/program';
 
 export default {
-    components: {
-        close: X
+  components: {
+    close: X
+  },
+  data() {
+    return {
+      selectedFilters: {
+        days: [],
+        genres: [],
+        venues: []
+      }
+    }
+  },
+  created() {
+    // Initialize with stored filters
+    const programStore = useProgramStore();
+    this.selectedFilters = JSON.parse(JSON.stringify(programStore.filters));
+  },
+  methods: {
+    toggleFilter(category, value) {
+      if (this.selectedFilters[category].includes(value)) {
+        this.selectedFilters[category] = this.selectedFilters[category].filter(item => item !== value);
+      } else {
+        this.selectedFilters[category].push(value);
+      }
+      
+      // Update store
+      const programStore = useProgramStore();
+      programStore.setFilters(this.selectedFilters);
+      
+      // Emit change
+      this.$emit('filter-changed', this.selectedFilters);
     },
-    data() {
-        return {
-            selectedFilters: {
-                days: [],
-                genres: [],
-                venues: []
-            }
-        }
-    },
-    methods: {
-        toggleFilter(category, value) {
-            if (this.selectedFilters[category].includes(value)) {
-                this.selectedFilters[category] = this.selectedFilters[category].filter(item => item !== value)
-            } else {
-                this.selectedFilters[category].push(value)
-            }
-        },
-        isSelected(category, value) {
-            return this.selectedFilters[category].includes(value)
-        }
-    },
-    emits: ['close', 'filter-changed']
+    isSelected(category, value) {
+      return this.selectedFilters[category].includes(value);
+    }
+  }
 }
 </script>
 
