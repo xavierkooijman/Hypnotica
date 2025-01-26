@@ -2,49 +2,44 @@
     <div class="modal-container">
         <header class="modal-header">
             <h1 class="modal-title">Filter program</h1>
-            <close 
-                
-                class="close-icon" 
-                @click="$emit('close')"
-                aria-label="Close filter modal"
-            />
+            <close class="close-icon" @click="$emit('close')" aria-label="Close filter modal" />
         </header>
         <div class="modal-content">
             <div class="filter-container">
                 <section class="filter-section">
                     <h2 class="section-title">Days</h2>
                     <div class="filter-options">
-                        <button class="filter-btn">Friday</button>
-                        <button class="filter-btn">Saturday</button>
-                        <button class="filter-btn">Sunday</button>
+                        <button v-for="day in ['Friday', 'Saturday', 'Sunday']" :key="day" class="filter-btn"
+                            :class="{ 'filter-btn-active': isSelected('days', day) }"
+                            @click="toggleFilter('days', day)">
+                            {{ day }}
+                        </button>
                     </div>
                 </section>
 
                 <section class="filter-section">
                     <h2 class="section-title">Genres</h2>
                     <div class="filter-options">
-                        <button class="filter-btn">Techno</button>
-                        <button class="filter-btn">House</button>
-                        <button class="filter-btn">Dubstep</button>
-                        <button class="filter-btn">Trance</button>
-                        <button class="filter-btn">Acid</button>
-                        <button class="filter-btn">Dub</button>
-                        <button class="filter-btn">Bass</button>
-                        <button class="filter-btn">Psytrance</button>
-                        <button class="filter-btn">Drum & bass</button>
-                        <button class="filter-btn">Disco</button>
-                        <button class="filter-btn">Hardcore</button>
+                        <button
+                            v-for="genre in ['Techno', 'House', 'Dubstep', 'Trance', 'Acid', 'Dub', 'Bass', 'Psytrance', 'Drum & bass', 'Disco', 'Hardcore']"
+                            :key="genre" class="filter-btn"
+                            :class="{ 'filter-btn-active': isSelected('genres', genre) }"
+                            @click="toggleFilter('genres', genre)">
+                            {{ genre }}
+                        </button>
                     </div>
                 </section>
 
                 <section class="filter-section">
                     <h2 class="section-title">Venues</h2>
                     <div class="filter-options">
-                        <button class="filter-btn">Tresor</button>
-                        <button class="filter-btn">Insomnia</button>
-                        <button class="filter-btn">KitKatClub</button>
-                        <button class="filter-btn">Ritter Butzke</button>
-                        <button class="filter-btn">Trauma Bar Und Kino</button>
+                        <button
+                            v-for="venue in ['Tresor', 'Insomnia', 'KitKatClub', 'Ritter Butzke', 'Trauma Bar Und Kino']"
+                            :key="venue" class="filter-btn"
+                            :class="{ 'filter-btn-active': isSelected('venues', venue) }"
+                            @click="toggleFilter('venues', venue)">
+                            {{ venue }}
+                        </button>
                     </div>
                 </section>
             </div>
@@ -54,11 +49,33 @@
 
 <script>
 import { X } from 'lucide-vue-next';
+
 export default {
     components: {
         close: X
     },
-    emits: ['close']
+    data() {
+        return {
+            selectedFilters: {
+                days: [],
+                genres: [],
+                venues: []
+            }
+        }
+    },
+    methods: {
+        toggleFilter(category, value) {
+            if (this.selectedFilters[category].includes(value)) {
+                this.selectedFilters[category] = this.selectedFilters[category].filter(item => item !== value)
+            } else {
+                this.selectedFilters[category].push(value)
+            }
+        },
+        isSelected(category, value) {
+            return this.selectedFilters[category].includes(value)
+        }
+    },
+    emits: ['close', 'filter-changed']
 }
 </script>
 
@@ -80,6 +97,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 
 .modal-header {
     display: flex;
@@ -148,6 +166,21 @@ export default {
     font-family: Aspekta400;
     padding: 6px 24px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn-active {
+    background-color: var(--Main-White, #fafafa);
+    color: var(--Main-Black, #010306);
+    border-color: var(--Main-White, #fafafa);
+}
+
+.filter-btn:hover {
+    background-color: rgba(250, 250, 250, 0.1);
+}
+
+.filter-btn.filter-btn-active:hover {
+    background-color: var(--Main-White, #fafafa);
 }
 
 .empty-btn {

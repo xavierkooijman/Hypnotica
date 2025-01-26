@@ -114,24 +114,24 @@ export const useEventStore = defineStore('event', {
 
       const [startHour, startMinute] = timeStart.split(':').map(Number);
       const [endHour, endMinute] = timeEnd.split(':').map(Number);
-  
+
       let startDate = new Date(0, 0, 0, startHour, startMinute);
       let endDate = new Date(0, 0, 0, endHour, endMinute);
-  
+
       if (endDate <= startDate) {
-          endDate.setDate(endDate.getDate() + 1);
+        endDate.setDate(endDate.getDate() + 1);
       }
-  
+
       const diff = endDate - startDate;
       const hours = Math.floor(diff / 1000 / 60 / 60);
       const minutes = Math.floor((diff / 1000 / 60) % 60);
-  
+
       const timeDifference = hours + (minutes / 60);
 
       const newEvent = {
         id: newId,
         name: name,
-        bio: bio, 
+        bio: bio,
         artistsIds: artistsIds,
         date: date,
         timeStart: timeStart,
@@ -161,5 +161,6 @@ export const useEventStore = defineStore('event', {
       this.events[eventIndex] = { ...this.events[eventIndex], ...updatedEvent };
     },
   },
+  
   persist: true,
 });
