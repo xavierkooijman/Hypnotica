@@ -77,6 +77,16 @@ export default {
                 collection.push(this.targetId);
             }
 
+            // Sync with users array
+            const userIndex = usersStore.users.findIndex(user => user.name === currentUser.name);
+            if (userIndex !== -1) {
+                if (this.type === 'artist') {
+                    usersStore.users[userIndex].favoriteArtists = [...currentUser.favoriteArtists];
+                } else {
+                    usersStore.users[userIndex].favoriteVenues = [...currentUser.favoriteVenues];
+                }
+            }
+
             usersStore.$patch();
             this.$emit('like-changed', !this.isLiked);
         }

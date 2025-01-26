@@ -58,6 +58,15 @@ export default {
             if (this.canAffordDiscount(discount)) {
                 this.redeemedCode = discount.code;
                 const authUser = this.usersStore.authenticatedUser;
+
+                // Update authenticatedUser first
+                if (!authUser.promoCodesRedeemed) {
+                    authUser.promoCodesRedeemed = [];
+                }
+                authUser.promoCodesRedeemed.push(discount.code);
+                authUser.coins -= discount.requiredCoins;
+
+                // Then sync with users array
                 const userIndex = this.usersStore.users.findIndex(
                     user => user.email === authUser.email
                 );
@@ -67,17 +76,15 @@ export default {
                         this.usersStore.users[userIndex].promoCodesRedeemed = [];
                     }
 
-                    // Add code to redeemed list only once
-                    this.usersStore.users[userIndex].promoCodesRedeemed.push(discount.code);
-
-                    // Update coins
-                    this.usersStore.users[userIndex].coins -= discount.requiredCoins;
+                    // Sync both promoCodesRedeemed and coins
+                    this.usersStore.users[userIndex].promoCodesRedeemed = [...authUser.promoCodesRedeemed];
+                    this.usersStore.users[userIndex].coins = authUser.coins;
 
                     // Persist changes
                     this.usersStore.$patch();
-
-                    alert(`Successfully redeemed ${discount.discount}% discount code!`);
                 }
+
+                alert(`Successfully redeemed ${discount.discount}% discount code!`);
             }
         }
     }

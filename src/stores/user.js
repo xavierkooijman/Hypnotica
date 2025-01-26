@@ -32,12 +32,15 @@ export const useUsersStore = defineStore('users', {
       if (!this.authenticatedUser) {
         throw new Error('Nenhum utilizador autenticado');
       }
-
+    
       const alreadyInCalendar = this.authenticatedUser.calendar.includes(eventId);
       if (!alreadyInCalendar) {
         this.authenticatedUser.calendar.push(eventId);
-        this.$patch();
-        console.log(`Evento ${eventId} adicionado ao calendário.`);
+        // Should also update users array
+        const userIndex = this.users.findIndex(user => user.name === this.authenticatedUser.name);
+        if (userIndex !== -1) {
+          this.users[userIndex].calendar.push(eventId);
+        }
       }
     },
 
@@ -123,6 +126,15 @@ export const useUsersStore = defineStore('users', {
       } else if (newProfImg && typeof newProfImg === 'string') {
         this.authenticatedUser.profImg = newProfImg; 
       }
+
+      const userIndex = this.users.findIndex(user => user.name === this.authenticatedUser.name);
+      if (userIndex !== -1) {
+        // Apply the same updates to users[userIndex]
+        if (username) this.users[userIndex].name = username;
+        if (email) this.users[userIndex].email = email;
+        if (newPassword) this.users[userIndex].password = newPassword;
+        if (newProfImg) this.users[userIndex].profImg = newProfImg;
+      }
     },
 
     removeUser(name) {
@@ -158,6 +170,13 @@ export const useUsersStore = defineStore('users', {
         this.authenticatedUser.profImg = newProfImg;
       } else {
         throw new Error('Nenhum utilizador autenticado!');
+      }
+
+      if (this.authenticatedUser) {
+        const userIndex = this.users.findIndex(user => user.name === this.authenticatedUser.name);
+        if (userIndex !== -1) {
+          this.users[userIndex] = { ...this.authenticatedUser };
+        }
       }
     }
   },
