@@ -21,12 +21,13 @@
 import { useArtistsStore } from "@/stores/artists";
 import { useUsersStore } from "@/stores/user";
 import LikeButton from '@/components/likeButton.vue';
-
-import Filter from '@/components/Minibar.vue';
 import PopUpLogin from '@/components/PopUpLogin.vue';
 
-
 export default {
+	components: {
+		LikeButton,
+		PopUpLogin
+	},
 	data() {
 		return {
 			artistStore: useArtistsStore(),
@@ -34,43 +35,27 @@ export default {
 			showLoginPopup: false
 		}
 	},
-	components: {
-		LikeButton,
-		Filter,
-		PopUpLogin
-	},
 	methods: {
 		handleArtistClick(artistId) {
 			this.$router.push({ path: `/artist/${artistId}` });
 		},
-
 		handleLikeClick() {
-			console.log('Like button clicked');
 			if (!this.userStore.authenticatedUser) {
 				this.showLoginPopup = true;
+			}
+		},
+		onLikeChanged(newState) {
+			const currentUser = this.userStore.authenticatedUser;
+			if (currentUser) {
+				this.userStore.updateUser({
+					...currentUser,
+					favoriteArtists: [...currentUser.favoriteArtists],
+				});
 			}
 		}
 	}
 }
 </script>
-
-<template>
-	<div>
-		<h1 class="outline-title">PROGRAM</h1>
-		<Filter/>
-		<div class="artists-container px-container">
-			<div v-for="artist in artistStore.artists" class="artist-card">
-				<p class="artist-name" @click="handleArtistClick(artist.id)">{{ artist.name }}</p>
-				<img :src="artist.mainImg" alt="artist image" class="image artist-image1" />
-				<img :src="artist.mainImg" alt="artist image" class="image artist-image2" />
-				<img :src="artist.mainImg" alt="artist image" class="image artist-image3" />
-				<div class="like-button-container">
-					<LikeButton type="artist" :targetId="artist.id" @like-changed="onLikeChanged" />
-				</div>
-			</div>
-		</div>
-	</div>
-</template>
 
 <style scoped>
 .artists-container {
