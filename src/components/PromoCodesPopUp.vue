@@ -1,5 +1,8 @@
 <template>
     <div class="popup-overlay" @click="$emit('close')">
+        <PopUpGeneral :is-visible="showPopup" :timeout="3"
+            :title="`Successfully redeemed ${selectedDiscount?.discount}% discount code!`" type="success"
+            @close="showPopup = false" />
         <div class="popup-content" @click.stop>
             <button class="close-btn" @click="$emit('close')" aria-label="Close popup">×</button>
             <h2 class="popup-title">Redeem Promo Code</h2>
@@ -29,13 +32,19 @@
 <script>
 import { useUsersStore } from '@/stores/user';
 import { useMerchandiseStore } from '@/stores/merchandise';
+import PopUpGeneral from '@/components/PopUpGeneral.vue'
+
 export default {
+    components: {
+        PopUpGeneral
+    },
     data() {
         return {
             selectedDiscount: null,
             redeemedCode: null,
             usersStore: useUsersStore(),
-            merchandiseStore: useMerchandiseStore()
+            merchandiseStore: useMerchandiseStore(),
+            showPopup: false
         };
     },
     computed: {
@@ -84,7 +93,7 @@ export default {
                     this.usersStore.$patch();
                 }
 
-                alert(`Successfully redeemed ${discount.discount}% discount code!`);
+                this.showPopup = true;
             }
         }
     }
