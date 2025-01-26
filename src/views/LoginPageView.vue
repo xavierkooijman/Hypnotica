@@ -1,4 +1,6 @@
 <template>
+    <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+    <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <form class="login-container" @submit.prevent="handleSubmit">
         <div class="login-wrapper">
             <h1 class="login-title">Login</h1>
@@ -72,7 +74,19 @@ export default {
 </script>
 
 <style scoped>
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -200px;
+  right: 0;
+}
 
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -500px;
+  rotate: 180deg;
+}
 
 .visually-hidden {
     position: absolute;
@@ -86,7 +100,6 @@ export default {
 }
 
 .login-container {
-    background: var(--Main-Black, #010306);
     display: flex;
     padding: 0 0 142px;
     flex-direction: column;

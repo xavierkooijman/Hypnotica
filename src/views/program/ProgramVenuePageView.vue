@@ -1,4 +1,5 @@
 <template>
+  <img class="blur-gradiant" src="../../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <div>
     <PopUpLogin 
       :is-visible="showLoginPopup"
@@ -16,6 +17,7 @@
         <div class="like-button-container">
           <LikeButton type="venue" :isEnabled="false" :targetId="venue.id" @like-changed="onLikeChanged" @click="handleLikeClick" class="like-button" />
         </div>
+        
       </div>
     </div>
   </div>
@@ -71,6 +73,13 @@ export default {
 .artists-container {
   display: flex;
   flex-direction: column;
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: 100px;
+  rotate: 180deg;
 }
 
 .artist-name {

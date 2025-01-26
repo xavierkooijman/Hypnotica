@@ -1,4 +1,5 @@
 <template>
+  <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <main class="about-us-page" role="main">
     <section class="hero-section" aria-labelledby="festival-description">
       <h1 class="outline-title">ABOUT US</h1>
@@ -188,8 +189,15 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--mainBlack);
 }
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -1700px;
+  right: 0;
+}
+
 
 .festival-description {
   color: var(--gray100);

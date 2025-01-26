@@ -1,4 +1,6 @@
 <template>
+  <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <main class="artist-profile">
     <section class="hero-section" aria-label="Artist Hero Section">
       <img loading="lazy" :src="artistInfo.mainImg" class="hero-background" alt="Artist performing live" />
@@ -159,6 +161,20 @@ export default {
   flex-direction: column;
   overflow: hidden;
   margin-bottom: 100px;
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -500px;
+  rotate: 180deg;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -2500px;
+  right: 0;
 }
 
 .hero-section {

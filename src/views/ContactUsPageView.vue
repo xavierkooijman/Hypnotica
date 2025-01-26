@@ -1,4 +1,5 @@
 <template>
+  <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <div class="contact-page">
       <PopUpGeneral 
             :is-visible="showPopup"
@@ -102,12 +103,18 @@
   
   <style scoped>
   .contact-page {
-    background: var(--Main-Black, #010306);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     font-family: Aspekta, sans-serif;
   }
+
+  .blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: 0px;
+  rotate: 180deg;
+}
   
   .contact-heading {
     text-align: center;

@@ -190,7 +190,6 @@ export default {
     align-items: center;
     padding: 0 48px;
     margin-top: 64px;
-    background-color: var(--Main-Black, #010306);
 }
 
 .ticket-grid {

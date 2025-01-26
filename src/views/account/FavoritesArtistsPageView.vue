@@ -1,4 +1,5 @@
 <template>
+  <img class="blur-gradiant" src="../../assets/images/Blur gradient.svg" alt="Blur Gradient" />
     <div>
       <PopUpLogin :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false" />
       <h1 class="outline-title">FAVORITES</h1>
@@ -134,7 +135,13 @@
     display: flex;
     flex-direction: column;
   }
-  
+
+  .blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: 0px;
+  right: 0;
+  }
   .artist-name {
     font-family: Aspekta400;
     font-size: 3rem;

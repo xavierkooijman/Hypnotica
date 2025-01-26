@@ -1,4 +1,6 @@
 <template>
+  <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <main class="event-profile" v-if="event && !loading">
     <PopUpLogin :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false" />
     <section class="hero-section">
@@ -167,6 +169,20 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -800px;
+  right: 0;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -1700px;
+  rotate: 180deg;
 }
 
 /* Hero Section */

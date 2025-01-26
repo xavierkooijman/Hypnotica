@@ -1,4 +1,6 @@
 <template>
+  <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <form class="register-container" @submit.prevent="handleSubmit">
     <div class="register-content">
       <h1 class="register-title">Welcome</h1>
@@ -85,8 +87,21 @@ export default {
   font: 16px Aspekta400;
 }
 
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -700px;
+  right: 0;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -100px;
+  rotate: 180deg;
+}
+
 .register-container {
-  background: var(--Main-Black, #010306);
   display: flex;
   padding: 0 0 111px;
   flex-direction: column;
