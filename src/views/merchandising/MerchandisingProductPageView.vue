@@ -208,6 +208,12 @@ export default {
             }
         },
 
+        resetPurchaseState() {
+            this.selectedSize = null
+            this.enteredCode = ''
+            this.appliedDiscount = null
+            this.validPromoCode = null
+        },
         async handleBuyNow() {
             try {
                 if (!this.selectedSize) {
@@ -219,24 +225,41 @@ export default {
 
                 if (this.validPromoCode) {
                     const user = this.usersStore.authenticatedUser
-                    const userIndex = this.usersStore.users.findIndex(u => u.email === user.email)
+                    if (!user) {
+                        throw new Error('No authenticated user found')
+                    }
 
-                    // Create new array with one code removed
-                    const updatedCodes = [...this.usersStore.users[userIndex].promoCodesRedeemed]
-                    const removeIndex = updatedCodes.indexOf(this.validPromoCode)
+                    // Ensure promoCodesRedeemed exists
+                    if (!user.promoCodesRedeemed) {
+                        user.promoCodesRedeemed = []
+                    }
 
-                    if (removeIndex !== -1) {
-                        updatedCodes.splice(removeIndex, 1)
-                        this.usersStore.users[userIndex].promoCodesRedeemed = updatedCodes
+                    // Find index of first occurrence of the promo code
+                    const promoCodeIndex = user.promoCodesRedeemed.indexOf(this.validPromoCode)
+                    if (promoCodeIndex !== -1) {
+                        // Remove only one instance of the promo code
+                        user.promoCodesRedeemed.splice(promoCodeIndex, 1)
+
+                        // Sync with users array
+                        const userIndex = this.usersStore.users.findIndex(u => u.email === user.email)
+                        if (userIndex !== -1) {
+                            if (!this.usersStore.users[userIndex].promoCodesRedeemed) {
+                                this.usersStore.users[userIndex].promoCodesRedeemed = []
+                            }
+                            this.usersStore.users[userIndex].promoCodesRedeemed = [...user.promoCodesRedeemed]
+                        }
+
+                        // Persist changes
                         this.usersStore.$patch()
                     }
                 }
 
-                alert('Product added to cart successfully!')
-                await this.$router.push({ name: 'MerchandisingPage' })
+                alert('Purchase successful!')
+                this.resetPurchaseState()
+                this.$router.push('/merchandising')
             } catch (err) {
-                console.error('Purchase error:', err)
-                alert('Failed to process purchase: ' + err.message)
+                console.error('Error during purchase:', err)
+                alert(err.message)
             }
         },
 

@@ -1,7 +1,7 @@
 <template>
   <article class="event-card" @click="navigateToEvent">
     <div class="event-header">
-      <h4 class="event-title" >{{ eventTitle }}</h4>
+      <h4 class="event-title">{{ eventTitle }}</h4>
       <p class="venue-name">{{ venue }}</p>
       <div class="time-wrapper">
         <time class="event-time">{{ eventTime }}</time>
@@ -15,11 +15,7 @@
     </div>
     <p class="lineup">{{ lineup }}</p>
 
-    <Popup
-      :is-visible="showLoginPopup" 
-      :timeout="5" 
-      @close="showLoginPopup = false"
-    ></Popup>
+    <Popup :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false"></Popup>
   </article>
 </template>
 
@@ -88,12 +84,28 @@ export default {
         return;
       }
 
-      this.clicked = !this.clicked; // Alterna entre adicionar e remover
-      if (this.clicked) {
-        this.addToCalendar();
+      const usersStore = useUsersStore();
+      const currentUser = usersStore.authenticatedUser;
+
+      if (this.isEventInCalendar) {
+        const index = currentUser.calendar.indexOf(this.eventId);
+        if (index !== -1) {
+          currentUser.calendar.splice(index, 1);
+        }
       } else {
-        this.removeFromCalendar();
+        currentUser.calendar.push(this.eventId);
       }
+
+      // Add sync with users array
+      const userIndex = usersStore.users.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        usersStore.users[userIndex].calendar = [...currentUser.calendar];
+      }
+
+      // Persist changes
+      usersStore.$patch();
+
+      this.clicked = !this.clicked;
     },
     addToCalendar() {
       const usersStore = useUsersStore();
@@ -165,14 +177,18 @@ export default {
 .event-icon {
   width: 36px;
   height: 36px;
-  color: var(--Gray-100, #bec7ce); /* Cor inicial */
-  transition: all 0.3s ease; /* Transição suave */
+  color: var(--Gray-100, #bec7ce);
+  /* Cor inicial */
+  transition: all 0.3s ease;
+  /* Transição suave */
 }
 
 /* Mudança de cor e transformação no hover */
 .event-icon:hover {
-  color: var(--Main-White, #fafafa); /* Cor ao passar o mouse */
-  transform: scale(1.1); /* Aumento do ícone */
+  color: var(--Main-White, #fafafa);
+  /* Cor ao passar o mouse */
+  transform: scale(1.1);
+  /* Aumento do ícone */
 }
 
 .lineup {

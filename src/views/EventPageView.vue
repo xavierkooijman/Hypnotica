@@ -107,7 +107,7 @@ export default {
   methods: {
     toggleCalendar() {
       const usersStore = useUsersStore();
-      const currentUser = usersStore.getAuthenticatedUser;
+      const currentUser = usersStore.authenticatedUser;
 
       if (!currentUser) {
         this.showLoginPopup = true;
@@ -123,6 +123,13 @@ export default {
         currentUser.calendar.push(this.event.id);
       }
 
+      // Add sync with users array
+      const userIndex = usersStore.users.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        usersStore.users[userIndex].calendar = [...currentUser.calendar];
+      }
+
+      // Persist changes
       usersStore.$patch();
     },
 
