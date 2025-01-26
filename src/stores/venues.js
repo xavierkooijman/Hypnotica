@@ -101,7 +101,7 @@ export const useVenuesStore = defineStore('venues', {
 
   actions: {
     addVenue(venue) {
-      const venueExists = this.venues.some(v => v.name === venue.name);
+      const venueExists = this.venues.some(v => v.name == venue.name);
 
       if (venueExists) {
         throw new Error('Venue already exists');
