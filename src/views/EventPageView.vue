@@ -1,5 +1,6 @@
 <template>
   <main class="event-profile" v-if="event && !loading">
+    <PopUpLogin :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false" />
     <section class="hero-section">
       <img :src="event.mainImg" alt="Main Event Image" class="hero-background" />
       <div class="text-overlay">
@@ -52,6 +53,7 @@ import { useUsersStore } from "@/stores/user";
 import { CalendarPlus, CalendarCheck } from "lucide-vue-next";
 import Carousel from "../components/Carousel.vue";
 import Slider from "../components/EventArtistSlider.vue";
+import PopUpLogin from '@/components/PopUpLogin.vue';
 
 export default {
   name: "EventProfile",
@@ -60,7 +62,8 @@ export default {
     Carousel,
     Slider,
     CalendarPlus,
-    CalendarCheck
+    CalendarCheck,
+    PopUpLogin
   },
 
   data() {
@@ -69,7 +72,8 @@ export default {
       loading: true,
       error: null,
       venuesStore: null,
-      eventStore: null
+      eventStore: null,
+      showLoginPopup: false
     };
   },
 
@@ -106,7 +110,7 @@ export default {
       const currentUser = usersStore.getAuthenticatedUser;
 
       if (!currentUser) {
-        alert("You need to be logged in to add events to calendar!");
+        this.showLoginPopup = true;
         return;
       }
 
