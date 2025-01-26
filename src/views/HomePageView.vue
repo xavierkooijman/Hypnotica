@@ -170,12 +170,9 @@
       </div>
       <div class="merch-content">
         <div class="merch-grid">
-          <article v-for="product in latestProducts" :key="product.id" class="merch-card">
-            <img loading="lazy" :src="product.mainImage" class="merch-image" :alt="product.name" />
-            <h3 class="product-title">{{ product.name }}</h3>
-          </article>
+          <MerchandiseCard v-for="product in availableProducts" :key="product.id" :product="product" />
         </div>
-        <button class="explore-button btn-secondary" tabindex="0" @click="navigateToMerchandise">
+        <button class="explore-button btn-secondary" @click="navigateToMerchandise">
           Explore the Collection
         </button>
       </div>
@@ -183,53 +180,62 @@
   </main>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script>
 import { useMerchandiseStore } from '@/stores/merchandise'
-import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useArtistsStore } from '@/stores/artists'
 import ArtistSmallCircle from '@/components/ArtistSmallCircle.vue'
 import ArtistBigCircle from '@/components/ArtistBigCircle.vue'
-import Tickets from '@/components/Tickets.vue';
+import Tickets from '@/components/Tickets.vue'
+import MerchandiseCard from '@/components/MerchandiseCard.vue'
 
+export default {
+  components: {
+    ArtistSmallCircle,
+    ArtistBigCircle,
+    Tickets,
+    MerchandiseCard
+  },
 
-const merchandiseStore = useMerchandiseStore()
-const router = useRouter()
+  data() {
+    return {
+      artistGrid: null,
+      isDragging: false,
+      startX: 0,
+      scrollLeft: 0,
+      merchandiseStore: useMerchandiseStore(),
+      artistStore: useArtistsStore(),
+      router: useRouter()
+    }
+  },
 
-const latestProducts = computed(() => {
-  return merchandiseStore.getAllMerchandise.slice(0, 3)
-})
+  computed: {
+    latestProducts() {
+      return this.merchandiseStore.getAllMerchandise.slice(0, 3)
+    },
 
-const navigateToMerchandise = () => {
-  router.push({ name: 'MerchandisingPage' })
-}
+    availableProducts() {
+      return this.merchandiseStore.getAllMerchandise
+        .filter(product => product.stock > 0)
+        .slice(0, 3)
+    }
+  },
 
-const navigateToTickets = () => {
-  router.push({ name: 'TicketsPage' })
-}
+  methods: {
+    navigateToMerchandise() {
+      this.router.push({ name: 'MerchandisingPage' })
+    },
 
-const artistStore = useArtistsStore()
-const artistGrid = ref(null)
-const isDragging = ref(false)
-const startX = ref(0)
-const scrollLeft = ref(0)
+    navigateToTickets() {
+      this.router.push({ name: 'TicketsPage' })
+    },
 
-const startDrag = (event) => {
-  isDragging.value = true
-  startX.value = event.pageX - artistGrid.value.offsetLeft
-  scrollLeft.value = artistGrid.value.scrollLeft
-}
-
-const drag = (event) => {
-  if (!isDragging.value) return
-  const x = event.pageX - artistGrid.value.offsetLeft
-  const walk = (x - startX.value) * 2
-  artistGrid.value.scrollLeft = scrollLeft.value - walk
-}
-
-const stopDrag = () => {
-  isDragging.value = false
+    startDrag(event) {
+      this.isDragging = true
+      this.startX = event.pageX - this.artistGrid.offsetLeft
+      this.scrollLeft = this.artistGrid.scrollLeft
+    }
+  }
 }
 </script>
 
@@ -511,8 +517,11 @@ const stopDrag = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  justify-content: center;
+  max-width: 1440px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .merch-header {
@@ -535,10 +544,10 @@ const stopDrag = () => {
 
 .merch-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(450px, 500px));
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  width: 100%;
   margin-bottom: 48px;
-  justify-content: center;
 }
 
 .merch-card {
@@ -573,5 +582,17 @@ const stopDrag = () => {
 
 .explore-button {
   margin: 0 auto;
+}
+
+@media (max-width: 991px) {
+  .merch-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .merch-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
