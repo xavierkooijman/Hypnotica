@@ -1,6 +1,7 @@
 <script>
 import { useEventStore } from "@/stores/events";
 import { useUsersStore } from "@/stores/user";
+import { useVenuesStore } from "@/stores/venues";
 import Sidebar from '@/components/Sidebar.vue';
     export default {
         components: {
@@ -10,6 +11,7 @@ import Sidebar from '@/components/Sidebar.vue';
             return {
                 userStore: useUsersStore(),
                 eventStore: useEventStore(),
+								venueStore: useVenuesStore(),
 								hours: ["20:00", "21:00", "22:00", "23:00", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00"]
             }
         },
@@ -64,10 +66,12 @@ import Sidebar from '@/components/Sidebar.vue';
 				</div>
 				<div class="blocks-container">
 					<div class="calendar-block" v-for="n in 30"></div>
-					<div class="event-card" v-for="event in eventStore.events" :style="{height: event.duration * 10 + '%', gridColumn: calculateGridColumn(event.date), top: calculateTopPosition(event.timeStart) + '%'}">
-						<p>{{ event.name }}</p>
-						<p>{{ event.timeStart }} - {{ event.timeEnd }}</p>
-						<p>{{ event.venueId }}</p>
+					<div v-for="event in eventStore.events" :style="{gridColumn: calculateGridColumn(event.date)}">
+						<div class="event-card" v-if="userStore.authenticatedUser.calendar.includes(event.id)" :style="{height: event.duration * 10 + '%', top: calculateTopPosition(event.timeStart) + '%'}">
+							<p>{{ event.name }}</p>
+							<p>{{ event.timeStart }} - {{ event.timeEnd }}</p>
+							<p>{{ event.venueId }}</p>
+						</div>
 					</div>
 				</div>
 			</div>
