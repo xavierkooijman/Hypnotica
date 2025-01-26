@@ -26,7 +26,9 @@
         >Venues</RouterLink>
       </div>
     </div>
+    <!-- Only show filter button on ProgramEventsPage -->
     <button 
+      v-if="$route.name === 'ProgramEventsPage'"
       tabindex="0"
       class="filter-toggle"
       aria-label="Open filters menu"
@@ -36,7 +38,7 @@
       <span>Filter</span>
     </button>
 
-    <Filter v-if="isFilterOpen" @close="closeFilter" @filter-changed="handleFilterChange" />
+    <Filter v-if="isFilterOpen && $route.name === 'ProgramEventsPage'" @close="closeFilter" @filter-changed="handleFilterChange" />
   </div>
 </template>
 
