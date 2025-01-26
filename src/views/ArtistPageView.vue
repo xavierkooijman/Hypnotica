@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import { useUsersStore } from "../stores/user";
 import { useArtistsStore } from "../stores/artists";
 import { useProgramStore } from "../stores/program";
 import Program from "../components/ProgramSection.vue";

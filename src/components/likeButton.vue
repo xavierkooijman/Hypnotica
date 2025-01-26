@@ -1,5 +1,5 @@
 <template>
-    <button @click="toggleLike" aria-label="Like/Dislike" class="like-button">
+    <button @click="toggleLike" aria-label="Like/Dislike" class="like-button" :style="{ '--icon-size': buttonSize }">
         <Heart :class="{ liked: isLiked }" class="heart-icon" />
         <Popup class="notification" :isVisible="isPopupVisible" :timeout="popupTimeout"
             @close="isPopupVisible = false" />
@@ -38,13 +38,13 @@ export default {
         isLiked() {
             const usersStore = useUsersStore();
             const currentUser = usersStore.getAuthenticatedUser;
-            
+
             if (!currentUser) return false;
 
-            const collection = this.type === 'artist' ? 
-                currentUser.favoriteArtists : 
+            const collection = this.type === 'artist' ?
+                currentUser.favoriteArtists :
                 currentUser.favoriteVenues;
-            
+
             return collection.includes(this.targetId);
         }
     },
@@ -58,8 +58,8 @@ export default {
                 return;
             }
 
-            const collection = this.type === 'artist' ? 
-                currentUser.favoriteArtists : 
+            const collection = this.type === 'artist' ?
+                currentUser.favoriteArtists :
                 currentUser.favoriteVenues;
 
             if (this.isLiked) {

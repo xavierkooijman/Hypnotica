@@ -13,10 +13,13 @@
                         <label for="password" class="visually-hidden">Password</label>
                         <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password"
                             class="form-input pbottom-12" placeholder="Password" required />
-
                     </div>
                 </div>
                 <a href="#" class="hover-underline-animation-gray forgot-password" tabindex="0">Forgot your password?</a>
+                <!-- Add error message display -->
+                <div v-if="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
             </div>
             <div class="action-section">
                 <button type="submit" class="btn-primary login-button">Log in</button>
@@ -105,6 +108,14 @@ export default {
     text-align: center;
     font: 48px Aspekta500;
     margin: 0;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .form-content {
