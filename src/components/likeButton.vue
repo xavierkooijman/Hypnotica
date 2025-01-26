@@ -30,6 +30,10 @@ export default {
         isEnabled: {
             type: Boolean,
             default: true
+        },
+        buttonSize: {
+            type: String,
+            default: '64px' // Default size
         }
     },
     data() {
@@ -105,8 +109,8 @@ export default {
 }
 
 .heart-icon {
-    width: 64px;
-    height: 64px;
+    width: var(--icon-size, 64px);
+    height: var(--icon-size, 64px);
     transition: transform 0.3s ease, fill 0.3s ease;
     stroke: #fff;
     fill: transparent;
