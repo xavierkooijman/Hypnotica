@@ -64,6 +64,7 @@ const handleNewsClick = (newsId) => {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 48px;
+    margin-bottom: 64px;
 }
 
 .featured-news {

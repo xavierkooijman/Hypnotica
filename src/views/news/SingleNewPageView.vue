@@ -122,7 +122,6 @@ export default {
   flex-direction: column;
   overflow: hidden;
   align-items: center;
-  margin-top: 100px;
 }
 
 .hero-image,
