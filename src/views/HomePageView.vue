@@ -1,4 +1,7 @@
 <template>
+  <img class="blur-gradiant" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-2" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
+  <img class="blur-gradiant-3" src="../assets/images/Blur gradient.svg" alt="Blur Gradient" />
   <main class="landing-page">
     <section class="hero-section">
       <h1 class="outline-title">HYPNØTICA</h1>
@@ -261,6 +264,27 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.blur-gradiant {
+  position: absolute;
+  z-index: -1;
+  bottom: -4500px;
+  right: 0;
+}
+
+.blur-gradiant-2 {
+  position: absolute;
+  z-index: -1;
+  bottom: -2900px;
+  rotate: 180deg;
+}
+
+.blur-gradiant-3 {
+  position: absolute;
+  z-index: -1;
+  top: 2000px;
+  right: 0;
 }
 
 .hero-section {
