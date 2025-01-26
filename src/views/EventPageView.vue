@@ -1,5 +1,6 @@
 <template>
   <main class="event-profile" v-if="event && !loading">
+    <PopUpLogin :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false" />
     <section class="hero-section">
       <img :src="event.mainImg" alt="Main Event Image" class="hero-background" />
       <div class="text-overlay">
@@ -13,6 +14,11 @@
         </div>
         <h2 class="event-subtitle">{{ formattedDescription }}</h2>
       </div>
+    </section>
+
+    <section class="event-bio" aria-label="Event Biography">
+      <p class="bio-text">{{ event.bio }}</p>
+      <img :src="event.bioImg" alt="Event atmosphere" class="bio-image" />
     </section>
 
     <!-- Tickets Section -->
@@ -47,6 +53,7 @@ import { useUsersStore } from "@/stores/user";
 import { CalendarPlus, CalendarCheck } from "lucide-vue-next";
 import Carousel from "../components/Carousel.vue";
 import Slider from "../components/EventArtistSlider.vue";
+import PopUpLogin from '@/components/PopUpLogin.vue';
 
 export default {
   name: "EventProfile",
@@ -55,7 +62,8 @@ export default {
     Carousel,
     Slider,
     CalendarPlus,
-    CalendarCheck
+    CalendarCheck,
+    PopUpLogin
   },
 
   data() {
@@ -64,7 +72,8 @@ export default {
       loading: true,
       error: null,
       venuesStore: null,
-      eventStore: null
+      eventStore: null,
+      showLoginPopup: false
     };
   },
 
@@ -91,7 +100,7 @@ export default {
       });
 
       const venueName = this.venuesStore.getVenueById(this.event.venueId)?.name || 'Unknown Venue';
-      return `${fullDate} | ${venueName} | ${this.event.location}`;
+      return `${fullDate} | ${venueName}`;
     }
   },
 
@@ -101,7 +110,7 @@ export default {
       const currentUser = usersStore.getAuthenticatedUser;
 
       if (!currentUser) {
-        alert("You need to be logged in to add events to calendar!");
+        this.showLoginPopup = true;
         return;
       }
 
@@ -177,6 +186,34 @@ export default {
   border-radius: 8px;
 }
 
+.event-bio {
+  display: flex;
+  gap: 128px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 128px 48px;
+  padding: 0 96px;
+}
+
+.bio-text {
+  flex: 1;
+  max-width: 900px;
+  color: var(--Gray-100, #bec7ce);
+  letter-spacing: 1.5px;
+  font: 30px Aspekta300, sans-serif;
+}
+
+.bio-image {
+  flex: 1;
+  max-width: 40%;
+  max-height: 700px;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
 .name-container {
   display: flex;
   align-items: center;
@@ -222,46 +259,6 @@ export default {
   color: var(--gray100);
   font: 24px Aspekta400, sans-serif;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Biography Section */
-.event-bio {
-  display: flex;
-  gap: 128px;
-  justify-content: space-between;
-  align-items: center;
-  /* Centraliza verticalmente os elementos */
-  flex-wrap: nowrap;
-  /* Impede que os itens quebrem para uma nova linha */
-  margin: 0 48px;
-  /* Margem lateral de 48px */
-  padding: 0 96px;
-}
-
-.bio-text {
-  flex: 1;
-  /* Garante que o texto ocupe espaço proporcional */
-  max-width: 900px;
-  /* Aumenta a largura máxima do texto */
-  color: var(--Gray-100, #bec7ce);
-  letter-spacing: 1.5px;
-  font: 30px Aspekta300, sans-serif;
-}
-
-.event-image {
-  flex: 1;
-  /* Garante que a imagem ocupe espaço proporcional */
-  max-width: 40%;
-  /* A largura se adapta ao contêiner */
-  max-height: 700px;
-  /* Define uma altura máxima reduzida */
-  width: auto;
-  /* Ajusta a largura proporcional à altura */
-  height: auto;
-  /* Mantém as proporções */
-  border-radius: 12px;
-  object-fit: cover;
-  /* Garante que a imagem preencha o espaço disponível sem distorção */
 }
 
 /* Tickets Section */

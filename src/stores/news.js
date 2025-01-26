@@ -8,11 +8,21 @@ export const useNewsStore = defineStore('news', {
         title: "The Countdown Begins: Berlin Awaits Hypnotica Festival 2025",
         date: "2024-12-20",
         description: "Berlin prepares for Hypnotica Festival 2025 with over 100 performances and immersive experiences.",
-        content: `Berlin, the epicenter of electronic music and cultural innovation, is gearing up for one of the most anticipated events of the year: the Hypnotica Festival 2025. Spanning three electrifying days and nights from January 3 to January 5, 2025, this groundbreaking festival promises to transform the city into a pulsating hub of cutting-edge sound, visual artistry, and unforgettable experiences.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijsiOiFCjQzU2O_BFZsBmeG-aoss95AOYuA&s",
+        content: `Berlin, the epicenter of electronic music and cultural innovation, is gearing up for one of the most anticipated events of the year: the Hypnotica Festival 2025. Spanning three electrifying days and nights from January 3 to January 5, 2025, this groundbreaking festival promises to transform the city into a pulsating hub of cutting-edge sound, visual artistry, and unforgettable experiences.
+      
+      Set against the backdrop of Berlin’s iconic landmarks and sprawling industrial spaces, Hypnotica Festival will feature over 100 performances from world-renowned DJs, live acts, and emerging talent. The festival is a celebration of electronic music in all its forms—ranging from hypnotic techno and ambient soundscapes to high-energy house and experimental beats. Each stage will offer a unique thematic experience, enhanced by immersive light shows, 3D visual mapping, and interactive installations designed by some of the world’s leading digital artists.
+      
+      But Hypnotica is more than just music. Attendees can explore a variety of curated spaces dedicated to art, technology, and culture. Highlights include workshops on music production and sound design, panel discussions with industry pioneers, and an innovation zone showcasing the latest advancements in music technology. A special wellness area will also provide spaces for relaxation, featuring sound healing sessions, yoga classes, and chill-out zones.
+      
+      Food lovers will not be disappointed either, as the festival will host a diverse selection of gourmet food trucks and pop-up restaurants offering international cuisine, vegan options, and Berlin’s iconic street food. For those looking for exclusive experiences, VIP passes grant access to private lounges, behind-the-scenes tours, and meet-and-greets with the artists.
+      
+      The Hypnotica Festival is expected to attract thousands of attendees from around the world, reinforcing Berlin’s reputation as a global capital of creativity and nightlife. Whether you're a die-hard electronic music fan or simply curious about the vibrant culture of Berlin, Hypnotica Festival 2025 promises to be an unforgettable start to the new year.
+      
+      Tickets are selling fast, with early bird packages already sold out. Don’t miss your chance to be part of this once-in-a-lifetime event that blends music, art, and community into an unparalleled festival experience.`,
+        mainImage: "https://images.ctfassets.net/w0xmjfdre13u/16TsQRnXu7ar567awIiuLO/4a073bc07e89f23d6d9a862c8cc1d179/junction2meta_copy.jpg",
         secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3FKx8_aCC4ZtsHjJkfDHBlF0oLmOGMfdFtg&s",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFd8f8ujWZzkBMYUepmzpgtz4dMuonHgg30g&s"
+          "https://scenenow.com/Content/Admin/Uploads/Articles/ArticlesMainPhoto/62584/f256e3a2-0bef-4612-8fed-92fcd7abb164.jpg",
+          "https://edm.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_xy_center%2Cq_auto:good%2Cw_620%2Cx_1280%2Cy_864/MTk1NzY4ODUyNTEwOTQyODY4/bs22_day1-264.jpg"
         ]
       },
       {
@@ -20,10 +30,14 @@ export const useNewsStore = defineStore('news', {
         title: "New York Fashion Week 2025: A Glimpse into the Future of Fashion",
         date: "2025-01-05",
         description: "New York Fashion Week 2025 is redefining the future of fashion with eco-friendly designs and technological innovations.",
-        content: `New York Fashion Week 2025 is here, showcasing an exciting blend of futuristic designs, sustainable fashion, and innovative technology. From AI-powered fashion shows to biodegradable fabrics, the event is setting the tone for the future of style.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVQozidI_Sd1Vq3MFy0IfiN9mjD7rk5Vximg&s",
+        content: `New York Fashion Week 2025 has arrived, bringing with it a wave of innovation, sustainability, and creativity that is reshaping the fashion world. This year’s event is not just a showcase of glamorous designs and couture; it is a statement on the direction in which the industry is heading. Designers from across the globe are presenting collections that prioritize eco-friendly materials, including recycled fabrics and biodegradable textiles, reflecting a growing commitment to sustainability. 
+    
+    The runways have also seen an infusion of technology, from AI-generated patterns to garments that incorporate wearable tech. Models are stepping onto the stage with garments that respond to environmental conditions, such as dresses that change color based on temperature or accessories embedded with smart sensors.
+    
+    Moreover, the event is embracing inclusivity like never before, with diverse representation across age, size, and cultural backgrounds. New York Fashion Week is not just a glimpse into the future of fashion—it’s a celebration of how the industry can evolve to reflect the world we live in today and tomorrow.`,
+        mainImage: "https://www.datocms-assets.com/66357/1693314142-palm-tree-festival.webp",
         secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTw9bQdSddV36J_TWyGXlJUmE2M_xa-YP0Ow&s",
+          "https://www.guettapen.com/wp-content/uploads/2019/04/54515083_643883306063751_7053415255946297344_n.jpg",
           "https://i0.wp.com/mnmt.no/wp-content/uploads/2016/03/10_10499542_10152668382583755_2186614163480345366_o.jpg?fit=2048%2C1153&ssl=1"
         ]
       },
@@ -32,11 +46,15 @@ export const useNewsStore = defineStore('news', {
         title: "Virtual Reality Takes Center Stage at CES 2025",
         date: "2025-01-10",
         description: "At CES 2025, virtual reality innovations are pushing the boundaries of entertainment, gaming, and education.",
-        content: `The Consumer Electronics Show (CES) 2025 in Las Vegas is unveiling cutting-edge virtual reality (VR) technologies. From immersive VR gaming experiences to educational simulations, this year's CES is a glimpse into the next era of digital interactivity.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwV33hTx8PWMyzxJoJv8OUYBAAeXhgleC2ww&s",
+        content: `The Consumer Electronics Show (CES) 2025 in Las Vegas has firmly positioned virtual reality (VR) at the forefront of technological innovation. Attendees are immersing themselves in futuristic experiences that redefine how we interact with digital spaces. Gaming companies are unveiling VR headsets with unprecedented levels of detail, allowing players to dive into hyper-realistic environments. 
+    
+    Education is another sector witnessing a VR revolution, as developers showcase simulations for training in medicine, engineering, and other disciplines. Surgeons are practicing complex procedures in fully immersive operating room simulations, while students are exploring ancient civilizations in 3D detail without leaving their classrooms.
+    
+    Additionally, entertainment is being transformed. Major film studios are experimenting with VR cinema, providing audiences with a 360-degree storytelling experience that puts them in the middle of the action. Beyond the excitement, discussions at CES are also addressing accessibility, striving to make these transformative technologies available to broader audiences, ensuring that VR becomes a tool for connection and progress rather than division.`,
+        mainImage: "https://www.noa-zrce.com/data/public/eventi/264957297_451185839706994_7517350140826312015_n.jpg",
         secondaryImages: [
           "https://europebookings.com/wp-content/uploads/hideout-festival-papaya-club-stage-lights.jpg",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9h3VTFwjD2Evd-EyIOrJKmHwO15eMACRSkg&s"
+          "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F892992183%2F312824393915%2F1%2Foriginal.20241106-130536?auto=format%2Ccompress&q=75&sharp=10&s=e8fb02bfdc40405b52afebcafe6cfc89"
         ]
       },
       {
@@ -44,11 +62,15 @@ export const useNewsStore = defineStore('news', {
         title: "The Rise of Eco-Tourism: A Sustainable Way to Travel",
         date: "2025-01-08",
         description: "Eco-tourism is on the rise as travelers seek environmentally conscious ways to explore the world.",
-        content: `Eco-tourism is rapidly gaining popularity as more people seek to travel sustainably while preserving natural landscapes and wildlife. From eco-friendly hotels to guided nature tours, the future of tourism is green, with travelers making an effort to reduce their carbon footprint.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVTrNIyuZiQgSMrYYSt9koZ9lYeBJN15cBaw&s",
+        content: `Eco-tourism is rapidly gaining traction as travelers increasingly prioritize environmentally responsible ways to explore the world. This growing trend is reshaping the tourism industry, with more destinations and travel providers offering eco-friendly alternatives. Eco-tourism encompasses a wide range of practices, from staying in green-certified accommodations to participating in guided wildlife tours that prioritize conservation.
+    
+    In Costa Rica, for example, eco-lodges are designed to blend seamlessly with the rainforest while promoting biodiversity. In Iceland, travelers can participate in carbon-offset programs while enjoying the northern lights. Tourists are also becoming more conscious of their carbon footprint, opting for train travel over flights where possible and supporting local communities through sustainable practices.
+    
+    Beyond the personal benefits, eco-tourism is a powerful force for change. It brings much-needed attention to conservation efforts and demonstrates that tourism can coexist with environmental stewardship, providing a model for a more sustainable future.`,
+        mainImage: "https://cdn.prod.website-files.com/64427620b70e49196db5e0d3/64427620b70e49530ab5e32c_yvette-de-wit-584317-unsplash.jpg",
         secondaryImages: [
           "https://i0.wp.com/thegroovecartel.com/wp-content/uploads/2024/01/rsz_20230611_verknipt_jessewensing_5.jpg?fit=770%2C512&ssl=1",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRklOE-pi2P0iS0-VQoRpAnhXhy-ISUUmv4ow&s"
+          "https://psymedia.co.za/wp-content/uploads/stone-techno-1.jpg"
         ]
       },
       {
@@ -56,10 +78,14 @@ export const useNewsStore = defineStore('news', {
         title: "Breakthrough in Quantum Computing: The Future of Technology",
         date: "2025-01-11",
         description: "Scientists have made a groundbreaking advancement in quantum computing, bringing us closer to a technological revolution.",
-        content: `In a historic breakthrough, researchers have developed a new quantum computing method that promises to solve complex problems at unprecedented speeds. This advancement could lead to revolutions in fields like artificial intelligence, cryptography, and medicine.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLg0IP_kGJ722M6rxjYJga9NlNBzl_J_hTUQ&s",
+        content: `Quantum computing has reached a historic milestone with scientists unveiling a new method that exponentially increases processing power. Unlike classical computers, which operate using binary code, quantum computers leverage quantum bits (qubits), allowing them to solve complex problems at previously unimaginable speeds. 
+    
+    This breakthrough has profound implications across multiple industries. In medicine, quantum computing could accelerate drug discovery by simulating molecular interactions in real time. In cybersecurity, it promises to crack current encryption methods but also enables the creation of quantum-resistant algorithms. Industries like finance, logistics, and artificial intelligence stand to benefit as well, with quantum systems providing solutions to optimization problems that would take classical computers years to solve.
+    
+    As we move closer to the widespread application of quantum technology, ethical and security concerns are also being addressed to ensure this transformative power is used responsibly and equitably.`,
+        mainImage: "https://love-explosion.com/_ipx/w_1500&f_webp/content/Startseite/Startseite-Techno4.jpg",
         secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMo1c8YmCBXD9QBMIF-Cv-UoK4a19OtCb_yA&s",
+          "https://www.seadancefestival.me/wp-content/uploads/2023/06/52317616884_09977d0afe_o-1.jpg",
           "https://www.technostation.tv/wp-content/uploads/2023/12/351377010_6386273988121268_3776490156528089739_n.jpg"
         ]
       },
@@ -68,181 +94,65 @@ export const useNewsStore = defineStore('news', {
         title: "Exploring Space Tourism: The Final Frontier",
         date: "2025-01-15",
         description: "Space tourism is taking off with private companies offering trips to the edge of space and beyond.",
-        content: `Space tourism is becoming a reality with private companies like SpaceX and Blue Origin offering commercial flights to the edge of space. As the industry grows, it promises to offer once-in-a-lifetime experiences for adventure seekers.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijsiOiFCjQzU2O_BFZsBmeG-aoss95AOYuA&s",
+        content: `Space tourism is no longer a far-fetched dream. Companies like SpaceX, Blue Origin, and Virgin Galactic are making space travel accessible to private individuals. From brief suborbital trips that offer minutes of weightlessness to week-long stays at orbital hotels, the industry is opening the doors to a new era of adventure.
+    
+    While the costs remain high, industry leaders predict that advances in technology will make space travel more affordable. Scientists and engineers are also developing systems to ensure the environmental impact of space tourism is minimized, exploring reusable rockets and alternative fuels.
+    
+    The rise of space tourism is inspiring a generation of enthusiasts and innovators while raising questions about accessibility, regulation, and sustainability in this burgeoning industry.`,
+        mainImage: "https://djmag.com/sites/default/files/styles/djm_23_961x540_jpg/public/2024-06/9.%20World%20Club%20Dome.webp.jpg?itok=_ZJ28YdG",
         secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3FKx8_aCC4ZtsHjJkfDHBlF0oLmOGMfdFtg&s",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFd8f8ujWZzkBMYUepmzpgtz4dMuonHgg30g&s"
+          "https://www.timeoutjeddah.com/cloud/timeoutjeddah/2024/04/21/groove-on-the-grass-4.jpg",
+          "https://static.listmag.com/styles/large/public/inline-images/Groove%20on%20the%20Grass%202024%202.jpg"
         ]
       },
       {
         id: "7",
-        title: "AI-Driven Art: A Revolution in Creativity",
+        title: "AI-Powered Health Diagnostics: Revolutionizing Medicine",
         date: "2025-01-18",
-        description: "Artificial intelligence is transforming the world of art, allowing machines to create stunning works of art.",
-        content: `Artificial intelligence is pushing the boundaries of creativity, with machines now capable of creating artwork that rivals human artists. AI-driven tools are enabling new forms of digital art, inspiring a new wave of artistic expression.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVQozidI_Sd1Vq3MFy0IfiN9mjD7rk5Vximg&s",
+        description: "Artificial Intelligence is transforming healthcare by providing accurate and fast diagnostics.",
+        content: `Artificial Intelligence (AI) is revolutionizing the field of healthcare, particularly in diagnostics. With advanced machine learning algorithms, AI systems can now analyze medical images, such as X-rays, MRIs, and CT scans, with unprecedented accuracy. This breakthrough is helping doctors detect diseases like cancer, heart conditions, and neurological disorders earlier and more effectively than ever before.
+    
+    AI-powered diagnostic tools are also proving to be invaluable in underserved areas, where access to specialists is limited. Portable devices equipped with AI can perform on-the-spot analyses, providing critical insights to healthcare workers in real time. In addition, AI is making strides in personalized medicine by predicting how patients will respond to treatments based on their genetic profiles.
+    
+    However, the integration of AI in healthcare raises important ethical considerations, such as data privacy, the role of human oversight, and ensuring equitable access to these advanced technologies. Despite these challenges, the potential for AI to save lives and improve patient outcomes is immense.`,
+        mainImage: "https://basscoast.ca/cdn/shop/files/3-ConcertSocks-2023-162_Justin-Martin_720x.jpg?v=1698945304",
         secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTw9bQdSddV36J_TWyGXlJUmE2M_xa-YP0Ow&s",
-          "https://i0.wp.com/mnmt.no/wp-content/uploads/2016/03/10_10499542_10152668382583755_2186614163480345366_o.jpg?fit=2048%2C1153&ssl=1"
+          "https://www.farandwide.com/wp-content/uploads/2024/12/6b91fc0a36864dd29cedd8fd0866a1e0.webp",
+          "https://www.dailynews.com/wp-content/uploads/2023/05/LDN-L-DESSERTHEARTS-0505-04.jpg?w=507"
         ]
       },
       {
         id: "8",
-        title: "Green Energy Takes Over the World",
-        date: "2025-01-22",
-        description: "Green energy sources are now dominating the global energy market as we transition to a sustainable future.",
-        content: `Solar, wind, and hydroelectric power are leading the charge in the transition to clean and sustainable energy. With technological advancements and lower costs, green energy is becoming the new normal in the global energy landscape.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwV33hTx8PWMyzxJoJv8OUYBAAeXhgleC2ww&s",
+        title: "Green Energy Breakthrough: Solar Panel Efficiency Hits New High",
+        date: "2025-01-20",
+        description: "Scientists have achieved record-breaking efficiency in solar panels, boosting renewable energy adoption.",
+        content: `A new milestone in renewable energy has been reached as scientists announce record-breaking efficiency in solar panel technology. By utilizing advanced materials like perovskite and tandem-cell designs, researchers have created solar panels capable of converting over 50% of sunlight into usable energy. This innovation marks a significant leap forward from the average efficiency of 20-25% seen in conventional panels.
+    
+    The breakthrough has the potential to transform the energy landscape, making solar power more viable and cost-effective for homes, businesses, and large-scale applications. These high-efficiency panels are not only more powerful but also lighter and more durable, enabling easier installation in diverse environments, from urban rooftops to remote off-grid areas.
+    
+    Governments and private sectors worldwide are investing heavily in scaling up production, with experts predicting that solar energy will account for a significant portion of global electricity generation within the next decade. As the technology advances, it promises to play a key role in combating climate change and reducing dependence on fossil fuels.`,
+        mainImage: "https://www.thissongslaps.com/wp-content/uploads/2020/01/hard-summer-2020-dates-thissongslaps-scaled.jpg",
         secondaryImages: [
-          "https://europebookings.com/wp-content/uploads/hideout-festival-papaya-club-stage-lights.jpg",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9h3VTFwjD2Evd-EyIOrJKmHwO15eMACRSkg&s"
+          "https://d3vhc53cl8e8km.cloudfront.net/hello-staging/wp-content/uploads/sites/38/2020/01/10114829/ticketingfaq768x440.jpg",
+          "https://d2po6uops3e7id.cloudfront.net/img/news-cover/4db5592d-bd0c-4160-8470-f99dfb98d129.jpg?v=10"
         ]
       },
       {
         id: "9",
-        title: "The Future of Autonomous Vehicles: A New Era of Transportation",
-        date: "2025-01-24",
-        description: "Autonomous vehicles are set to revolutionize the way we travel, making roads safer and more efficient.",
-        content: `Autonomous vehicles (self-driving cars) are now closer to becoming a reality, with major companies testing advanced driver-assistance systems. This innovation promises to reduce traffic accidents, improve fuel efficiency, and transform urban mobility.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVTrNIyuZiQgSMrYYSt9koZ9lYeBJN15cBaw&s",
+        title: "Robotics in Agriculture: The Future of Farming",
+        date: "2025-01-23",
+        description: "Robotic systems are transforming agriculture by automating tasks and improving efficiency.",
+        content: `Agriculture is undergoing a technological revolution as robotic systems become increasingly integral to farming operations. From autonomous tractors to drones equipped with AI, these innovations are streamlining labor-intensive tasks such as planting, harvesting, and crop monitoring. Farmers can now utilize precision agriculture techniques, where sensors and robots work together to optimize the use of water, fertilizers, and pesticides.
+    
+    One notable development is the introduction of robotic harvesters capable of picking delicate fruits like strawberries without causing damage. Drones are also playing a crucial role, capturing high-resolution images of fields to detect diseases, pests, or nutrient deficiencies early. These insights allow farmers to intervene proactively, reducing crop loss and improving yields.
+    
+    Beyond efficiency, robotics is helping address labor shortages in the agricultural sector while reducing the environmental impact of farming practices. As the technology becomes more affordable and accessible, robotics promises to reshape the future of agriculture, ensuring food security for a growing global population.`,
+        mainImage: "https://t3.ftcdn.net/jpg/05/95/39/36/360_F_595393668_T5R3JVKFAXiZgdpsMkH9hyGchnC6eM1s.jpg",
         secondaryImages: [
-          "https://i0.wp.com/thegroovecartel.com/wp-content/uploads/2024/01/rsz_20230611_verknipt_jessewensing_5.jpg?fit=770%2C512&ssl=1",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRklOE-pi2P0iS0-VQoRpAnhXhy-ISUUmv4ow&s"
+          "https://discotech.me/wp-content/uploads/2021/02/photo-1578946956088-940c3b502864.jpeg",
+          "https://st2.depositphotos.com/3726985/12027/i/450/depositphotos_120272698-stock-photo-medusa-sun-beach-festival.jpg"
         ]
       },
-      {
-        id: "10",
-        title: "Health Tech Innovations: Revolutionizing Medical Treatments",
-        date: "2025-01-30",
-        description: "Advancements in health tech are changing the landscape of healthcare, offering innovative treatments and improving patient care.",
-        content: `From AI-driven diagnostics to telemedicine platforms, health technology is transforming how we access care. These innovations are leading to faster diagnoses, personalized treatments, and better overall health outcomes for patients.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLg0IP_kGJ722M6rxjYJga9NlNBzl_J_hTUQ&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMo1c8YmCBXD9QBMIF-Cv-UoK4a19OtCb_yA&s",
-          "https://www.technostation.tv/wp-content/uploads/2023/12/351377010_6386273988121268_3776490156528089739_n.jpg"
-        ]
-      },
-      {
-        id: "11",
-        title: "Smart Cities: The Future of Urban Living",
-        date: "2025-02-01",
-        description: "Smart cities are using technology to improve the quality of life for residents through smarter infrastructure and data-driven solutions.",
-        content: `Smart cities are integrating Internet of Things (IoT) technology into urban infrastructure to enhance everything from traffic management to waste disposal. These innovations promise to improve city efficiency, reduce energy consumption, and increase overall quality of life.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijsiOiFCjQzU2O_BFZsBmeG-aoss95AOYuA&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3FKx8_aCC4ZtsHjJkfDHBlF0oLmOGMfdFtg&s",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFd8f8ujWZzkBMYUepmzpgtz4dMuonHgg30g&s"
-        ]
-      },
-      {
-        id: "12",
-        title: "Virtual Concerts: The New Normal in Live Music",
-        date: "2025-02-05",
-        description: "Virtual concerts are changing the way we experience live music, offering immersive online performances.",
-        content: `With advances in virtual reality and streaming technology, virtual concerts are now providing fans with an unprecedented live music experience from the comfort of their homes. This trend is set to continue as more artists embrace virtual performances.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVQozidI_Sd1Vq3MFy0IfiN9mjD7rk5Vximg&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTw9bQdSddV36J_TWyGXlJUmE2M_xa-YP0Ow&s",
-          "https://i0.wp.com/mnmt.no/wp-content/uploads/2016/03/10_10499542_10152668382583755_2186614163480345366_o.jpg?fit=2048%2C1153&ssl=1"
-        ]
-      },
-      {
-        id: "13",
-        title: "The Rise of Sustainable Fashion",
-        date: "2025-02-10",
-        description: "Sustainable fashion is taking center stage as more brands prioritize eco-friendly materials and ethical production methods.",
-        content: `The fashion industry is undergoing a transformation, with designers and brands focusing on sustainable practices. From using organic fabrics to reducing waste, the shift towards sustainable fashion is shaping the future of style.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwV33hTx8PWMyzxJoJv8OUYBAAeXhgleC2ww&s",
-        secondaryImages: [
-          "https://europebookings.com/wp-content/uploads/hideout-festival-papaya-club-stage-lights.jpg",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9h3VTFwjD2Evd-EyIOrJKmHwO15eMACRSkg&s"
-        ]
-      },
-      {
-        id: "14",
-        title: "AI-Powered Healthcare: The Future of Medical Diagnostics",
-        date: "2025-02-15",
-        description: "AI is revolutionizing healthcare by enhancing diagnostic accuracy and providing personalized treatment options.",
-        content: `Artificial intelligence is now being used to detect diseases and recommend personalized treatments faster and more accurately than traditional methods. This technology has the potential to save lives by providing earlier diagnoses.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLg0IP_kGJ722M6rxjYJga9NlNBzl_J_hTUQ&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMo1c8YmCBXD9QBMIF-Cv-UoK4a19OtCb_yA&s",
-          "https://www.technostation.tv/wp-content/uploads/2023/12/351377010_6386273988121268_3776490156528089739_n.jpg"
-        ]
-      },
-      {
-        id: "15",
-        title: "Exploring the Impact of Climate Change on Global Agriculture",
-        date: "2025-02-20",
-        description: "Climate change is having a profound impact on agriculture, threatening food security worldwide.",
-        content: `As global temperatures rise and weather patterns become more unpredictable, agriculture is facing challenges that threaten food production. Solutions such as drought-resistant crops and sustainable farming techniques are being explored to mitigate these effects.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVTrNIyuZiQgSMrYYSt9koZ9lYeBJN15cBaw&s",
-        secondaryImages: [
-          "https://i0.wp.com/thegroovecartel.com/wp-content/uploads/2024/01/rsz_20230611_verknipt_jessewensing_5.jpg?fit=770%2C512&ssl=1",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRklOE-pi2P0iS0-VQoRpAnhXhy-ISUUmv4ow&s"
-        ]
-      },
-      {
-        id: "16",
-        title: "5G Technology: The Next Generation of Connectivity",
-        date: "2025-02-25",
-        description: "5G networks are set to transform global connectivity, enabling faster communication and new technologies.",
-        content: `5G technology promises to revolutionize how we connect to the internet and interact with digital devices. With faster speeds, lower latency, and greater capacity, 5G is set to power innovations across industries like healthcare, entertainment, and transportation.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijsiOiFCjQzU2O_BFZsBmeG-aoss95AOYuA&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3FKx8_aCC4ZtsHjJkfDHBlF0oLmOGMfdFtg&s",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFd8f8ujWZzkBMYUepmzpgtz4dMuonHgg30g&s"
-        ]
-      },
-      {
-        id: "17",
-        title: "Advancements in Robotics: The Future of Automation",
-        date: "2025-03-01",
-        description: "Robotic technologies are advancing rapidly, promising to revolutionize industries and improve efficiency.",
-        content: `From autonomous delivery drones to robots assisting in surgery, robotics is reshaping various sectors. Automation technologies are streamlining manufacturing, logistics, and healthcare, leading to more efficient and safer processes.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVQozidI_Sd1Vq3MFy0IfiN9mjD7rk5Vximg&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTw9bQdSddV36J_TWyGXlJUmE2M_xa-YP0Ow&s",
-          "https://i0.wp.com/mnmt.no/wp-content/uploads/2016/03/10_10499542_10152668382583755_2186614163480345366_o.jpg?fit=2048%2C1153&ssl=1"
-        ]
-      },
-      {
-        id: "18",
-        title: "The Evolution of Social Media: What's Next?",
-        date: "2025-03-05",
-        description: "Social media continues to evolve, with new trends and platforms changing the way we communicate.",
-        content: `The rise of new social media platforms, along with the evolution of AI and AR technologies, is transforming how we interact online. With greater emphasis on privacy and authenticity, social media is moving toward more immersive and secure experiences.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwV33hTx8PWMyzxJoJv8OUYBAAeXhgleC2ww&s",
-        secondaryImages: [
-          "https://europebookings.com/wp-content/uploads/hideout-festival-papaya-club-stage-lights.jpg",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9h3VTFwjD2Evd-EyIOrJKmHwO15eMACRSkg&s"
-        ]
-      },
-      {
-        id: "19",
-        title: "The World of Virtual Reality Fitness: A New Frontier",
-        date: "2025-03-10",
-        description: "Virtual reality is revolutionizing the fitness industry, offering immersive workouts and personalized fitness programs.",
-        content: `Virtual reality fitness is transforming how we approach exercise, with immersive VR workouts that make fitness fun and engaging. This trend is gaining momentum as more people seek innovative ways to stay fit and active.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLg0IP_kGJ722M6rxjYJga9NlNBzl_J_hTUQ&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMo1c8YmCBXD9QBMIF-Cv-UoK4a19OtCb_yA&s",
-          "https://www.technostation.tv/wp-content/uploads/2023/12/351377010_6386273988121268_3776490156528089739_n.jpg"
-        ]
-      },
-      {
-        id: "20",
-        title: "Space Exploration: Humanity's Next Giant Leap",
-        date: "2025-03-15",
-        description: "Space exploration is taking humanity to new frontiers, with missions to Mars and beyond.",
-        content: `With new space missions underway, humanity is poised to explore new frontiers beyond Earth. Private companies and government agencies are working together to develop technologies that will take humans to the Moon, Mars, and even further into space.`,
-        mainImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQijsiOiFCjQzU2O_BFZsBmeG-aoss95AOYuA&s",
-        secondaryImages: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3FKx8_aCC4ZtsHjJkfDHBlF0oLmOGMfdFtg&s",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFd8f8ujWZzkBMYUepmzpgtz4dMuonHgg30g&s"
-        ]
-      }
     ],
   }),
 
@@ -256,7 +166,7 @@ export const useNewsStore = defineStore('news', {
   },
 
   actions: {
-    addNews(title,description,content,images) {
+    addNews(title, description, content, images) {
       const newsExists = this.news.some(newsItem => newsItem.title == title);
       if (newsExists) {
         throw new Error('Já existe uma notícia com esse título');
@@ -265,7 +175,7 @@ export const useNewsStore = defineStore('news', {
       let newId;
       do {
         newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.news.some(singleNews=> singleNews.id == newId));
+      } while (this.news.some(singleNews => singleNews.id == newId));
 
       const newsDate = new Date().toISOString().split('T')[0];
 
@@ -274,9 +184,9 @@ export const useNewsStore = defineStore('news', {
         title: title,
         date: newsDate,
         description: description,
-        content: content, 
+        content: content,
         mainImage: images[0],
-        secondaryImages: [images[1],images[2]]
+        secondaryImages: [images[1], images[2]]
       };
 
       this.news.push(newNews);

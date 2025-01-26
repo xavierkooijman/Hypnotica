@@ -1,7 +1,7 @@
 <template>
-  <article class="event-card">
+  <article class="event-card" @click="navigateToEvent">
     <div class="event-header">
-      <h4 class="event-title" @click="navigateToEvent">{{ eventTitle }}</h4>
+      <h4 class="event-title" >{{ eventTitle }}</h4>
       <p class="venue-name">{{ venue }}</p>
       <div class="time-wrapper">
         <time class="event-time">{{ eventTime }}</time>
@@ -124,27 +124,31 @@ export default {
 }
 
 .event-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  gap: 20px;
   color: var(--Main-White, #fafafa);
   font: 24px Aspekta300, sans-serif;
 }
 
 .event-title {
-  cursor: pointer; /* Apenas o título será clicável */
+  cursor: pointer;
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .venue-name {
-  text-align: right; /* Alinha o nome do local à direita */
-  flex-shrink: 0; /* Impede que o elemento se redimensione */
-  width: 150px; /* Define uma largura fixa para alinhamento */
   color: var(--Gray-100, #bec7ce);
+  white-space: nowrap;
+  text-align: center;
 }
 
 .time-wrapper {
   display: flex;
+  justify-self: end;
   align-items: center;
   gap: 48px;
 }
@@ -174,6 +178,6 @@ export default {
 .lineup {
   color: var(--Gray-100, #bec7ce);
   font: 20px Aspekta350, sans-serif;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 </style>
