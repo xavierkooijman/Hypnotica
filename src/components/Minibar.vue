@@ -36,12 +36,13 @@
       <span>Filter</span>
     </button>
 
-    <Filter v-if="isFilterOpen" @close="closeFilter" />
+    <Filter v-if="isFilterOpen" @close="closeFilter" @filter-changed="handleFilterChange" />
   </div>
 </template>
 
 <script>
 import Filter from '@/components/Filter.vue';
+import { useProgramStore } from '@/stores/program';
 
 export default {
   components: {
@@ -49,7 +50,7 @@ export default {
   },
   data() {
     return {
-      isFilterOpen: false
+      isFilterOpen: false,
     }
   },
   methods: {
@@ -58,6 +59,11 @@ export default {
     },
     closeFilter() {
       this.isFilterOpen = false;
+    },
+    handleFilterChange(filters) {
+      const programStore = useProgramStore();
+      programStore.setFilters(filters);
+      this.$emit('filter-changed', filters);
     }
   }
 }
