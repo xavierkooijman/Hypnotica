@@ -1,6 +1,7 @@
 <script>
 import { useArtistsStore } from "@/stores/artists";
 import LikeButton from '@/components/likeButton.vue';
+import Filter from '@/components/Minibar.vue';
 
 export default {
 	data() {
@@ -9,7 +10,8 @@ export default {
 		}
 	},
 	components: {
-		LikeButton
+		LikeButton,
+		Filter
 	},
 	methods: {
 		handleArtistClick(artistId) {
@@ -26,6 +28,7 @@ export default {
 <template>
 	<div>
 		<h1 class="outline-title">PROGRAM</h1>
+		<Filter/>
 		<div class="artists-container px-container">
 			<div v-for="artist in artistStore.artists" class="artist-card">
 				<p class="artist-name" @click="handleArtistClick(artist.id)">{{ artist.name }}</p>

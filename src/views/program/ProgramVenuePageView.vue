@@ -2,7 +2,7 @@
 import { useVenuesStore } from "@/stores/venues";
 import { useUsersStore } from "@/stores/user";
 import LikeButton from '@/components/likeButton.vue';
-
+import Filter from '@/components/Minibar.vue';
 
 export default {
 	data() {
@@ -13,6 +13,7 @@ export default {
 	},
 	components: {
 		LikeButton,
+		Filter
 	},
 	methods: {
 		handleVenueClick(venueId) {
@@ -35,6 +36,7 @@ export default {
 <template>
 	<div>
 		<h1 class="outline-title">PROGRAM</h1>
+		<Filter/>
 		<div class="artists-container px-container">
 			<div v-for="venue in venueStore.venues" class="artist-card">
 				<p class="artist-name" @click="handleVenueClick(venue.id)">{{ venue.name }}</p>
