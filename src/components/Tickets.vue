@@ -1,5 +1,7 @@
 <template>
     <div class="tickets-section">
+        <PopUpGeneral :is-visible="showSuccessPopup" :timeout="3" title="Ticket purchased successfully!" type="success"
+            @close="showSuccessPopup = false" />
         <div class="ticket-grid">
             <article class="ticket-item">
                 <div class="ticket-content">
@@ -124,57 +126,60 @@
     </div>
 </template>
 
-<script setup>
+<script>
 import { CircleCheck } from 'lucide-vue-next';
 import { useTicketsStore } from '@/stores/tickets';
 import { useUsersStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
+import PopUpGeneral from './PopUpGeneral.vue';
 
-const ticketsStore = useTicketsStore();
-const usersStore = useUsersStore();
-const router = useRouter();
+export default {
+  components: {
+    CircleCheck,
+    PopUpGeneral
+  },
 
-const purchaseTicket = (type, price) => {
-    if (!usersStore.authenticatedUser) {
-        alert('Please login to purchase tickets');
-        router.push('/login');
-        return;
+  data() {
+    return {
+      showSuccessPopup: false,
+      ticketsStore: useTicketsStore(),
+      usersStore: useUsersStore(),
+      router: useRouter()
     }
+  },
 
-    try {
+  methods: {
+    purchaseTicket(type, price) {
+      if (!this.usersStore.authenticatedUser) {
+        this.router.push('/login');
+        return;
+      }
 
+      try {
         let newId;
         do {
-            newId = Math.floor(Math.random() * 999) + 1;
-        } while (ticketsStore.getTicketById(newId.toString()));
+          newId = Math.floor(Math.random() * 999) + 1;
+        } while (this.ticketsStore.getTicketById(newId.toString()));
 
         const ticketData = {
-            id: newId.toString(),
-            title: "HYPNØTICA 2025",
-            date: type === 'Single Day' ? "FRIDAY 24th JANUARY" : "24th-26th JANUARY",
-            name: usersStore.authenticatedUser.name,
-            type: type,
-            price: price,
-            qrcode: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png',
-            background: 'https://cdn.builder.io/api/v1/image/assets/TEMP/d203ace7cd45f849cefbb792a778b82f5ecdd49de0e9aaf507667a936ff309fb?apiKey=3650e9b5644d4191adc714c61c50f709&'
+          id: newId.toString(),
+          title: "HYPNØTICA 2025",
+          date: type === 'Single Day' ? "FRIDAY 24th JANUARY" : "24th-26th JANUARY",
+          name: this.usersStore.authenticatedUser.name,
+          type: type,
+          price: price,
+          qrcode: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png',
+          background: 'https://cdn.builder.io/api/v1/image/assets/TEMP/d203ace7cd45f849cefbb792a778b82f5ecdd49de0e9aaf507667a936ff309fb?apiKey=3650e9b5644d4191adc714c61c50f709&'
         };
 
-        ticketsStore.addTicket(
-            ticketData.id,
-            ticketData.title,
-            ticketData.date,
-            ticketData.name,
-            ticketData.type,
-            ticketData.qrcode,
-            ticketData.background
-        );
-
-        alert('Ticket purchased successfully!');
-        router.push('/account/tickets');
-    } catch (error) {
-        alert('Failed to purchase ticket: ' + error.message);
+        this.ticketsStore.addTicket(ticketData);
+        this.showSuccessPopup = true;
+      } catch (error) {
+        console.error('Error purchasing ticket:', error);
+      }
     }
-};
+  }
+}
 </script>
 
 <style scoped>
@@ -282,7 +287,7 @@ const purchaseTicket = (type, price) => {
 
 .ti {
     display: none;
-} 
+}
 
 .ticket-button {
     margin-top: 24px;
