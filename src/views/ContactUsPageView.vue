@@ -1,5 +1,12 @@
 <template>
     <div class="contact-page">
+      <PopUpGeneral 
+            :is-visible="showPopup"
+            :timeout="3"
+            title="Message sent successfully!"
+            type="success"
+            @close="showPopup = false"
+        />
       <h1 class="outline-title">CONTACT US</h1>
       <div class="contact-content">
         <div class="contact-intro">
@@ -51,15 +58,21 @@
   
   <script>
   import { contactStore } from '@/stores/contactUsForm'
+  import PopUpGeneral from '@/components/PopUpGeneral.vue'
+
   export default {
     name: 'ContactForm',
+    components: {
+      PopUpGeneral
+    },
     data() {
       return {
         formData: {
           name: '',
           email: '',
           message: ''
-        }
+        },
+        showPopup: false
       }
     },
     methods: {
@@ -80,8 +93,8 @@
         message: ''
       }
 
-      // Show success message
-      alert('Message sent successfully!')
+      this.showPopup = true
+
     }
   }
   }

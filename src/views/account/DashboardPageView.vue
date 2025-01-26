@@ -1,5 +1,12 @@
 <template>
     <main class="profile-settings-page">
+        <PopUpGeneral 
+            :is-visible="showPopup"
+            :timeout="3"
+            title="Changes saved successfully!"
+            type="success"
+            @close="showPopup = false"
+        />
         <div class="profile-settings-layout">
             <Sidebar />
             <div class="profile-settings-container">
@@ -35,6 +42,7 @@
 import Sidebar from '@/components/Sidebar.vue';
 import { Pen } from 'lucide-vue-next';
 import { useUsersStore } from '@/stores/user'
+import PopUpGeneral from '@/components/PopUpGeneral.vue'
 
 export default {
     name: 'ProfileSettings',
@@ -42,12 +50,14 @@ export default {
         return {
             username: useUsersStore().authenticatedUser.name,
             email: useUsersStore().authenticatedUser.email,
-            imageURL: useUsersStore().authenticatedUser.profImg
+            imageURL: useUsersStore().authenticatedUser.profImg,
+            showPopup: false
         }
     },
     components: {
         Sidebar,
-        Pen,  
+        Pen,
+        PopUpGeneral
     },
     methods: {
         handleSubmit() {
@@ -60,7 +70,7 @@ export default {
             const store = useUsersStore();
             try {
                 store.updateUser(updatedUserData);
-                alert("Alterações feitas com sucesso!")
+                this.showPopup = true
             } catch (error) {
                 console.error(error);
             }

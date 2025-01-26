@@ -3,6 +3,8 @@
         <div v-if="loading" class="loading">Loading...</div>
         <div v-else-if="error" class="error">{{ error }}</div>
         <div v-else class="main-container">
+            <PopUpGeneral :is-visible="showPopup" :timeout="3" title="Purchase successful!" type="success"
+                @close="showPopup = false" />
             <!-- Shop Photos Section -->
             <div class="shop-photos-container">
                 <div class="shop-photos-column">
@@ -65,6 +67,13 @@
                         </button>
 
             </div>
+
+            <section class="related-products">
+                <h2 class="section-title">Customers Also Like</h2>
+                <div class="related-grid">
+                    <MerchandiseCard v-for="product in relatedProducts" :key="product.id" :product="product" />
+                </div>
+            </section>
         </div>
     </main>
 </template>
@@ -73,12 +82,14 @@
 import { useMerchandiseStore } from '@/stores/merchandise'
 import { useUsersStore } from '@/stores/user'
 import MerchandiseCard from '@/components/MerchandiseCard.vue'
+import PopUpGeneral from '@/components/PopUpGeneral.vue'
 
 export default {
     name: 'MerchandisingProductPageView',
 
     components: {
-        MerchandiseCard
+        MerchandiseCard,
+        PopUpGeneral
     },
 
     data() {
@@ -95,9 +106,9 @@ export default {
             selectedSize: null,
             availableSizes: [],
             displayImages: [],
-            enteredCode: '',
             appliedDiscount: null,
-            validPromoCode: null
+            validPromoCode: null,
+            showPopup: false
         }
     },
 
@@ -109,14 +120,6 @@ export default {
             if (!this.product?.price || !this.appliedDiscount) return this.product?.price
             return (this.product.price * (1 - this.appliedDiscount / 100)).toFixed(2)
         },
-        groupedUserCodes() {
-            const codes = this.usersStore?.authenticatedUser?.promoCodesRedeemed || []
-            console.log(codes);
-            return codes.reduce((acc, code) => {
-                acc[code] = (acc[code] || 0) + 1
-                return acc
-            }, {})
-        },
         isAuthenticated() {
             return !!this.usersStore?.authenticatedUser
         },
@@ -127,7 +130,6 @@ export default {
                 return acc
             }, {})
 
-            // Sort by discount value
             return Object.fromEntries(
                 Object.entries(grouped).sort((a, b) => {
                     const discountA = this.merchandiseStore.getpromoCodes.find(p => p.code === a[0])?.discount || 0
@@ -165,8 +167,9 @@ export default {
 
                 const allProducts = this.merchandiseStore.merchandise || []
                 this.relatedProducts = allProducts
-                    .filter(p => p.id !== product.id)
-                    .slice(0, 3)
+                    .filter(p => p.id !== product.id) // Exclude current product
+                    .sort(() => 0.5 - Math.random()) // Randomize array
+                    .slice(0, 3) // Get first 3 items
 
             } catch (err) {
                 this.error = err.message
@@ -190,37 +193,29 @@ export default {
             this.selectedSize = size
         },
 
-        validatePromoCode() {
-            const user = this.usersStore.authenticatedUser
-            if (!user?.promoCodesRedeemed?.includes(this.enteredCode)) {
-                alert('Invalid or already used promo code')
-                return
-            }
-
-            const promoCode = this.merchandiseStore.getpromoCodes.find(
-                code => code.code === this.enteredCode
-            )
-
-            if (promoCode) {
-                this.appliedDiscount = promoCode.discount
-                this.validPromoCode = this.enteredCode
-                alert(`${promoCode.discount}% discount applied successfully!`)
-            }
-        },
-
         resetPurchaseState() {
             this.selectedSize = null
-            this.enteredCode = ''
             this.appliedDiscount = null
             this.validPromoCode = null
         },
+
+        toggleCode(code) {
+            if (this.validPromoCode === code) {
+                this.appliedDiscount = null
+                this.validPromoCode = null
+            } else {
+                const promoCode = this.merchandiseStore.getpromoCodes.find(
+                    pc => pc.code === code
+                )
+                if (promoCode) {
+                    this.appliedDiscount = promoCode.discount
+                    this.validPromoCode = code
+                }
+            }
+        },
+
         async handleBuyNow() {
             try {
-                if (!this.selectedSize) {
-                    alert('Please select a size')
-                    return
-                }
-
                 await this.merchandiseStore.decreaseStock(this.product.id)
 
                 if (this.validPromoCode) {
@@ -229,18 +224,14 @@ export default {
                         throw new Error('No authenticated user found')
                     }
 
-                    // Ensure promoCodesRedeemed exists
                     if (!user.promoCodesRedeemed) {
                         user.promoCodesRedeemed = []
                     }
 
-                    // Find index of first occurrence of the promo code
                     const promoCodeIndex = user.promoCodesRedeemed.indexOf(this.validPromoCode)
                     if (promoCodeIndex !== -1) {
-                        // Remove only one instance of the promo code
                         user.promoCodesRedeemed.splice(promoCodeIndex, 1)
 
-                        // Sync with users array
                         const userIndex = this.usersStore.users.findIndex(u => u.email === user.email)
                         if (userIndex !== -1) {
                             if (!this.usersStore.users[userIndex].promoCodesRedeemed) {
@@ -249,36 +240,20 @@ export default {
                             this.usersStore.users[userIndex].promoCodesRedeemed = [...user.promoCodesRedeemed]
                         }
 
-                        // Persist changes
                         this.usersStore.$patch()
                     }
                 }
 
-                alert('Purchase successful!')
+                this.showPopup = true
                 this.resetPurchaseState()
-                this.$router.push('/merchandising')
+
+                // Delay navigation to allow popup to be visible
+                setTimeout(() => {
+                    this.$router.push('/merchandising')
+                }, 3000) // 3 seconds delay to match popup timeout
             } catch (err) {
                 console.error('Error during purchase:', err)
                 alert(err.message)
-            }
-        },
-
-        toggleCode(code) {
-            if (this.enteredCode === code) {
-                // Deselect code
-                this.enteredCode = ''
-                this.appliedDiscount = null
-                this.validPromoCode = null
-            } else {
-                // Select and validate new code
-                this.enteredCode = code
-                const promoCode = this.merchandiseStore.getpromoCodes.find(
-                    pc => pc.code === code
-                )
-                if (promoCode) {
-                    this.appliedDiscount = promoCode.discount
-                    this.validPromoCode = code
-                }
             }
         }
     },
@@ -548,6 +523,41 @@ export default {
     max-width: 1440px;
     margin: 0 auto;
     margin-bottom: 48px;
+}
+
+.related-products {
+    width: 100%;
+    margin-top: 96px;
+    padding: 0 32px;
+}
+
+.section-title {
+    color: var(--mainWhite);
+    font: 48px Aspekta600, sans-serif;
+    text-align: center;
+    margin-bottom: 64px;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    margin-bottom: 48px;
+}
+
+@media (max-width: 991px) {
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 991px) {

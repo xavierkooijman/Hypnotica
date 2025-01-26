@@ -1,5 +1,7 @@
 <template>
     <form class="volunteer-page" @submit.prevent="handleSubmit">
+        <PopUpGeneral :is-visible="showPopup" :timeout="3" title="Volunteer request sent successfully!" type="success"
+            @close="showPopup = false" />
         <div class="main-content">
             <h1 class="outline-title">VOLUNTEER</h1>
             <div class="join-text">
@@ -48,11 +50,13 @@
 import { volunteerStore } from '@/stores/volunteerForm';
 import { useUsersStore } from '@/stores/user';
 import PopUpLogin from '@/components/PopUpLogin.vue';
+import PopUpGeneral from '@/components/PopUpGeneral.vue'
 
 export default {
     name: 'VolunteerForm',
     components: {
-        PopUpLogin
+        PopUpLogin,
+        PopUpGeneral
     },
     data() {
         return {
@@ -62,7 +66,8 @@ export default {
                 workFunction: '',
                 coverLetter: ''
             },
-            showLoginPopup: false
+            showLoginPopup: false,
+            showPopup: false
         }
     },
     methods: {
@@ -94,7 +99,7 @@ export default {
             };
 
             // Show success message
-            alert('Volunteer request sent successfully!')
+            this.showPopup = true
         }
     }
 }
