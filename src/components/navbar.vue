@@ -23,20 +23,23 @@ export default {
   methods: {
     navbarAnimation() {
       if (this.open == true) {
-        this.open = false
-        setTimeout(() => {
-          this.closed = true
-        }, 350);
+        this.closeMenu();
       }
       else {
-        this.open = true
-        this.closed = false
+        this.open = true;
+        this.closed = false;
       }
     },
     logout() {
       this.userStore.logout();
       router.push({ name: 'HomePage' });
-    }
+    },
+    closeMenu() {
+      this.open = false;
+      setTimeout(() => {
+        this.closed = true;
+      }, 350);
+    },
   }
 }
 </script>
@@ -53,44 +56,40 @@ export default {
           </div>
           <img class="vHidden" :class="{ vShow: open }" src="/src/assets/Icons/CrossXIcon.svg" alt="">
         </div>
-          <div class="navbar-links" v-show="closed">
+        <div class="navbar-links" v-show="closed">
           <RouterLink class="link" :to="{ name: 'TicketsPage' }">Tickets</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramEventsPage' }">Program</RouterLink>
           <RouterLink class="link" :to="{ name: 'ProgramArtistsPage' }">Artists</RouterLink>
           <RouterLink class="link" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
         </div>
       </div>
-        <div class="hidden-container" :class="{ subnav: open }">
+      <div class="hidden-container" :class="{ subnav: open }">
         <div class="hidden-section" :class="{ vShow: open }">
           <p class="hidden-title">Festival</p>
           <div class="hidden-links">
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'TicketsPage' }">Tickets</RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ProgramEventsPage' }">Program</RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ProgramArtistsPage' }">Artists
-            </RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ProgramVenuePage' }">Venues</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'TicketsPage' }" @click="closeMenu()">Tickets</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ProgramEventsPage' }" @click="closeMenu()">Program</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ProgramArtistsPage' }" @click="closeMenu()">Artists</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ProgramVenuePage' }" @click="closeMenu()">Venues</RouterLink>
           </div>
         </div>
         <div class="hidden-section" :class="{ vShow: open }">
           <p class="hidden-title">Practical</p>
           <div class="hidden-links">
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'LocationsMapPage' }">Locations map
-            </RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'TravelPage' }">Travel</RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'WhereToStayPage' }">Where to stay
-            </RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'FAQPage' }">FAQ</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'LocationsMapPage' }" @click="closeMenu()">Locations map</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'TravelPage' }" @click="closeMenu()">Travel</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'WhereToStayPage' }" @click="closeMenu()">Where to stay</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'FAQPage' }" @click="closeMenu()">FAQ</RouterLink>
           </div>
         </div>
         <div class="hidden-section" :class="{ vShow: open }">
           <p class="hidden-title">More</p>
           <div class="hidden-links">
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'NewsPage' }">News</RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ContactUsPage' }">Contact us</RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'VolunteerPage' }">Volunteer</RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'MerchandisingPage' }">Merchandise
-            </RouterLink>
-            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'AboutUsPage' }">About us</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'NewsPage' }" @click="closeMenu()">News</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'ContactUsPage' }" @click="closeMenu()">Contact us</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'VolunteerPage' }" @click="closeMenu()">Volunteer</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'MerchandisingPage' }" @click="closeMenu()">Merchandise</RouterLink>
+            <RouterLink class="hover-underline-animation w-fit" :to="{ name: 'AboutUsPage' }" @click="closeMenu()">About us</RouterLink>
           </div>
         </div>
       </div>
@@ -122,7 +121,7 @@ export default {
 }
 
 .Favourites.active {
-  fill: var(--mainWhite); /* Fill with white when active */
+  fill: var(--mainWhite);
 }
 
 .Favourites:hover {
@@ -153,10 +152,6 @@ export default {
   width: 100% !important;
 }
 
-.flex {
-  display: flex !important;
-}
-
 .navbar {
   display: flex;
   position: absolute;
@@ -175,17 +170,18 @@ export default {
   overflow: hidden;
 }
 
-.hauto{
+.hauto {
   height: 343px;
 }
 
-.gap{
+.gap {
   gap: 0px !important;
 }
 
 .navbar-menuLinks {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   gap: 36px;
 }
@@ -196,7 +192,6 @@ export default {
   align-items: center;
   gap: 48px;
 }
-
 
 .vHidden {
   visibility: hidden;
