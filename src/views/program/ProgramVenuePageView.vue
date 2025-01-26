@@ -1,59 +1,63 @@
+<template>
+    <div>
+        <PopUpLogin 
+            :is-visible="showLoginPopup"
+            :timeout="5"
+            @close="showLoginPopup = false"
+        />
+        <h1 class="outline-title">PROGRAM</h1>
+        <div class="artists-container px-container">
+            <div v-for="venue in venueStore.venues" class="artist-card">
+                <p class="artist-name" @click="handleVenueClick(venue.id)">{{ venue.name }}</p>
+                <img :src="venue.mainImg" alt="venue image" class="image artist-image1" />
+                <img :src="venue.mainImg" alt="venue image" class="image artist-image2" />
+                <img :src="venue.mainImg" alt="venue image" class="image artist-image3" />
+				<div class="like-button-container">
+					<LikeButton type="venue" :isEnabled="false" :targetId="venue.id" @like-changed="onLikeChanged"
+						@click="handleLikeClick" class="like-button" />
+				</div>
+            </div>
+        </div>
+    </div>
+</template>
+
 <script>
 import { useVenuesStore } from "@/stores/venues";
 import { useUsersStore } from "@/stores/user";
 import LikeButton from '@/components/likeButton.vue';
-
+import PopUpLogin from '@/components/PopUpLogin.vue';
 
 export default {
-	data() {
-		return {
-			venueStore: useVenuesStore(),
-			usersStore: useUsersStore(),
-		}
-	},
-	components: {
-		LikeButton,
-	},
-	methods: {
-		handleVenueClick(venueId) {
-			this.$router.push({ path: `/venue/${venueId}` });
-		},
-		onLikeChanged(newState) {
-			const currentUser = this.usersStore.getAuthenticatedUser;
-			if (currentUser) {
-				// Update the store to persist changes
-				this.usersStore.updateUser({
-					...currentUser,
-					favoriteVenues: [...currentUser.favoriteVenues]
-				});
+    data() {
+        return {
+            venueStore: useVenuesStore(),
+            userStore: useUsersStore(),
+            showLoginPopup: false
+        }
+    },
+    components: {
+        LikeButton,
+        PopUpLogin
+    },
+    methods: {
+        handleVenueClick(venueId) {
+            this.$router.push({ path: `/venue/${venueId}` });
+        },
+		handleLikeClick() {
+			console.log('Like button clicked');
+			if (!this.userStore.authenticatedUser) {
+				this.showLoginPopup = true;
 			}
 		}
-	}
+    }
 }
 </script>
-
-<template>
-	<div>
-		<h1 class="outline-title">PROGRAM</h1>
-		<div class="artists-container px-container">
-			<div v-for="venue in venueStore.venues" class="artist-card">
-				<p class="artist-name" @click="handleVenueClick(venue.id)">{{ venue.name }}</p>
-				<img :src="venue.mainImg" alt="venue image" class="image artist-image1" />
-				<img :src="venue.mainImg" alt="venue image" class="image artist-image2" />
-				<img :src="venue.mainImg" alt="venue image" class="image artist-image3" />
-				<div class="like-button-container">
-					<LikeButton type="venue" :targetId="venue.id" @like-changed="onLikeChanged" />
-				</div>
-			</div>
-		</div>
-	</div>
-</template>
 
 <style scoped>
 .artists-container {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+
 }
 
 .artist-name {
@@ -64,9 +68,8 @@ export default {
 .artist-card {
 	position: relative;
 	display: flex;
-	gap: 32px;
-	padding-bottom: 12px;
 	border-bottom: 1px solid var(--gray500);
+	align-items: center; /* Vertical center */
 	cursor: pointer;
 }
 
@@ -122,4 +125,9 @@ export default {
 	width: 336px;
 	height: 336px;
 }
+
+.like-button {
+  transform: scale(0.65);
+}
+
 </style>

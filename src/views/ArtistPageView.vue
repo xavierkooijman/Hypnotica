@@ -5,7 +5,7 @@
       <div class="text-overlay">
         <div class="name-container">
           <h1 class="artist-name">{{ artistInfo.name }}</h1>
-          <LikeButton type="artist" :targetId="artistInfo.id" @like-changed="onLikeChanged" />
+          <LikeButton :isEnabled="true" type="artist" :targetId="artistInfo.id" @like-changed="onLikeChanged" />
         </div>
       </div>
     </section>

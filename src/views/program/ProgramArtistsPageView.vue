@@ -1,30 +1,6 @@
-<script>
-import { useArtistsStore } from "@/stores/artists";
-import LikeButton from '@/components/likeButton.vue';
-
-export default {
-	data() {
-		return {
-			artistStore: useArtistsStore(),
-		}
-	},
-	components: {
-		LikeButton
-	},
-	methods: {
-		handleArtistClick(artistId) {
-			this.$router.push({ path: `/artist/${artistId}` });
-		},
-		onLikeChanged(newState) {
-			// Optional: Handle like state change if needed
-			console.log('Like state changed:', newState);
-		}
-	}
-}
-</script>
-
 <template>
 	<div>
+		<PopUpLogin :is-visible="showLoginPopup" :timeout="5" @close="showLoginPopup = false" />
 		<h1 class="outline-title">PROGRAM</h1>
 		<div class="artists-container px-container">
 			<div v-for="artist in artistStore.artists" class="artist-card">
@@ -33,18 +9,52 @@ export default {
 				<img :src="artist.mainImg" alt="artist image" class="image artist-image2" />
 				<img :src="artist.mainImg" alt="artist image" class="image artist-image3" />
 				<div class="like-button-container">
-					<LikeButton type="artist" :targetId="artist.id" @like-changed="onLikeChanged" />
+					<LikeButton type="artist" :isEnabled="false" :targetId="artist.id" @like-changed="onLikeChanged"
+						@click="handleLikeClick" class="like-button" />
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
+<script>
+import { useArtistsStore } from "@/stores/artists";
+import { useUsersStore } from "@/stores/user";
+import LikeButton from '@/components/likeButton.vue';
+import PopUpLogin from '@/components/PopUpLogin.vue';
+
+export default {
+	data() {
+		return {
+			artistStore: useArtistsStore(),
+			userStore: useUsersStore(),
+			showLoginPopup: false
+		}
+	},
+	components: {
+		LikeButton,
+		PopUpLogin
+	},
+	methods: {
+		handleArtistClick(artistId) {
+			this.$router.push({ path: `/artist/${artistId}` });
+		},
+
+		handleLikeClick() {
+			console.log('Like button clicked');
+			if (!this.userStore.authenticatedUser) {
+				this.showLoginPopup = true;
+			}
+		}
+	}
+}
+</script>
+
 <style scoped>
 .artists-container {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+
 }
 
 .artist-name {
@@ -55,12 +65,11 @@ export default {
 .artist-card {
 	position: relative;
 	display: flex;
-	gap: 32px;
-	padding-bottom: 12px;
 	border-bottom: 1px solid var(--gray500);
+	align-items: center;
+	/* Vertical center */
 	cursor: pointer;
 }
-
 
 .image {
 	position: absolute;
@@ -113,5 +122,9 @@ export default {
 	visibility: visible;
 	width: 336px;
 	height: 336px;
+}
+
+.like-button {
+	transform: scale(0.65);
 }
 </style>
