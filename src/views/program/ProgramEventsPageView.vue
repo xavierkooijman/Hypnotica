@@ -1,6 +1,7 @@
 <template>
   <main class="program-page">
     <h1 class="outline-title">PROGRAM</h1>
+    <Filter/>
     <section class="event-list">
       <div v-if="loading">Loading...</div>
       <div v-else-if="error">{{ error }}</div>
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import Filter from '@/components/Minibar.vue';
 import Program from "@/components/ProgramSection.vue";
 import { useProgramStore } from '@/stores/program';
 
@@ -24,6 +26,7 @@ export default {
   name: 'EventList',
   components: {
     Program,
+    Filter
   },
   data() {
     return {
@@ -50,7 +53,6 @@ export default {
 
 <style scoped>
 .program-page {
-  padding: 0 48px;
   margin-bottom: 100px;
 }
 
@@ -58,6 +60,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-left: 48px;
+  margin-right: 48px;
 }
 
 .event-group {
