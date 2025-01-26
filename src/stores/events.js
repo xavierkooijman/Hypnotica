@@ -13,7 +13,7 @@ export const useEventStore = defineStore('event', {
         timeEnd: "01:00",
         duration: 3,
         venueId: "1",
-        genres: "Techno",
+        genres: ["Techno", "House"],
         mainImg: "https://love-explosion.com/_ipx/w_1500&f_webp/content/Startseite/Startseite-Techno4.jpg",
         bioImg: "https://www.seadancefestival.me/wp-content/uploads/2023/06/52317616884_09977d0afe_o-1.jpg",
         carouselImages: [
@@ -34,7 +34,7 @@ export const useEventStore = defineStore('event', {
         timeEnd: "03:00",
         duration: 4,
         venueId: "2",
-        genres: "Techno",
+        genres: ["Techno", "Electro"],
         mainImg: "https://hierfestival.nl/wp-content/uploads/techno-festivals-2024.jpg",
         bioImg: "https://europebookings.com/wp-content/uploads/i-love-techno-europe-stage-lights-show.jpg",
         carouselImages: [
@@ -55,7 +55,7 @@ export const useEventStore = defineStore('event', {
         timeEnd: "02:00",
         duration: 6,
         venueId: "3",
-        genres: "House",
+        genres: ["House", "Disco"],
         mainImg: "https://cdn.prod.website-files.com/654c619d331d35a065ede6d8/654d4af1b66272a1195414ec_Rectangle%206.png",
         bioImg: "https://img.freepik.com/premium-photo/crowd-concert-with-purple-pink-lights_832479-4429.jpg",
         carouselImages: [
@@ -76,7 +76,7 @@ export const useEventStore = defineStore('event', {
         timeEnd: "04:00",
         duration: 7,
         venueId: "4",
-        genres: "Acid",
+        genres: ["Acid", "Drum & bass"],
         mainImg: "https://mixmag.net/assets/uploads/images/_fullX2/dance-music-sustainbility-festivals-events.jpg",
         bioImg: "https://mixmag.net/assets/uploads/images/_fullX2/DGTL-festival-sustainbility.jpg",
         carouselImages: [
