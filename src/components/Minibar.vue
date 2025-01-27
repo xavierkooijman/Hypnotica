@@ -78,8 +78,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1800px;
-  margin: 64px 48px 128px;
+  padding: 48px;
 }
 
 .filter-label {
