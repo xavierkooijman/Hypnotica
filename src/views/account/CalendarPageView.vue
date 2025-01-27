@@ -70,7 +70,7 @@ import Sidebar from '@/components/Sidebar.vue';
 						<div class="event-card" v-if="userStore.authenticatedUser.calendar.includes(event.id)" :style="{height: event.duration * 10 + '%', top: calculateTopPosition(event.timeStart) + '%'}">
 							<p>{{ event.name }}</p>
 							<p>{{ event.timeStart }} - {{ event.timeEnd }}</p>
-							<p>{{ event.venueId }}</p>
+							<p>{{ venueStore.getVenueById(event.venueId).name }}</p>
 						</div>
 					</div>
 				</div>
@@ -100,7 +100,11 @@ import Sidebar from '@/components/Sidebar.vue';
 	border-radius: 16px;
 	width: clamp(100px, calc(22vw - 32px), 450px);
 	max-width: 450px;
-	
+	cursor: pointer;
+}
+
+.event-card:hover{
+	z-index: 2;
 }
 
 .days-blocks-container{

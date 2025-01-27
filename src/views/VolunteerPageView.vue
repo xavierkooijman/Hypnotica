@@ -84,6 +84,7 @@ export default {
 
             // Add new volunteer to store
             store.volunteers.push({
+                id: userStore.authenticatedUser.id,
                 name: this.formData.name,
                 email: this.formData.email,
                 workFunction: this.formData.workFunction,

@@ -10,6 +10,7 @@
     <RouterLink class="hover-underline-animation w-fit" to="/admin/adminMerch">Admin Merch</RouterLink>
     <RouterLink class="hover-underline-animation w-fit" to="/admin/adminShifts">Admin Shifts</RouterLink>
     <RouterLink class="hover-underline-animation w-fit" to="/admin/adminContact">Admin Contacts</RouterLink>
+    <RouterLink class="hover-underline-animation w-fit" to="/admin/adminVolunteers">Admin Volunteers</RouterLink>
   </div>
 </template>
 
