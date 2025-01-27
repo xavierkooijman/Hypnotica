@@ -155,11 +155,10 @@ export default {
         return;
       }
 
-      try {
         let newId;
         do {
           newId = Math.floor(Math.random() * 999) + 1;
-        } while (this.ticketsStore.getTicketById(newId.toString()));
+        } while (this.ticketsStore.tickets.some(ticket => ticket.id == newId));
 
         const ticketData = {
           id: newId.toString(),
@@ -174,12 +173,10 @@ export default {
 
         this.ticketsStore.addTicket(ticketData);
         this.showSuccessPopup = true;
-      } catch (error) {
-        console.error('Error purchasing ticket:', error);
       }
     }
   }
-}
+
 </script>
 
 <style scoped>
