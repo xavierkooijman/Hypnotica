@@ -240,7 +240,7 @@ export const useArtistsStore = defineStore('artists', {
 
     // Remove um artista pelo ID
     removeArtist(id) {
-      const artistIndex = this.artists.findIndex(artist => artist.id === id);
+      const artistIndex = this.artists.findIndex(artist => artist.id == id);
 
       if (artistIndex === -1) {
         throw new Error('Artista não encontrado');

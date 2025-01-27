@@ -7,8 +7,10 @@ export default {
             name: "",
             address: "",
             bio: "",
+            latitude: "",
+            logitude: "",
             images: [],
-            venueStore: useVenuesStore()
+            venueStore: useVenuesStore(),
         }
     },
     methods: {
@@ -29,7 +31,7 @@ export default {
             const venueStore = useVenuesStore();
 
             try {
-                await venueStore.addVenue(this.name, this.address, this.bio, this.images);
+                await venueStore.addVenue(this.name, this.address, this.bio, this.latitude,this.logitude  ,this.images);
                 alert("Venue added successfully");
             } catch (error) {
                 alert(error.message);
@@ -48,6 +50,8 @@ export default {
         <h2>Add Venue:</h2>
         <input type="text" class="form-input pbottom-12" v-model="name" placeholder="Name" required/>
         <input type="text" class="form-input pbottom-12" v-model="address" placeholder="Address" required/>
+        <input type="text" class="form-input pbottom-12" v-model="latitude" placeholder="Latitude" required/>
+        <input type="text" class="form-input pbottom-12" v-model="logitude" placeholder="Longitude" required/>
         <textarea class="form-input pbottom-12" v-model="bio" placeholder="Bio" required />
         <input type="file" @change="handleImagesSelect" accept="image/*" multiple />
         <button type="submit" class="btn-primary">Add venue</button>

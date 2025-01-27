@@ -100,8 +100,8 @@ export const useVenuesStore = defineStore('venues', {
   },
 
   actions: {
-    addVenue(venue) {
-      const venueExists = this.venues.some(v => v.name == venue.name);
+    addVenue(name,address,bio,latitude,logitude,images) {
+      const venueExists = this.venues.some(venue => venue.name === name);
 
       if (venueExists) {
         throw new Error('Venue already exists');
@@ -114,10 +114,24 @@ export const useVenuesStore = defineStore('venues', {
 
       const newVenue = {
         id: newId.toString(),
-        ...venue
+        name: name,
+        desc: address,
+        bio: bio,
+        position: { lat: parseFloat(latitude), lng: parseFloat(logitude) },
+        mainImg: images[0],
+        carouselImages: [images[1],images[2],images[3],images[4]]
       };
 
       this.venues.push(newVenue);
+    },
+    removeVenue(id) {
+      const index = this.venues.findIndex(venue => venue.id == id);
+
+      if (index === -1) {
+        throw new Error('Venue não encontrada');
+      }
+
+      this.venues.splice(index, 1);
     }
   },
   persist: true

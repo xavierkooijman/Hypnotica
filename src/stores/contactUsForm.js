@@ -22,7 +22,7 @@ export const contactStore = defineStore('contacts', {
             let newId;
             do {
               newId = Math.floor(Math.random() * 1000) + 1;
-            } while (this.venues.some(v => v.id === newId.toString()));
+            } while (this.contacts.some(contact => contact.id == newId));
 
             const newContact = {
                 id: newId,
