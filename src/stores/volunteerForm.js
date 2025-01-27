@@ -11,7 +11,7 @@ export const volunteerStore = defineStore('volunteers', {
 
     actions: {
         addVolunteer(name, email, workFunction, coverLetter) {
-            const volunteerExists = this.volunteers.some(volunteer => volunteer.name === name);
+            const volunteerExists = this.volunteers.some(volunteer => volunteer.name == name);
 
             if (volunteerExists) {
                 throw new Error('Volunteer application already exists');
@@ -31,11 +31,15 @@ export const volunteerStore = defineStore('volunteers', {
             };
             this.volunteers.push(newVolunteer);
         },
+        deleteVolunteer(id) {
+            const index = this.volunteers.findIndex(volunteer => volunteer.id == id);
 
-        deleteVolunteer(index) {
+            if (index === -1) {
+                throw new Error('Volunteer application not found');
+            }
+
             this.volunteers.splice(index, 1);
         },
     },
-    
     persist: true,
 });

@@ -1,5 +1,5 @@
 <script>
-import {volunteerStore} from '@/stores/volunteerForm';
+import { volunteerStore } from '@/stores/volunteerForm';
 import { useUsersStore } from '@/stores/user';
 
 export default {
@@ -15,6 +15,7 @@ export default {
       },
       acceptVolunteer(volunteerId){
         this.userStore.addVolunteer(volunteerId);
+        this.volunteerStore.deleteVolunteer(volunteerId);
       },
       removeVolunteer(id){
         return this.userStore.removeVolunteer(id);
@@ -27,7 +28,7 @@ export default {
     <h1>Admin Volunteers</h1>
 		<h2>All applications:</h2><br>
     <div class="artists-container">
-        <div v-for="volunteer in volunteerStore.volunteers">
+        <div v-for="volunteer in volunteerStore.volunteers" class="artist-card">
             <p class="card-title">{{ volunteer.name }}</p>
             <p>{{ volunteer.email }}</p>
             <p>{{ volunteer.workFunction }}</p>
@@ -39,7 +40,7 @@ export default {
     <h2>All active volunteers:</h2><br>
     <div class="artists-container">
       <div v-for="user in userStore.users">
-        <div v-if="user.IsVolunteer">
+        <div v-if="user.isVolunteer == true" class="artist-card">
           <p class="card-title">{{ user.name }}</p>
           <p>{{ user.email }}</p>
           <button class="btn-primary w-100" @click="removeVolunteer(user.id)">Remove</button>
@@ -55,10 +56,6 @@ export default {
 	gap: 24px;
 	padding: 24px;
 	width: 600px;
-}
-
-.active{
-  background-color: var(--gray700) !important;
 }
 
 .dateInput{
