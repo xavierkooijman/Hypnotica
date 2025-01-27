@@ -101,7 +101,7 @@ export const useEventStore = defineStore('event', {
 
   actions: {
     addEvent(name,bio,artistsIds,date,timeStart,timeEnd,venueId,genres,images) {
-      const eventExists = this.events.some(event => event.name === name);
+      const eventExists = this.events.some(event => event.name == name);
 
       if (eventExists) {
         throw new Error('Já existe um evento com esse nome');
@@ -110,7 +110,7 @@ export const useEventStore = defineStore('event', {
       let newId;
       do {
         newId = Math.floor(Math.random() * 1000) + 1;
-      } while (this.events.some(event => event.id === newId));
+      } while (this.events.some(event => event.id == newId));
 
       const [startHour, startMinute] = timeStart.split(':').map(Number);
       const [endHour, endMinute] = timeEnd.split(':').map(Number);
@@ -147,14 +147,14 @@ export const useEventStore = defineStore('event', {
       this.events.push(newEvent);
     },
     removeEvent(eventId) {
-      const eventIndex = this.events.findIndex(event => event.id === eventId);
-      if (eventIndex === -1) {
+      const eventIndex = this.events.findIndex(event => event.id == eventId);
+      if (eventIndex == -1) {
         throw new Error('Evento não encontrado');
       }
       this.events.splice(eventIndex, 1);
     },
     updateEvent(updatedEvent) {
-      const eventIndex = this.events.findIndex(event => event.id === updatedEvent.id);
+      const eventIndex = this.events.findIndex(event => event.id == updatedEvent.id);
       if (eventIndex === -1) {
         throw new Error('Evento não encontrado');
       }

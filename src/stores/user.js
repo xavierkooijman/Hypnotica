@@ -6,8 +6,8 @@ export const useUsersStore = defineStore('users', {
   state: () => ({
     authenticatedUser: null,
     users: [
-      { name: "admin", email: "admin@gmail.com", password: "123", isAdmin: true},
-      { name: "xavi", email: "example@gmail.com", password: "321", profImg: '/src/assets/images/1.jpg', tickets: [], favoriteArtists: [], favoriteVenues: [], calendar: [], isVolunteer: true, coins: 5000, promoCodesRedeemed: [], notificationPref: [] },
+      { id: "1", name: "admin", email: "admin@gmail.com", password: "123", isAdmin: true},
+      { id: "2", name: "xavi", email: "example@gmail.com", password: "321", profImg: '/src/assets/images/1.jpg', tickets: [], favoriteArtists: [], favoriteVenues: [], calendar: [], isVolunteer: true, coins: 5000, promoCodesRedeemed: [], notificationPref: [] },
     ],
   }),
 
@@ -81,10 +81,16 @@ export const useUsersStore = defineStore('users', {
         throw new Error('Já existe um utilizador com esse nome ou email!');
       }
 
+      let newId;
+      do {
+        newId = Math.floor(Math.random() * 1000) + 1;
+      } while (this.users.some(user => user.id == newId.toString()));
+
 
 
       const notificationsStore = useNotificationsStore();  // Acessar a store de notificações
       const newUser = {
+        id: newId,
         name: name,
         email: email,
         password: password,
@@ -178,7 +184,16 @@ export const useUsersStore = defineStore('users', {
           this.users[userIndex] = { ...this.authenticatedUser };
         }
       }
-    }
+    },
+
+    addVolunteer(id){
+      const user = this.users.find(user => user.id == id);
+      user.isVolunteer = true;
+    },
+    removeVolunteer(id){
+      const user = this.users.find(user => user.id == id);
+      user.isVolunteer = false;
+    },
   },
   persist: true,
 });

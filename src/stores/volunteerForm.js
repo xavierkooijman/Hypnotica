@@ -2,14 +2,7 @@ import { defineStore } from 'pinia';
 
 export const volunteerStore = defineStore('volunteers', {
     state: () => ({
-        volunteers: [
-            {
-                name: 'Rachelle Chell',
-                email: 'rachelle@gmail.com',
-                workFunction: 'Production',
-                coverLetter: 'Hi i would like to applay'
-            }
-        ],
+        volunteers: [],
     }),
 
     getters: {
@@ -18,7 +11,19 @@ export const volunteerStore = defineStore('volunteers', {
 
     actions: {
         addVolunteer(name, email, workFunction, coverLetter) {
+            const volunteerExists = this.volunteers.some(volunteer => volunteer.name == name);
+
+            if (volunteerExists) {
+                throw new Error('Volunteer application already exists');
+            }
+
+            let newId;
+            do {
+              newId = Math.floor(Math.random() * 1000) + 1;
+            } while (this.volunteers.some(v => v.id == newId.toString()));
+
             const newVolunteer = {
+                id: newId,
                 name,
                 email,
                 workFunction,
@@ -26,11 +31,15 @@ export const volunteerStore = defineStore('volunteers', {
             };
             this.volunteers.push(newVolunteer);
         },
+        deleteVolunteer(id) {
+            const index = this.volunteers.findIndex(volunteer => volunteer.id == id);
 
-        deleteVolunteer(index) {
+            if (index === -1) {
+                throw new Error('Volunteer application not found');
+            }
+
             this.volunteers.splice(index, 1);
         },
     },
-    
     persist: true,
 });

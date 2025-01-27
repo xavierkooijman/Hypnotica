@@ -37,6 +37,8 @@ import adminDashboard from '@/views/admin/adminDashboard.vue';
 import adminNews from '@/views/admin/adminNews.vue';
 import adminMerch from '@/views/admin/adminMerch.vue';
 import adminShifts from '@/views/admin/adminShifts.vue';
+import adminContact from '@/views/admin/adminContact.vue';
+import adminVolunteers from '@/views/admin/adminVolunteers.vue';
 
 // Definição de rotas
 const routes = [
@@ -229,6 +231,18 @@ const routes = [
     component: adminShifts,
     meta: { requiresAdmin: true }
   },
+  {
+    path: '/admin/adminContact',
+    name: 'adminContact',
+    component: adminContact,
+    meta: { requiresAdmin: true }
+  },
+  {
+    path: '/admin/adminVolunteers',
+    name: 'adminVolunteers',
+    component: adminVolunteers,
+    meta: { requiresAdmin: true }
+  }
 ];
 
 // Configuração do router
