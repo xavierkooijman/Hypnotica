@@ -1,4 +1,4 @@
-# PW1-ECDI-Project
+# Hypnøtica
 
 A Vue.js-based web application for managing music festival events, featuring artist information, ticket sales, venue details, news, and user account management.
 
